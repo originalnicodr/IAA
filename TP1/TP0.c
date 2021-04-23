@@ -213,13 +213,37 @@ int main(int argc, char *argv[]) {
     //char dataPath[256];
     //get_paths(namesPath, dataPath);
 
-    char namesPath[9]="ej.names";
-    char dataPath[8]="ej.data";
+
+    char namesPath[256]="";
+    char dataPath[256]="";
+
+    
+
+    if ((argc==6) || (argc==4)){
+        char temp[256];
+        if (argc==6) strcpy(temp, argv[5]);
+        else strcpy(temp, argv[3]);
+
+
+        strcpy(namesPath, temp);
+        strcpy(dataPath, temp);
+
+        strncat(namesPath, ".names", 7);//ver si lo hago con 8 sino
+        strncat(dataPath, ".data", 6);//ver si lo hago con 7 sino
+
+        
+    }
+    else{
+        //strncat(namesPath, "ej.names", 9);//ver si lo hago con 8 sino
+        //strncat(dataPath, "ej.data", 8);//ver si lo hago con 7 sino
+        strcpy(namesPath, "ej.names");
+        strcpy(dataPath, "ej.data");
+    }
 
 
     //printf("Ejercicio %c ejecutado con los parametros n=%d, d=%d, c=%f\n",ej,n,d,c);
 
-    if (argc==5){
+    if ((argc==5) || (argc==6)){
         fnames = fopen(namesPath,"w");
         fdata = fopen(dataPath,"w");
 
@@ -234,7 +258,7 @@ int main(int argc, char *argv[]) {
         fclose(fdata);
 
     }
-    else if(argc==3){
+    else if((argc==3) || (argc==4)){
         fnames = fopen(namesPath,"w");
         fdata = fopen(dataPath,"w");
 

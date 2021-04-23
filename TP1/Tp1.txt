@@ -580,7 +580,7 @@ ggplot(`ej5.a)diagonal`, aes(TrainingSetSize)) +
   geom_line(aes(y = trainingAfterPrunningError, colour = "Training")) + 
   geom_line(aes(y = testingAfterPrunningError, colour = "Testing")) + ggtitle("Ej 5)a) Diagonal Error Porcentual") + xlab("Training Set Size") + ylab("After Prunning Error") + scale_x_log10()
 
-ggplot(`ej5.a)diagonal`, aes(TrainingSetSize)) + geom_line(aes(y = trainingAfterPrunningSize)) + ggtitle("Ej 5)a) Diagonal - Tree Size") + xlab("Training Set Size") + ylab("Tree Size")
+ggplot(`ej5.a)diagonal`, aes(TrainingSetSize)) + geom_line(aes(y = trainingAfterPrunningSize)) + ggtitle("Ej 5)a) Diagonal - Tree Size") + xlab("Training Set Size") + ylab("Tree Size") + scale_x_log10()
 
 b)
 
@@ -589,4 +589,31 @@ ggplot(`ej5.b)paralelo`, aes(TrainingSetSize)) +
   geom_line(aes(y = trainingAfterPrunningError, colour = "Training")) + 
   geom_line(aes(y = testingAfterPrunningError, colour = "Testing")) + ggtitle("Ej 5)b) Paralelo Error Porcentual") + xlab("Training Set Size") + ylab("After Prunning Error") + scale_x_log10()
 
-ggplot(`ej5.b)paralelo`, aes(TrainingSetSize)) + geom_line(aes(y = trainingAfterPrunningSize)) + ggtitle("Ej 5)b) Paralelo - Tree Size") + xlab("Training Set Size") + ylab("Tree Size")
+ggplot(`ej5.b)paralelo`, aes(TrainingSetSize)) + geom_line(aes(y = trainingAfterPrunningSize)) + ggtitle("Ej 5)b) Paralelo - Tree Size") + xlab("Training Set Size") + ylab("Tree Size") + scale_x_log10()
+
+fusionados
+
+
+ggplot(`ej5.a)diagonal`, aes(TrainingSetSize)) + 
+  geom_line(aes(y = trainingAfterPrunningError, colour = "On diagonal training data")) + 
+  geom_line(aes(y = testingAfterPrunningError, colour = "On diagonal testing data")) +
+  geom_line(aes(y = `ej5.b)paralelo`$trainingAfterPrunningError, colour = "On parallel training data")) + 
+  geom_line(aes(y = `ej5.b)paralelo`$testingAfterPrunningError, colour = "On parallel testing data")) +
+ggtitle("Ej 5) Error Porcentual") + xlab("Training Set Size") + ylab("After Prunning Error") + scale_x_log10() + theme(legend.position="bottom")
+
+
+ggplot(`ej5.a)diagonal`, aes(TrainingSetSize)) + geom_line(aes(y = `ej5.b)paralelo`$trainingAfterPrunningSize, colour = "On parallel training data")) +
+geom_line(aes(y = trainingAfterPrunningSize, colour = "On diagonal testing data")) +
+ggtitle("Ej 5) Tree Size") + xlab("Training Set Size") + ylab("Tree Size") + scale_x_log10() + theme(legend.position="bottom")
+
+6)
+ggplot(`ej6.diagonal`, aes(CValue)) + 
+  geom_line(aes(y = `ej6.diagonal`$TestingBeforePrunningError, colour = "Before Prunning on diagonal test data")) + 
+  geom_line(aes(y = `ej6.diagonal`$TestingAfterPrunningError, colour = "After Prunning on diagonal test data")) +
+  geom_line(aes(y = `ej6.parallel`$TestingBeforePrunningError, colour = "Before Prunning on parallel test data")) + 
+  geom_line(aes(y = `ej6.parallel`$TestingAfterPrunningError, colour = "After Prunning on parallel test data")) +
+ggtitle("Ej 6) Error Porcentual") + xlab("C value") + ylab("Error%") + scale_x_log10()
+
+6.1) si no podes predecir nada entonces devolver el resultado mas probable (caso dado o tirar moneda)
+Ver plots del paralelo y el diagonal e imaginarse como lo clasificariamos nosotros si los datos son de la clase 0 o 1
+Se implementa levantando el conjunto de datos y haciendo una formula simple en R

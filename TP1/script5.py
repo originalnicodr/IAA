@@ -2,6 +2,7 @@ import re
 from functools import reduce
 import subprocess
 import time
+import os
 
 def get_training_and_testing_values(s):
     """
@@ -46,57 +47,71 @@ def sum(a, b):
     return a + b
 
 
+def ej5():
+    f = open("ej5.txt", "a")
 
-f = open("ej5.txt", "a")
+    f.write("TrainingSetSize    trainingAfterPrunningError    testingAfterPrunningError    trainingAfterPrunningSize    testingAfterPrunningSize\n")
 
-f.write("TrainingSetSize    trainingAfterPrunningError    testingAfterPrunningError    trainingAfterPrunningSize    testingAfterPrunningSize\n")
+    valoresn=[125, 250, 500, 1000, 2000, 4000]
+    for n in valoresn:
+        valores_guardados=[]
+        for i in range(0,20):
+            #estoy corriendo python 2 aca
+            subprocess.check_output("./TP0.out b "+str(n)+" 2 0.78", shell=True, universal_newlines=True)
+            output= subprocess.check_output("./c4.5 -f ej -g -u", shell=True, universal_newlines=True)
+            valores_guardados.append(get_training_and_testing_values(output))
 
-valoresn=[125, 250, 500, 1000, 2000, 4000]
-for n in valoresn:
-    valores_guardados=[]
-    for i in range(0,20):
-        #estoy corriendo python 2 aca
-        subprocess.check_output("./TP0.out b "+str(n)+" 2 0.78", shell=True, universal_newlines=True)
-        output= subprocess.check_output("./c4.5 -f ej -g -u", shell=True, universal_newlines=True)
-        valores_guardados.append(get_training_and_testing_values(output))
+        #BeforePruningSize, BeforePruningErrors, BeforePruningErrors%, AfterPruningSize, AfterPruningErrors, AfterPruningErrors%, Estimate%]
 
-    #BeforePruningSize, BeforePruningErrors, BeforePruningErrors%, AfterPruningSize, AfterPruningErrors, AfterPruningErrors%, Estimate%]
+        trainingAfterPSize=reduce(sum,map(lambda x: x[0][3],valores_guardados))/len(valores_guardados)
+        trainingAfterPError=reduce(sum,map(lambda x: x[0][5],valores_guardados))/len(valores_guardados)
 
-    trainingAfterPSize=reduce(sum,map(lambda x: x[0][3],valores_guardados))/len(valores_guardados)
-    trainingAfterPError=reduce(sum,map(lambda x: x[0][5],valores_guardados))/len(valores_guardados)
+        testingAfterPSize=reduce(sum,map(lambda x: x[1][3],valores_guardados))/len(valores_guardados)
+        testingAfterPError=reduce(sum,map(lambda x: x[1][5],valores_guardados))/len(valores_guardados)
 
-    testingAfterPSize=reduce(sum,map(lambda x: x[1][3],valores_guardados))/len(valores_guardados)
-    testingAfterPError=reduce(sum,map(lambda x: x[1][5],valores_guardados))/len(valores_guardados)
+        
+        f.write(str(n) + "    " + str(trainingAfterPError) + "    " + str(testingAfterPError) + "    " + str(trainingAfterPSize) + "    " + str(testingAfterPSize) + "\n")
 
-    
-    f.write(str(n) + "    " + str(trainingAfterPError) + "    " + str(testingAfterPError) + "    " + str(trainingAfterPSize) + "    " + str(testingAfterPSize) + "\n")
-
-    time.sleep(1)
-
-
-
-f.close()
+        time.sleep(1)
 
 
 
-s = """Evaluation on training data (3000 items):
-
-	 Before Pruning           After Pruning
-	----------------   ---------------------------
-	Size      Errors   Size      Errors   Estimate
-
-	 207   33( 1.1%)    193   38( 1.3%)    ( 5.6%)   <<
-
-Evaluation on test data (10000 items):
-
-	 Before Pruning           After Pruning
-	----------------   ---------------------------
-	Size      Errors   Size      Errors   Estimate
-
-	 207  603( 6.0%)    193  602( 6.0%)    ( 5.6%)   <<
+    f.close()
 
 
-	  (a)  (b)	<-classified as
-	 ---- ----
-	 3489  312	(a): class 0
-	  290 5909	(b): class 1"""
+
+
+def ej6():
+    f = open("ej6.txt", "a")
+
+    f.write("CValue    TrainingBeforePrunningError    TrainingAfterPrunningError    TestingBeforePrunningError    TestingAfterPrunningError\n")
+
+    valoresc=[0.5, 1, 1.5, 2, 2.5]
+    for c in valoresc:
+        valores_guardados=[]
+        subprocess.check_output("./TP0.out b 10000 5 "+str(c), shell=True, universal_newlines=True)
+        os.rename('ej.data', 'ej.test')
+        for i in range(0,20):
+            #estoy corriendo python 2 aca
+            subprocess.check_output("./TP0.out b 250 5 "+str(c), shell=True, universal_newlines=True)
+            output= subprocess.check_output("./c4.5 -f ej -g -u", shell=True, universal_newlines=True)
+            valores_guardados.append(get_training_and_testing_values(output))
+
+        #BeforePruningSize, BeforePruningErrors, BeforePruningErrors%, AfterPruningSize, AfterPruningErrors, AfterPruningErrors%, Estimate%]
+
+        trainingBeforePError=reduce(sum,map(lambda x: x[0][2],valores_guardados))/len(valores_guardados)
+        trainingAfterPError=reduce(sum,map(lambda x: x[0][5],valores_guardados))/len(valores_guardados)
+
+        testingBeforePError=reduce(sum,map(lambda x: x[1][2],valores_guardados))/len(valores_guardados)
+        testingAfterPError=reduce(sum,map(lambda x: x[1][5],valores_guardados))/len(valores_guardados)
+
+        
+        f.write(str(c) + "    " + str(trainingAfterPError) + "    " + str(trainingAfterPError) + "    " + str(testingBeforePError) + "    " + str(testingAfterPError) + "\n")
+
+        time.sleep(1)
+
+
+
+    f.close()
+
+ej6()

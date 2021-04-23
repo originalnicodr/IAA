@@ -1,0 +1,6 @@
+CValue    TrainingBeforePrunningError    TrainingAfterPrunningError    TestingBeforePrunningError    TestingAfterPrunningError
+0.5    0.84    0.84    2.775    2.205
+1    17.52    17.52    19.04    16.72
+1.5    20.0    20.0    27.875    27.875
+2    33.16    33.16    33.54    33.54
+2.5    29.2    29.2    35.83    35.83
