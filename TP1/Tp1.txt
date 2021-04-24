@@ -607,13 +607,30 @@ geom_line(aes(y = trainingAfterPrunningSize, colour = "On diagonal testing data"
 ggtitle("Ej 5) Tree Size") + xlab("Training Set Size") + ylab("Tree Size") + scale_x_log10() + theme(legend.position="bottom")
 
 6)
+require(ggplot2)
+
 ggplot(`ej6.diagonal`, aes(CValue)) + 
   geom_line(aes(y = `ej6.diagonal`$TestingBeforePrunningError, colour = "Before Prunning on diagonal test data")) + 
   geom_line(aes(y = `ej6.diagonal`$TestingAfterPrunningError, colour = "After Prunning on diagonal test data")) +
   geom_line(aes(y = `ej6.parallel`$TestingBeforePrunningError, colour = "Before Prunning on parallel test data")) + 
   geom_line(aes(y = `ej6.parallel`$TestingAfterPrunningError, colour = "After Prunning on parallel test data")) +
-ggtitle("Ej 6) Error Porcentual") + xlab("C value") + ylab("Error%") + scale_x_log10()
+  geom_line(aes(y = `ej6.1.parallel`$ErrorMinimo, colour = "Minimum Error on parallel test data")) +
+  geom_line(aes(y = `ej6.1.diagonal`$ErrorMinimo, colour = "Minimum Error on diagonal test data")) +
+ggtitle("Ej 6) Error Porcentual") + xlab("C value") + ylab("Error%") + theme(legend.position="bottom")
 
 6.1) si no podes predecir nada entonces devolver el resultado mas probable (caso dado o tirar moneda)
 Ver plots del paralelo y el diagonal e imaginarse como lo clasificariamos nosotros si los datos son de la clase 0 o 1
 Se implementa levantando el conjunto de datos y haciendo una formula simple en R
+
+7)
+
+require(ggplot2)
+
+ggplot(`ej7.diagonal`, aes(Dimensiones)) + 
+  geom_line(aes(y = `ej7.diagonal`$TestingAfterPrunningError, colour = "After Prunning on diagonal test data")) +
+  geom_line(aes(y = `ej7.diagonal`$TrainingAfterPrunningError, colour = "After Prunning on diagonal training data")) +
+  geom_line(aes(y = `ej7.paralelo`$TestingAfterPrunningError, colour = "After Prunning on parallel test data")) +
+  geom_line(aes(y = `ej7.paralelo`$TrainingAfterPrunningError, colour = "After Prunning on parallel training data")) +
+ggtitle("Ej 7) Error Porcentual") + xlab("Dimensiones") + ylab("Error%") + theme(legend.position="bottom")
+
+  geom_line(aes(y = `ej7.diagonal`$TestingBeforePrunningError, colour = "Before Prunning on diagonal test data")) + 

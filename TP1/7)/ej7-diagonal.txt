@@ -1,0 +1,6 @@
+Dimensiones    TrainingBeforePrunningError    TrainingAfterPrunningError    TestingBeforePrunningError    TestingAfterPrunningError
+2    9.6    9.6    11.99    11.99
+4    6.0    6.0    15.75    15.75
+8    2.36    2.36    21.74    21.76
+16    2.38    2.38    28.805    28.805
+32    1.88    1.88    34.635    34.635
