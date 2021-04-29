@@ -1,7 +1,7 @@
 TrainingSetSize    trainingAfterPrunningError    testingAfterPrunningError    trainingAfterPrunningSize    testingAfterPrunningSize
-125    7.64    11.98    10.1    10.1
-250    6.0    12.6    9.0    9.0
-500    8.25    11.615    9.2    9.2
-1000    9.54    11.37    13.0    13.0
-2000    9.6    10.7    17.0    17.0
-4000    9.51    10.71    21.1    21.1
+125    7.48    14.355    9.1    9.1
+250    8.04    13.105    12.0    12.0
+500    8.26    12.1    13.8    13.8
+1000    8.625    11.695    15.9    15.9
+2000    9.645    11.39    16.7    16.7
+4000    9.395    10.9    23.8    23.8

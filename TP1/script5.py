@@ -3,6 +3,7 @@ from functools import reduce
 import subprocess
 import time
 import os
+import math
 
 def get_training_and_testing_values(s):
     """
@@ -61,6 +62,8 @@ def ej5():
             output= subprocess.check_output("./c4.5 -f ej -g -u", shell=True, universal_newlines=True)
             valores_guardados.append(get_training_and_testing_values(output))
 
+            time.sleep(1)
+
         #BeforePruningSize, BeforePruningErrors, BeforePruningErrors%, AfterPruningSize, AfterPruningErrors, AfterPruningErrors%, Estimate%]
 
         trainingAfterPSize=reduce(sum,map(lambda x: x[0][3],valores_guardados))/len(valores_guardados)
@@ -71,10 +74,6 @@ def ej5():
 
         
         f.write(str(n) + "    " + str(trainingAfterPError) + "    " + str(testingAfterPError) + "    " + str(trainingAfterPSize) + "    " + str(testingAfterPSize) + "\n")
-
-        time.sleep(1)
-
-
 
     f.close()
 
@@ -89,13 +88,15 @@ def ej6():
     valoresc=[0.5, 1, 1.5, 2, 2.5]
     for c in valoresc:
         valores_guardados=[]
-        subprocess.check_output("./TP0.out a 10000 5 "+str(c), shell=True, universal_newlines=True)
+        subprocess.check_output("./TP0.out b 10000 5 "+str(c), shell=True, universal_newlines=True)
         os.rename('ej.data', 'ej.test')
         for i in range(0,20):
             #estoy corriendo python 2 aca
-            subprocess.check_output("./TP0.out a 250 5 "+str(c), shell=True, universal_newlines=True)
+            subprocess.check_output("./TP0.out b 250 5 "+str(c), shell=True, universal_newlines=True)
             output= subprocess.check_output("./c4.5 -f ej -g -u", shell=True, universal_newlines=True)
             valores_guardados.append(get_training_and_testing_values(output))
+
+            time.sleep(1)
 
         #BeforePruningSize, BeforePruningErrors, BeforePruningErrors%, AfterPruningSize, AfterPruningErrors, AfterPruningErrors%, Estimate%]
 
@@ -108,12 +109,19 @@ def ej6():
         
         f.write(str(c) + "    " + str(trainingAfterPError) + "    " + str(trainingAfterPError) + "    " + str(testingBeforePError) + "    " + str(testingAfterPError) + "\n")
 
-        time.sleep(1)
-
-
 
     f.close()
 
+def ideal_clas(coord,origin1,origin2):
+    def distance(v1,v2):
+        return math.sqrt(pow(v1[0]-v2[0],2)+pow(v1[1]-v2[1],2)+pow(v1[2]-v2[2],2)+pow(v1[3]-v2[3],2)+pow(v1[4]-v2[4],2))
+    d1= distance(coord,origin1)
+    d2= distance(coord,origin2)
+    #print(str(d1)+">"+str(d2)+"?")
+    if d1>d2:
+        return 1
+    else:
+        return 0
 
 def get_values_data(s,n):
     listofstrings = re.split('\n', s)
@@ -126,15 +134,19 @@ def ej6_1():
     f.write("CValue    ErrorMinimo\n")
 
     def predict_parallel(coord):
-        if (float(coord[0])>0):
-            return 1
+        #if (float(coord[0])>0):
+        """
+        if (float(coord[0]) + float(coord[1]) + float(coord[2]) + float(coord[3]) + float(coord[4])>0):
+           return 1
         else:
             return 0
+        """
 
     def predict_diagonal(coord):
         #if (-float(coord[0])<float(coord[1]) and -float(coord[0])<float(coord[2]) and -float(coord[0])<float(coord[3]) and -float(coord[0])<float(coord[4])):
         #if (-float(coord[0])<float(coord[1]) or -float(coord[0])<float(coord[2]) or -float(coord[0])<float(coord[3]) or -float(coord[0])<float(coord[4])):
-        if ((-float(coord[0]))<float(coord[1])):
+        #if ((-float(coord[0])/2)<float(coord[1])):
+        if ((-float(coord[0]) - float(coord[2]) - float(coord[3])- float(coord[4]))<float(coord[1])):
             return 1  #etiqueto 1, pero tengo que ver que pasa con las otras componentes si comparo con coord[0]
         else:
             return 0
@@ -149,18 +161,23 @@ def ej6_1():
         
         for i in range(0,10000):
             valores_leidos=re.findall(r"[+-]? *(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?", file.readline())
-            
+
+            if(float(valores_leidos[5])==ideal_clas([float(i) for i in valores_leidos[:5]],(-1,-1,-1,-1,-1),(1,1,1,1,1))):
+                correct+=1
+                
+
+            """
             #Si estamos en ejercicio a)diagonal
             if (float(valores_leidos[5])==predict_diagonal(valores_leidos[:5])):#fijarse si estoy haciendolo bien
                 correct+=1
-            
-
-            #Si estamos en ejercicio b)paralelo
             """
+            """
+            #Si estamos en ejercicio b)paralelo
             if (float(valores_leidos[5])==predict_parallel(valores_leidos[:5])):#fijarse si estoy haciendolo bien
                 correct+=1
                 #print(str(valores_leidos[5])+"=="+str(predict_parallel(valores_leidos[:3])))
             """
+            
         
         file.close()
         
@@ -191,6 +208,8 @@ def ej7():
             output= subprocess.check_output("./c4.5 -f ej -g -u", shell=True, universal_newlines=True)
             valores_guardados.append(get_training_and_testing_values(output))
 
+            time.sleep(1)
+
         #BeforePruningSize, BeforePruningErrors, BeforePruningErrors%, AfterPruningSize, AfterPruningErrors, AfterPruningErrors%, Estimate%]
 
         trainingBeforePError=reduce(sum,map(lambda x: x[0][2],valores_guardados))/len(valores_guardados)
@@ -202,12 +221,13 @@ def ej7():
         
         f.write(str(d) + "    " + str(trainingAfterPError) + "    " + str(trainingAfterPError) + "    " + str(testingBeforePError) + "    " + str(testingAfterPError) + "\n")
 
-        time.sleep(1)
+        
 
 
 
     f.close()
 
+#ej5()
 #ej6()
-#ej6_1()
-ej7()
+ej6_1()
+#ej7()

@@ -602,8 +602,8 @@ ggplot(`ej5.a)diagonal`, aes(TrainingSetSize)) +
 ggtitle("Ej 5) Error Porcentual") + xlab("Training Set Size") + ylab("After Prunning Error") + scale_x_log10() + theme(legend.position="bottom")
 
 
-ggplot(`ej5.a)diagonal`, aes(TrainingSetSize)) + geom_line(aes(y = `ej5.b)paralelo`$trainingAfterPrunningSize, colour = "On parallel training data")) +
-geom_line(aes(y = trainingAfterPrunningSize, colour = "On diagonal testing data")) +
+ggplot(`ej5.a)diagonal`, aes(TrainingSetSize)) + geom_line(aes(y = `ej5.b)paralelo`$testingAfterPrunningSize, colour = "On parallel testing data")) +
+geom_line(aes(y = `ej5.a)diagonal`$testingAfterPrunningSize, colour = "On diagonal testing data")) +
 ggtitle("Ej 5) Tree Size") + xlab("Training Set Size") + ylab("Tree Size") + scale_x_log10() + theme(legend.position="bottom")
 
 6)
@@ -629,8 +629,6 @@ require(ggplot2)
 ggplot(`ej7.diagonal`, aes(Dimensiones)) + 
   geom_line(aes(y = `ej7.diagonal`$TestingAfterPrunningError, colour = "After Prunning on diagonal test data")) +
   geom_line(aes(y = `ej7.diagonal`$TrainingAfterPrunningError, colour = "After Prunning on diagonal training data")) +
-  geom_line(aes(y = `ej7.paralelo`$TestingAfterPrunningError, colour = "After Prunning on parallel test data")) +
-  geom_line(aes(y = `ej7.paralelo`$TrainingAfterPrunningError, colour = "After Prunning on parallel training data")) +
+  geom_line(aes(y = `ej7.parallel`$TestingAfterPrunningError, colour = "After Prunning on parallel test data")) +
+  geom_line(aes(y = `ej7.parallel`$TrainingAfterPrunningError, colour = "After Prunning on parallel training data")) +
 ggtitle("Ej 7) Error Porcentual") + xlab("Dimensiones") + ylab("Error%") + theme(legend.position="bottom")
-
-  geom_line(aes(y = `ej7.diagonal`$TestingBeforePrunningError, colour = "Before Prunning on diagonal test data")) + 
