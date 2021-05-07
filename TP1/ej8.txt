@@ -1,0 +1,1841 @@
+
+C4.5 [release 8] decision tree generator	Fri Apr 30 12:35:21 2021
+----------------------------------------
+
+    Options:
+	File stem <xor>
+	Gain criterion used
+	Trees evaluated on unseen cases
+	Verbosity level 3
+
+Read 200 cases (6 attributes) from xor.data
+
+200 items, total weight 200.0
+	Att x
+		Cut at -0.895  (gain 0.015, val 0.015):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    2.0    8.0]
+		[above  :   98.0   92.0]
+		Cut at -0.891  (gain 0.009, val 0.009):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    3.0    8.0]
+		[above  :   97.0   92.0]
+		Cut at -0.886  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    4.0    8.0]
+		[above  :   96.0   92.0]
+		Cut at -0.867  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    5.0    8.0]
+		[above  :   95.0   92.0]
+		Cut at -0.848  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    6.0    8.0]
+		[above  :   94.0   92.0]
+		Cut at -0.839  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    7.0    8.0]
+		[above  :   93.0   92.0]
+		Cut at -0.832  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    7.0    9.0]
+		[above  :   93.0   91.0]
+		Cut at -0.830  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    8.0    9.0]
+		[above  :   92.0   91.0]
+		Cut at -0.824  (gain -0.000, val -0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    9.0    9.0]
+		[above  :   91.0   91.0]
+		Cut at -0.819  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    9.0   10.0]
+		[above  :   91.0   90.0]
+		Cut at -0.816  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    9.0   11.0]
+		[above  :   91.0   89.0]
+		Cut at -0.814  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    9.0   12.0]
+		[above  :   91.0   88.0]
+		Cut at -0.813  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    9.0   13.0]
+		[above  :   91.0   87.0]
+		Cut at -0.808  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    9.0   14.0]
+		[above  :   91.0   86.0]
+		Cut at -0.794  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    9.0   15.0]
+		[above  :   91.0   85.0]
+		Cut at -0.765  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   10.0   15.0]
+		[above  :   90.0   85.0]
+		Cut at -0.738  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   10.0   16.0]
+		[above  :   90.0   84.0]
+		Cut at -0.727  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   11.0   17.0]
+		[above  :   89.0   83.0]
+		Cut at -0.719  (gain 0.007, val 0.007):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   11.0   18.0]
+		[above  :   89.0   82.0]
+		Cut at -0.708  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   12.0   18.0]
+		[above  :   88.0   82.0]
+		Cut at -0.697  (gain 0.007, val 0.007):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   12.0   19.0]
+		[above  :   88.0   81.0]
+		Cut at -0.689  (gain 0.009, val 0.009):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   12.0   20.0]
+		[above  :   88.0   80.0]
+		Cut at -0.687  (gain 0.011, val 0.011):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   12.0   21.0]
+		[above  :   88.0   79.0]
+		Cut at -0.685  (gain 0.013, val 0.013):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   12.0   22.0]
+		[above  :   88.0   78.0]
+		Cut at -0.683  (gain 0.010, val 0.010):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   13.0   22.0]
+		[above  :   87.0   78.0]
+		Cut at -0.681  (gain 0.008, val 0.008):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   14.0   22.0]
+		[above  :   86.0   78.0]
+		Cut at -0.675  (gain 0.010, val 0.010):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   14.0   23.0]
+		[above  :   86.0   77.0]
+		Cut at -0.670  (gain 0.012, val 0.012):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   14.0   24.0]
+		[above  :   86.0   76.0]
+		Cut at -0.664  (gain 0.014, val 0.014):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   14.0   25.0]
+		[above  :   86.0   75.0]
+		Cut at -0.645  (gain 0.011, val 0.011):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   15.0   25.0]
+		[above  :   85.0   75.0]
+		Cut at -0.626  (gain 0.009, val 0.009):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   16.0   25.0]
+		[above  :   84.0   75.0]
+		Cut at -0.620  (gain 0.007, val 0.007):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   17.0   25.0]
+		[above  :   83.0   75.0]
+		Cut at -0.616  (gain 0.009, val 0.009):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   17.0   26.0]
+		[above  :   83.0   74.0]
+		Cut at -0.607  (gain 0.011, val 0.011):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   17.0   27.0]
+		[above  :   83.0   73.0]
+		Cut at -0.598  (gain 0.008, val 0.008):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   18.0   27.0]
+		[above  :   82.0   73.0]
+		Cut at -0.581  (gain 0.007, val 0.007):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   19.0   27.0]
+		[above  :   81.0   73.0]
+		Cut at -0.568  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   20.0   27.0]
+		[above  :   80.0   73.0]
+		Cut at -0.564  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   21.0   27.0]
+		[above  :   79.0   73.0]
+		Cut at -0.560  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   22.0   27.0]
+		[above  :   78.0   73.0]
+		Cut at -0.556  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   22.0   28.0]
+		[above  :   78.0   72.0]
+		Cut at -0.551  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   23.0   28.0]
+		[above  :   77.0   72.0]
+		Cut at -0.547  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   24.0   28.0]
+		[above  :   76.0   72.0]
+		Cut at -0.545  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   25.0   28.0]
+		[above  :   75.0   72.0]
+		Cut at -0.542  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   26.0   28.0]
+		[above  :   74.0   72.0]
+		Cut at -0.532  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   27.0   28.0]
+		[above  :   73.0   72.0]
+		Cut at -0.519  (gain -0.000, val -0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   28.0   28.0]
+		[above  :   72.0   72.0]
+		Cut at -0.508  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   28.0   29.0]
+		[above  :   72.0   71.0]
+		Cut at -0.500  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   28.0   30.0]
+		[above  :   72.0   70.0]
+		Cut at -0.493  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   29.0   30.0]
+		[above  :   71.0   70.0]
+		Cut at -0.482  (gain -0.000, val -0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   30.0   30.0]
+		[above  :   70.0   70.0]
+		Cut at -0.475  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   31.0   30.0]
+		[above  :   69.0   70.0]
+		Cut at -0.468  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   32.0   30.0]
+		[above  :   68.0   70.0]
+		Cut at -0.462  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   33.0   30.0]
+		[above  :   67.0   70.0]
+		Cut at -0.458  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   34.0   30.0]
+		[above  :   66.0   70.0]
+		Cut at -0.455  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   34.0   31.0]
+		[above  :   66.0   69.0]
+		Cut at -0.450  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   34.0   32.0]
+		[above  :   66.0   68.0]
+		Cut at -0.432  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   34.0   33.0]
+		[above  :   66.0   67.0]
+		Cut at -0.418  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   34.0   34.0]
+		[above  :   66.0   66.0]
+		Cut at -0.416  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   34.0   35.0]
+		[above  :   66.0   65.0]
+		Cut at -0.411  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   35.0   35.0]
+		[above  :   65.0   65.0]
+		Cut at -0.403  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   35.0   36.0]
+		[above  :   65.0   64.0]
+		Cut at -0.392  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   35.0   37.0]
+		[above  :   65.0   63.0]
+		Cut at -0.381  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   36.0   37.0]
+		[above  :   64.0   63.0]
+		Cut at -0.374  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   37.0   37.0]
+		[above  :   63.0   63.0]
+		Cut at -0.367  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   38.0   37.0]
+		[above  :   62.0   63.0]
+		Cut at -0.363  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   39.0   37.0]
+		[above  :   61.0   63.0]
+		Cut at -0.362  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   39.0   38.0]
+		[above  :   61.0   62.0]
+		Cut at -0.358  (gain -0.000, val -0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   39.0   39.0]
+		[above  :   61.0   61.0]
+		Cut at -0.345  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   40.0   39.0]
+		[above  :   60.0   61.0]
+		Cut at -0.331  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   41.0   39.0]
+		[above  :   59.0   61.0]
+		Cut at -0.325  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   42.0   39.0]
+		[above  :   58.0   61.0]
+		Cut at -0.322  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   43.0   39.0]
+		[above  :   57.0   61.0]
+		Cut at -0.322  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   43.0   40.0]
+		[above  :   57.0   60.0]
+		Cut at -0.316  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   43.0   41.0]
+		[above  :   57.0   59.0]
+		Cut at -0.310  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   44.0   41.0]
+		[above  :   56.0   59.0]
+		Cut at -0.301  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   44.0   42.0]
+		[above  :   56.0   58.0]
+		Cut at -0.290  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   45.0   42.0]
+		[above  :   55.0   58.0]
+		Cut at -0.275  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   45.0   43.0]
+		[above  :   55.0   57.0]
+		Cut at -0.236  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   45.0   44.0]
+		[above  :   55.0   56.0]
+		Cut at -0.199  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   46.0   44.0]
+		[above  :   54.0   56.0]
+		Cut at -0.185  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   47.0   45.0]
+		[above  :   53.0   55.0]
+		Cut at -0.168  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   47.0   46.0]
+		[above  :   53.0   54.0]
+		Cut at -0.154  (gain -0.000, val -0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   47.0   47.0]
+		[above  :   53.0   53.0]
+		Cut at -0.144  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   48.0   47.0]
+		[above  :   52.0   53.0]
+		Cut at -0.135  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   49.0   47.0]
+		[above  :   51.0   53.0]
+		Cut at -0.125  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   50.0   47.0]
+		[above  :   50.0   53.0]
+		Cut at -0.117  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   51.0   47.0]
+		[above  :   49.0   53.0]
+		Cut at -0.115  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   52.0   47.0]
+		[above  :   48.0   53.0]
+		Cut at -0.111  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   52.0   48.0]
+		[above  :   48.0   52.0]
+		Cut at -0.098  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   52.0   49.0]
+		[above  :   48.0   51.0]
+		Cut at -0.083  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   52.0   50.0]
+		[above  :   48.0   50.0]
+		Cut at -0.077  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   53.0   50.0]
+		[above  :   47.0   50.0]
+		Cut at -0.074  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   53.0   51.0]
+		[above  :   47.0   49.0]
+		Cut at -0.067  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   54.0   51.0]
+		[above  :   46.0   49.0]
+		Cut at -0.043  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   54.0   52.0]
+		[above  :   46.0   48.0]
+		Cut at -0.024  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   55.0   52.0]
+		[above  :   45.0   48.0]
+		Cut at -0.009  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   56.0   52.0]
+		[above  :   44.0   48.0]
+		Cut at 0.016  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   56.0   53.0]
+		[above  :   44.0   47.0]
+		Cut at 0.027  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   56.0   54.0]
+		[above  :   44.0   46.0]
+		Cut at 0.030  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   56.0   55.0]
+		[above  :   44.0   45.0]
+		Cut at 0.047  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   56.0   56.0]
+		[above  :   44.0   44.0]
+		Cut at 0.080  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   57.0   56.0]
+		[above  :   43.0   44.0]
+		Cut at 0.101  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   58.0   56.0]
+		[above  :   42.0   44.0]
+		Cut at 0.104  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   59.0   56.0]
+		[above  :   41.0   44.0]
+		Cut at 0.112  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   59.0   57.0]
+		[above  :   41.0   43.0]
+		Cut at 0.123  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   60.0   57.0]
+		[above  :   40.0   43.0]
+		Cut at 0.128  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   61.0   57.0]
+		[above  :   39.0   43.0]
+		Cut at 0.136  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   62.0   57.0]
+		[above  :   38.0   43.0]
+		Cut at 0.153  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   63.0   57.0]
+		[above  :   37.0   43.0]
+		Cut at 0.165  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   64.0   57.0]
+		[above  :   36.0   43.0]
+		Cut at 0.166  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   65.0   57.0]
+		[above  :   35.0   43.0]
+		Cut at 0.168  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   66.0   57.0]
+		[above  :   34.0   43.0]
+		Cut at 0.171  (gain 0.008, val 0.008):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   67.0   57.0]
+		[above  :   33.0   43.0]
+		Cut at 0.178  (gain 0.009, val 0.009):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   68.0   57.0]
+		[above  :   32.0   43.0]
+		Cut at 0.197  (gain 0.008, val 0.008):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   68.0   58.0]
+		[above  :   32.0   42.0]
+		Cut at 0.219  (gain 0.009, val 0.009):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   69.0   58.0]
+		[above  :   31.0   42.0]
+		Cut at 0.227  (gain 0.011, val 0.011):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   70.0   58.0]
+		[above  :   30.0   42.0]
+		Cut at 0.238  (gain 0.013, val 0.013):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   71.0   58.0]
+		[above  :   29.0   42.0]
+		Cut at 0.253  (gain 0.016, val 0.016):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   72.0   58.0]
+		[above  :   28.0   42.0]
+		Cut at 0.261  (gain 0.014, val 0.014):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   72.0   59.0]
+		[above  :   28.0   41.0]
+		Cut at 0.266  (gain 0.012, val 0.012):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   72.0   60.0]
+		[above  :   28.0   40.0]
+		Cut at 0.272  (gain 0.010, val 0.010):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   72.0   61.0]
+		[above  :   28.0   39.0]
+		Cut at 0.281  (gain 0.008, val 0.008):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   72.0   62.0]
+		[above  :   28.0   38.0]
+		Cut at 0.290  (gain 0.010, val 0.010):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   73.0   62.0]
+		[above  :   27.0   38.0]
+		Cut at 0.300  (gain 0.012, val 0.012):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   74.0   62.0]
+		[above  :   26.0   38.0]
+		Cut at 0.312  (gain 0.010, val 0.010):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   74.0   63.0]
+		[above  :   26.0   37.0]
+		Cut at 0.334  (gain 0.008, val 0.008):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   74.0   64.0]
+		[above  :   26.0   36.0]
+		Cut at 0.350  (gain 0.010, val 0.010):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   75.0   64.0]
+		[above  :   25.0   36.0]
+		Cut at 0.356  (gain 0.011, val 0.011):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   76.0   65.0]
+		[above  :   24.0   35.0]
+		Cut at 0.371  (gain 0.009, val 0.009):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   76.0   66.0]
+		[above  :   24.0   34.0]
+		Cut at 0.384  (gain 0.007, val 0.007):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   76.0   67.0]
+		[above  :   24.0   33.0]
+		Cut at 0.390  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   76.0   68.0]
+		[above  :   24.0   32.0]
+		Cut at 0.396  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   76.0   69.0]
+		[above  :   24.0   31.0]
+		Cut at 0.403  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   76.0   70.0]
+		[above  :   24.0   30.0]
+		Cut at 0.411  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   76.0   71.0]
+		[above  :   24.0   29.0]
+		Cut at 0.433  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   76.0   72.0]
+		[above  :   24.0   28.0]
+		Cut at 0.460  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   76.0   73.0]
+		[above  :   24.0   27.0]
+		Cut at 0.471  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   77.0   73.0]
+		[above  :   23.0   27.0]
+		Cut at 0.474  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   78.0   73.0]
+		[above  :   22.0   27.0]
+		Cut at 0.480  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   78.0   74.0]
+		[above  :   22.0   26.0]
+		Cut at 0.484  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   79.0   74.0]
+		[above  :   21.0   26.0]
+		Cut at 0.488  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   80.0   74.0]
+		[above  :   20.0   26.0]
+		Cut at 0.493  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   80.0   75.0]
+		[above  :   20.0   25.0]
+		Cut at 0.496  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   81.0   75.0]
+		[above  :   19.0   25.0]
+		Cut at 0.499  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   81.0   76.0]
+		[above  :   19.0   24.0]
+		Cut at 0.505  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   82.0   76.0]
+		[above  :   18.0   24.0]
+		Cut at 0.514  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   82.0   77.0]
+		[above  :   18.0   23.0]
+		Cut at 0.524  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   82.0   78.0]
+		[above  :   18.0   22.0]
+		Cut at 0.531  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   82.0   79.0]
+		[above  :   18.0   21.0]
+		Cut at 0.533  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   83.0   79.0]
+		[above  :   17.0   21.0]
+		Cut at 0.537  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   83.0   80.0]
+		[above  :   17.0   20.0]
+		Cut at 0.544  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   83.0   81.0]
+		[above  :   17.0   19.0]
+		Cut at 0.549  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   83.0   82.0]
+		[above  :   17.0   18.0]
+		Cut at 0.558  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   84.0   82.0]
+		[above  :   16.0   18.0]
+		Cut at 0.568  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   85.0   82.0]
+		[above  :   15.0   18.0]
+		Cut at 0.574  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   86.0   82.0]
+		[above  :   14.0   18.0]
+		Cut at 0.588  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   87.0   82.0]
+		[above  :   13.0   18.0]
+		Cut at 0.601  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   88.0   82.0]
+		[above  :   12.0   18.0]
+		Cut at 0.607  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   88.0   83.0]
+		[above  :   12.0   17.0]
+		Cut at 0.617  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   89.0   83.0]
+		[above  :   11.0   17.0]
+		Cut at 0.624  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   89.0   84.0]
+		[above  :   11.0   16.0]
+		Cut at 0.627  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   89.0   85.0]
+		[above  :   11.0   15.0]
+		Cut at 0.633  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   90.0   85.0]
+		[above  :   10.0   15.0]
+		Cut at 0.641  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   90.0   86.0]
+		[above  :   10.0   14.0]
+		Cut at 0.649  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   91.0   86.0]
+		[above  :    9.0   14.0]
+		Cut at 0.667  (gain 0.007, val 0.007):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   92.0   86.0]
+		[above  :    8.0   14.0]
+		Cut at 0.693  (gain 0.010, val 0.010):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   93.0   86.0]
+		[above  :    7.0   14.0]
+		Cut at 0.713  (gain 0.007, val 0.007):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   93.0   87.0]
+		[above  :    7.0   13.0]
+		Cut at 0.720  (gain 0.011, val 0.011):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   94.0   87.0]
+		[above  :    6.0   13.0]
+		Cut at 0.725  (gain 0.015, val 0.015):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   95.0   87.0]
+		[above  :    5.0   13.0]
+		Cut at 0.737  (gain 0.020, val 0.020):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   96.0   87.0]
+		[above  :    4.0   13.0]
+		Cut at 0.754  (gain 0.016, val 0.016):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   96.0   88.0]
+		[above  :    4.0   12.0]
+		Cut at 0.765  (gain 0.013, val 0.013):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   96.0   89.0]
+		[above  :    4.0   11.0]
+		Cut at 0.770  (gain 0.010, val 0.010):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   96.0   90.0]
+		[above  :    4.0   10.0]
+		Cut at 0.781  (gain 0.008, val 0.008):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   96.0   91.0]
+		[above  :    4.0    9.0]
+		Cut at 0.794  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   96.0   92.0]
+		[above  :    4.0    8.0]
+		Cut at 0.801  (gain 0.009, val 0.009):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   97.0   92.0]
+		[above  :    3.0    8.0]
+		Cut at 0.810  (gain 0.015, val 0.015):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   98.0   92.0]
+		[above  :    2.0    8.0]
+	no gain
+	Att y
+		Cut at -0.878  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    7.0    3.0]
+		[above  :   93.0   97.0]
+		Cut at -0.855  (gain 0.009, val 0.009):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    8.0    3.0]
+		[above  :   92.0   97.0]
+		Cut at -0.846  (gain 0.012, val 0.012):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    9.0    3.0]
+		[above  :   91.0   97.0]
+		Cut at -0.819  (gain 0.008, val 0.008):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :    9.0    4.0]
+		[above  :   91.0   96.0]
+		Cut at -0.794  (gain 0.010, val 0.010):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   10.0    4.0]
+		[above  :   90.0   96.0]
+		Cut at -0.791  (gain 0.007, val 0.007):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   10.0    5.0]
+		[above  :   90.0   95.0]
+		Cut at -0.785  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   10.0    6.0]
+		[above  :   90.0   94.0]
+		Cut at -0.773  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   11.0    6.0]
+		[above  :   89.0   94.0]
+		Cut at -0.764  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   11.0    7.0]
+		[above  :   89.0   93.0]
+		Cut at -0.759  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   11.0    8.0]
+		[above  :   89.0   92.0]
+		Cut at -0.757  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   11.0    9.0]
+		[above  :   89.0   91.0]
+		Cut at -0.757  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   12.0    9.0]
+		[above  :   88.0   91.0]
+		Cut at -0.755  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   12.0   10.0]
+		[above  :   88.0   90.0]
+		Cut at -0.749  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   12.0   11.0]
+		[above  :   88.0   89.0]
+		Cut at -0.741  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   13.0   11.0]
+		[above  :   87.0   89.0]
+		Cut at -0.736  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   13.0   12.0]
+		[above  :   87.0   88.0]
+		Cut at -0.735  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   14.0   12.0]
+		[above  :   86.0   88.0]
+		Cut at -0.727  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   14.0   13.0]
+		[above  :   86.0   87.0]
+		Cut at -0.714  (gain -0.000, val -0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   14.0   14.0]
+		[above  :   86.0   86.0]
+		Cut at -0.707  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   15.0   14.0]
+		[above  :   85.0   86.0]
+		Cut at -0.704  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   16.0   14.0]
+		[above  :   84.0   86.0]
+		Cut at -0.697  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   17.0   14.0]
+		[above  :   83.0   86.0]
+		Cut at -0.687  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   17.0   15.0]
+		[above  :   83.0   85.0]
+		Cut at -0.677  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   17.0   16.0]
+		[above  :   83.0   84.0]
+		Cut at -0.663  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   17.0   17.0]
+		[above  :   83.0   83.0]
+		Cut at -0.651  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   17.0   18.0]
+		[above  :   83.0   82.0]
+		Cut at -0.650  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   18.0   18.0]
+		[above  :   82.0   82.0]
+		Cut at -0.646  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   18.0   19.0]
+		[above  :   82.0   81.0]
+		Cut at -0.627  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   18.0   20.0]
+		[above  :   82.0   80.0]
+		Cut at -0.610  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   19.0   20.0]
+		[above  :   81.0   80.0]
+		Cut at -0.607  (gain -0.000, val -0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   20.0   20.0]
+		[above  :   80.0   80.0]
+		Cut at -0.601  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   20.0   21.0]
+		[above  :   80.0   79.0]
+		Cut at -0.582  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   21.0   21.0]
+		[above  :   79.0   79.0]
+		Cut at -0.566  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   22.0   21.0]
+		[above  :   78.0   79.0]
+		Cut at -0.563  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   23.0   21.0]
+		[above  :   77.0   79.0]
+		Cut at -0.544  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   24.0   21.0]
+		[above  :   76.0   79.0]
+		Cut at -0.526  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   25.0   21.0]
+		[above  :   75.0   79.0]
+		Cut at -0.518  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   25.0   22.0]
+		[above  :   75.0   78.0]
+		Cut at -0.512  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   26.0   22.0]
+		[above  :   74.0   78.0]
+		Cut at -0.508  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   26.0   23.0]
+		[above  :   74.0   77.0]
+		Cut at -0.504  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   27.0   23.0]
+		[above  :   73.0   77.0]
+		Cut at -0.503  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   28.0   23.0]
+		[above  :   72.0   77.0]
+		Cut at -0.499  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   28.0   24.0]
+		[above  :   72.0   76.0]
+		Cut at -0.495  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   28.0   25.0]
+		[above  :   72.0   75.0]
+		Cut at -0.486  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   29.0   25.0]
+		[above  :   71.0   75.0]
+		Cut at -0.478  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   29.0   26.0]
+		[above  :   71.0   74.0]
+		Cut at -0.476  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   29.0   27.0]
+		[above  :   71.0   73.0]
+		Cut at -0.475  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   29.0   28.0]
+		[above  :   71.0   72.0]
+		Cut at -0.472  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   29.0   29.0]
+		[above  :   71.0   71.0]
+		Cut at -0.469  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   29.0   30.0]
+		[above  :   71.0   70.0]
+		Cut at -0.462  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   29.0   31.0]
+		[above  :   71.0   69.0]
+		Cut at -0.454  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   29.0   32.0]
+		[above  :   71.0   68.0]
+		Cut at -0.448  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   30.0   32.0]
+		[above  :   70.0   68.0]
+		Cut at -0.441  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   31.0   32.0]
+		[above  :   69.0   68.0]
+		Cut at -0.437  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   31.0   33.0]
+		[above  :   69.0   67.0]
+		Cut at -0.433  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   32.0   33.0]
+		[above  :   68.0   67.0]
+		Cut at -0.424  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   33.0   33.0]
+		[above  :   67.0   67.0]
+		Cut at -0.416  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   35.0   33.0]
+		[above  :   65.0   67.0]
+		Cut at -0.410  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   35.0   34.0]
+		[above  :   65.0   66.0]
+		Cut at -0.403  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   36.0   34.0]
+		[above  :   64.0   66.0]
+		Cut at -0.392  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   37.0   34.0]
+		[above  :   63.0   66.0]
+		Cut at -0.376  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   37.0   35.0]
+		[above  :   63.0   65.0]
+		Cut at -0.365  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   37.0   36.0]
+		[above  :   63.0   64.0]
+		Cut at -0.356  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   37.0   37.0]
+		[above  :   63.0   63.0]
+		Cut at -0.351  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   38.0   37.0]
+		[above  :   62.0   63.0]
+		Cut at -0.350  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   39.0   37.0]
+		[above  :   61.0   63.0]
+		Cut at -0.329  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   39.0   38.0]
+		[above  :   61.0   62.0]
+		Cut at -0.305  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   40.0   38.0]
+		[above  :   60.0   62.0]
+		Cut at -0.298  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   41.0   38.0]
+		[above  :   59.0   62.0]
+		Cut at -0.277  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   42.0   38.0]
+		[above  :   58.0   62.0]
+		Cut at -0.258  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   43.0   38.0]
+		[above  :   57.0   62.0]
+		Cut at -0.255  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   44.0   38.0]
+		[above  :   56.0   62.0]
+		Cut at -0.251  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   44.0   39.0]
+		[above  :   56.0   61.0]
+		Cut at -0.247  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   44.0   40.0]
+		[above  :   56.0   60.0]
+		Cut at -0.223  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   45.0   40.0]
+		[above  :   55.0   60.0]
+		Cut at -0.199  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   46.0   40.0]
+		[above  :   54.0   60.0]
+		Cut at -0.195  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   47.0   40.0]
+		[above  :   53.0   60.0]
+		Cut at -0.191  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   47.0   41.0]
+		[above  :   53.0   59.0]
+		Cut at -0.187  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   48.0   41.0]
+		[above  :   52.0   59.0]
+		Cut at -0.186  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   48.0   42.0]
+		[above  :   52.0   58.0]
+		Cut at -0.165  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   49.0   42.0]
+		[above  :   51.0   58.0]
+		Cut at -0.145  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   50.0   42.0]
+		[above  :   50.0   58.0]
+		Cut at -0.139  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   51.0   42.0]
+		[above  :   49.0   58.0]
+		Cut at -0.114  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   51.0   43.0]
+		[above  :   49.0   57.0]
+		Cut at -0.094  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   51.0   44.0]
+		[above  :   49.0   56.0]
+		Cut at -0.089  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   51.0   45.0]
+		[above  :   49.0   55.0]
+		Cut at -0.085  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   52.0   45.0]
+		[above  :   48.0   55.0]
+		Cut at -0.083  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   53.0   45.0]
+		[above  :   47.0   55.0]
+		Cut at -0.073  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   54.0   45.0]
+		[above  :   46.0   55.0]
+		Cut at -0.055  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   54.0   46.0]
+		[above  :   46.0   54.0]
+		Cut at -0.043  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   54.0   47.0]
+		[above  :   46.0   53.0]
+		Cut at -0.036  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   54.0   48.0]
+		[above  :   46.0   52.0]
+		Cut at -0.027  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   55.0   48.0]
+		[above  :   45.0   52.0]
+		Cut at -0.012  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   56.0   48.0]
+		[above  :   44.0   52.0]
+		Cut at 0.003  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   57.0   48.0]
+		[above  :   43.0   52.0]
+		Cut at 0.015  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   57.0   49.0]
+		[above  :   43.0   51.0]
+		Cut at 0.037  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   58.0   49.0]
+		[above  :   42.0   51.0]
+		Cut at 0.051  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   58.0   50.0]
+		[above  :   42.0   50.0]
+		Cut at 0.053  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   58.0   51.0]
+		[above  :   42.0   49.0]
+		Cut at 0.053  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   59.0   51.0]
+		[above  :   41.0   49.0]
+		Cut at 0.060  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   59.0   52.0]
+		[above  :   41.0   48.0]
+		Cut at 0.068  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   59.0   53.0]
+		[above  :   41.0   47.0]
+		Cut at 0.071  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   59.0   54.0]
+		[above  :   41.0   46.0]
+		Cut at 0.075  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   60.0   54.0]
+		[above  :   40.0   46.0]
+		Cut at 0.081  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   60.0   55.0]
+		[above  :   40.0   45.0]
+		Cut at 0.111  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   61.0   55.0]
+		[above  :   39.0   45.0]
+		Cut at 0.150  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   62.0   55.0]
+		[above  :   38.0   45.0]
+		Cut at 0.166  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   63.0   55.0]
+		[above  :   37.0   45.0]
+		Cut at 0.179  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   63.0   56.0]
+		[above  :   37.0   44.0]
+		Cut at 0.201  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   64.0   56.0]
+		[above  :   36.0   44.0]
+		Cut at 0.214  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   65.0   56.0]
+		[above  :   35.0   44.0]
+		Cut at 0.234  (gain 0.008, val 0.008):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   66.0   56.0]
+		[above  :   34.0   44.0]
+		Cut at 0.256  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   66.0   57.0]
+		[above  :   34.0   43.0]
+		Cut at 0.263  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   66.0   58.0]
+		[above  :   34.0   42.0]
+		Cut at 0.277  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   66.0   59.0]
+		[above  :   34.0   41.0]
+		Cut at 0.292  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   66.0   60.0]
+		[above  :   34.0   40.0]
+		Cut at 0.299  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   66.0   61.0]
+		[above  :   34.0   39.0]
+		Cut at 0.304  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   66.0   62.0]
+		[above  :   34.0   38.0]
+		Cut at 0.321  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   66.0   63.0]
+		[above  :   34.0   37.0]
+		Cut at 0.336  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   67.0   63.0]
+		[above  :   33.0   37.0]
+		Cut at 0.348  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   67.0   64.0]
+		[above  :   33.0   36.0]
+		Cut at 0.364  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   67.0   65.0]
+		[above  :   33.0   35.0]
+		Cut at 0.370  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   68.0   65.0]
+		[above  :   32.0   35.0]
+		Cut at 0.381  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   68.0   66.0]
+		[above  :   32.0   34.0]
+		Cut at 0.393  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   69.0   66.0]
+		[above  :   31.0   34.0]
+		Cut at 0.397  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   69.0   67.0]
+		[above  :   31.0   33.0]
+		Cut at 0.417  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   70.0   67.0]
+		[above  :   30.0   33.0]
+		Cut at 0.437  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   71.0   67.0]
+		[above  :   29.0   33.0]
+		Cut at 0.439  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   71.0   68.0]
+		[above  :   29.0   32.0]
+		Cut at 0.439  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   72.0   68.0]
+		[above  :   28.0   32.0]
+		Cut at 0.441  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   73.0   68.0]
+		[above  :   27.0   32.0]
+		Cut at 0.447  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   74.0   68.0]
+		[above  :   26.0   32.0]
+		Cut at 0.457  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   75.0   68.0]
+		[above  :   25.0   32.0]
+		Cut at 0.465  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   76.0   68.0]
+		[above  :   24.0   32.0]
+		Cut at 0.470  (gain 0.007, val 0.007):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   77.0   68.0]
+		[above  :   23.0   32.0]
+		Cut at 0.472  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   77.0   69.0]
+		[above  :   23.0   31.0]
+		Cut at 0.475  (gain 0.008, val 0.008):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   78.0   69.0]
+		[above  :   22.0   31.0]
+		Cut at 0.484  (gain 0.009, val 0.009):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   79.0   69.0]
+		[above  :   21.0   31.0]
+		Cut at 0.495  (gain 0.008, val 0.008):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   79.0   70.0]
+		[above  :   21.0   30.0]
+		Cut at 0.499  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   79.0   71.0]
+		[above  :   21.0   29.0]
+		Cut at 0.501  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   79.0   72.0]
+		[above  :   21.0   28.0]
+		Cut at 0.518  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   79.0   73.0]
+		[above  :   21.0   27.0]
+		Cut at 0.534  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   79.0   74.0]
+		[above  :   21.0   26.0]
+		Cut at 0.541  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   80.0   74.0]
+		[above  :   20.0   26.0]
+		Cut at 0.554  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   80.0   75.0]
+		[above  :   20.0   25.0]
+		Cut at 0.565  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   80.0   76.0]
+		[above  :   20.0   24.0]
+		Cut at 0.578  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   81.0   76.0]
+		[above  :   19.0   24.0]
+		Cut at 0.590  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   82.0   76.0]
+		[above  :   18.0   24.0]
+		Cut at 0.597  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   83.0   76.0]
+		[above  :   17.0   24.0]
+		Cut at 0.603  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   83.0   77.0]
+		[above  :   17.0   23.0]
+		Cut at 0.604  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   83.0   78.0]
+		[above  :   17.0   22.0]
+		Cut at 0.606  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   84.0   78.0]
+		[above  :   16.0   22.0]
+		Cut at 0.613  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   84.0   79.0]
+		[above  :   16.0   21.0]
+		Cut at 0.624  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   85.0   79.0]
+		[above  :   15.0   21.0]
+		Cut at 0.632  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   85.0   80.0]
+		[above  :   15.0   20.0]
+		Cut at 0.640  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   86.0   80.0]
+		[above  :   14.0   20.0]
+		Cut at 0.654  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   86.0   81.0]
+		[above  :   14.0   19.0]
+		Cut at 0.662  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   86.0   82.0]
+		[above  :   14.0   18.0]
+		Cut at 0.664  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   87.0   82.0]
+		[above  :   13.0   18.0]
+		Cut at 0.667  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   88.0   82.0]
+		[above  :   12.0   18.0]
+		Cut at 0.679  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   88.0   83.0]
+		[above  :   12.0   17.0]
+		Cut at 0.692  (gain 0.005, val 0.005):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   89.0   83.0]
+		[above  :   11.0   17.0]
+		Cut at 0.698  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   89.0   84.0]
+		[above  :   11.0   16.0]
+		Cut at 0.706  (gain 0.006, val 0.006):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   90.0   84.0]
+		[above  :   10.0   16.0]
+		Cut at 0.720  (gain 0.004, val 0.004):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   90.0   85.0]
+		[above  :   10.0   15.0]
+		Cut at 0.730  (gain 0.003, val 0.003):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   90.0   86.0]
+		[above  :   10.0   14.0]
+		Cut at 0.736  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   90.0   87.0]
+		[above  :   10.0   13.0]
+		Cut at 0.747  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   90.0   88.0]
+		[above  :   10.0   12.0]
+		Cut at 0.756  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   90.0   89.0]
+		[above  :   10.0   11.0]
+		Cut at 0.757  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   91.0   89.0]
+		[above  :    9.0   11.0]
+		Cut at 0.772  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   91.0   90.0]
+		[above  :    9.0   10.0]
+		Cut at 0.788  (gain -0.000, val -0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   91.0   91.0]
+		[above  :    9.0    9.0]
+		Cut at 0.801  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   92.0   91.0]
+		[above  :    8.0    9.0]
+		Cut at 0.811  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   93.0   91.0]
+		[above  :    7.0    9.0]
+		Cut at 0.838  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   93.0   92.0]
+		[above  :    7.0    8.0]
+		Cut at 0.871  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   93.0   93.0]
+		[above  :    7.0    7.0]
+		Cut at 0.884  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   94.0   93.0]
+		[above  :    6.0    7.0]
+		Cut at 0.901  (gain 0.001, val 0.001):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   95.0   93.0]
+		[above  :    5.0    7.0]
+		Cut at 0.911  (gain 0.000, val 0.000):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   95.0   94.0]
+		[above  :    5.0    6.0]
+		Cut at 0.915  (gain 0.002, val 0.002):
+			       0      1
+		[unknown:    0.0    0.0]
+		[below  :   96.0   94.0]
+		[above  :    4.0    6.0]
+	no gain
+	no sensible splits  200.0/100.0
+
+Decision Tree:
+ 0 (200.0/100.0)
+
+
+
+0 (200.00:100.00/105.39)
+
+Tree saved
+
+
+Evaluation on training data (200 items):
+
+	 Before Pruning           After Pruning
+	----------------   ---------------------------
+	Size      Errors   Size      Errors   Estimate
+
+	   1  100(50.0%)      1  100(50.0%)    (52.7%)   <<
+
+Evaluation on test data (200 items):
+
+	 Before Pruning           After Pruning
+	----------------   ---------------------------
+	Size      Errors   Size      Errors   Estimate
+
+	   1  100(50.0%)      1  100(50.0%)    (52.7%)   <<
+
+
+	  (a)  (b)	<-classified as
+	 ---- ----
+	  100     	(a): class 0
+	  100     	(b): class 1
+

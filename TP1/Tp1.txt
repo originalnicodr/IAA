@@ -632,3 +632,7 @@ ggplot(`ej7.diagonal`, aes(Dimensiones)) +
   geom_line(aes(y = `ej7.parallel`$TestingAfterPrunningError, colour = "After Prunning on parallel test data")) +
   geom_line(aes(y = `ej7.parallel`$TrainingAfterPrunningError, colour = "After Prunning on parallel training data")) +
 ggtitle("Ej 7) Error Porcentual") + xlab("Dimensiones") + ylab("Error%") + theme(legend.position="bottom")
+
+8)
+
+ggplot(`xor`, aes(x = V1, y = V2, color=V7)) + geom_point()

@@ -1,0 +1,18 @@
+| primero van las clases (2)
+|
+0, 1
+|
+|
+| despues los atributos
+|
+|
+x:	continuous.
+y:	continuous.
+|noise1:	continuous.
+|noise2:	continuous.
+|noise3:	continuous.
+|noise4:	continuous.
+noise1:	ignore.
+noise2:	ignore.
+noise3:	ignore.
+noise4:	ignore.

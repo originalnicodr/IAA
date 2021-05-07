@@ -224,10 +224,16 @@ def ej7():
         
 
 
-
+def ej8():
+    f = open("ej8.txt", "a")
+    f.write(subprocess.check_output("./c4.5 -f xor -g -u -v 3", shell=True, universal_newlines=True))
     f.close()
+
+ 
+
 
 #ej5()
 #ej6()
-ej6_1()
+#ej6_1()
 #ej7()
+ej8()
