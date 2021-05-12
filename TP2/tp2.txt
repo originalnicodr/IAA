@@ -145,6 +145,9 @@ Test discreto: 12.2250001
 3)
 require(ggplot2)
 
+Me interesa el error de test
+Problema: Cuando me quedo en un minimo local y cuando no
+
 ggplot(`dos_elipses.m=0,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.1`))*200)) +
 geom_line(aes(y = `dos_elipses.m=0,eta=0.1`$V5, colour = "m=0, eta=0.1")) +
 geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V5, colour = "m=0.5, eta=0.1")) +
@@ -246,25 +249,176 @@ geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V7, colour = "m=0.9, eta=0.01")) 
 geom_line(aes(y = `dos_elipses.m=0.6,eta=0.01`$V7, colour = "m=0.6, eta=0.01")) +
 theme(legend.position="bottom") + ggtitle("dos_elipses: Error on test set") + xlab("Generaciones") + ylab("Error") 
 
+-------------------------------------------------------------------------------------------------------------------
+ggplot(`dos_elipses.m=0,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.1`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.1`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.1`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0, eta=0.1") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.5,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0.5,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.5, eta=0.1") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.9,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0.9,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.1`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.1`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.1`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.9, eta=0.1") + xlab("Generaciones") + ylab("Error mse")
 
 
-3)
+
+ggplot(`dos_elipses.m=0,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.5,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.5,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.5, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.9,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.9,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.9, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+
+
+ggplot(`dos_elipses.m=0,eta=0.001`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.001`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.001`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.001`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.001`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0, eta=0.001") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.5,eta=0.001`, aes(as.numeric(row.names(`dos_elipses.m=0.5,eta=0.001`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.001`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.001`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.001`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.5, eta=0.001") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.9,eta=0.001`, aes(as.numeric(row.names(`dos_elipses.m=0.9,eta=0.001`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.001`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.001`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.001`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.9, eta=0.001") + xlab("Generaciones") + ylab("Error mse")
+
+
+
+ggplot(`dos_elipses.m=0.25,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.25,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.25,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.25,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.25,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.25, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.75,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.75,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.75, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.75,eta=0.001`, aes(as.numeric(row.names(`dos_elipses.m=0.75,eta=0.001`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.001`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.001`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.001`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.75, eta=0.001") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.75,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0.75,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.1`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.1`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.1`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.75, eta=0.1") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.8,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.8,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.8, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.8,eta=0.001`, aes(as.numeric(row.names(`dos_elipses.m=0.8,eta=0.001`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.001`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.001`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.001`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.8, eta=0.001") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.85,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.85,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.85,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.85,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.85,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.85, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+
+ggplot(`dos_elipses.m=0.6,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.6,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.6,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.6,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.6,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.6, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+4)
+Regularizacion: Como encontrar la solucion optima en complejidad
+(ej de que grado es el polinomio ideal para mi problema)
+
+Hacer que la red tenga la complejidad adecuada. Hacer que no siga complejizandose
+
+ikeda=predecir sistema caotico (muy dificil de predecir)
+
+error de tipo continuo (mse)
+
+early stopping
+ver relacion curva validacion y curva test
+
 require(ggplot2)
 
 ggplot(`ikeda.95.5`, aes(as.numeric(row.names(`ikeda.95.5`))*200)) +
-geom_line(aes(y = `ikeda.95.5`$V2, colour = "95%-5%")) +
-geom_line(aes(y = `ikeda.75.25`$V2, colour = "75%-25%")) +
-geom_line(aes(y = `ikeda.50.50`$V2, colour = "50%-50%")) +
-theme(legend.position="bottom") + ggtitle("Ikeda: Error on training set") + xlab("Generaciones") + ylab("Error") 
+geom_line(aes(y = `ikeda.95.5`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `ikeda.95.5`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `ikeda.95.5`$V4, colour = "Error sobre testing set")) +
+theme(legend.position="bottom") + ggtitle("Ikeda: training=95%, validation=5%") + xlab("Generaciones") + ylab("Error mse") 
 
-ggplot(`ikeda.95.5`, aes(as.numeric(row.names(`ikeda.95.5`))*200)) +
-geom_line(aes(y = `ikeda.95.5`$V3, colour = "95%-5%")) +
-geom_line(aes(y = `ikeda.75.25`$V3, colour = "75%-25%")) +
-geom_line(aes(y = `ikeda.50.50`$V3, colour = "50%-50%")) +
-theme(legend.position="bottom") + ggtitle("Ikeda: Error on validation set") + xlab("Generaciones") + ylab("Error") 
+ggplot(`ikeda.75.25`, aes(as.numeric(row.names(`ikeda.75.25`))*200)) +
+geom_line(aes(y = `ikeda.75.25`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `ikeda.75.25`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `ikeda.75.25`$V4, colour = "Error sobre testing set")) +
+theme(legend.position="bottom") + ggtitle("Ikeda: training=75%, validation=25%") + xlab("Generaciones") + ylab("Error mse") 
 
-ggplot(`ikeda.95.5`, aes(as.numeric(row.names(`ikeda.95.5`))*200)) +
-geom_line(aes(y = `ikeda.95.5`$V4, colour = "95%-5%")) +
-geom_line(aes(y = `ikeda.75.25`$V4, colour = "75%-25%")) +
-geom_line(aes(y = `ikeda.50.50`$V4, colour = "50%-50%")) +
-theme(legend.position="bottom") + ggtitle("Ikeda: Error on test set") + xlab("Generaciones") + ylab("Error") 
+ggplot(`ikeda.50.50`, aes(as.numeric(row.names(`ikeda.50.50`))*200)) +
+geom_line(aes(y = `ikeda.50.50`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `ikeda.50.50`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `ikeda.50.50`$V4, colour = "Error sobre testing set")) +
+theme(legend.position="bottom") + ggtitle("Ikeda: training=50%, validation=50%") + xlab("Generaciones") + ylab("Error mse") 
+
+5)
+require(ggplot2)
+
+
+ggplot(`ssp.gamma=10.8`, aes(as.numeric(row.names(`ssp.gamma=10.8`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.8`$V5, colour = "Error de training")) +
+geom_line(aes(y = `ssp.gamma=10.8`$V7, colour = "Error de test")) +
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-8") + xlab("Generaciones") + ylab("Classification Error") 
+
+ggplot(`ssp.gamma=10.6`, aes(as.numeric(row.names(`ssp.gamma=10.6`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.6`$V5, colour = "Error de training")) +
+geom_line(aes(y = `ssp.gamma=10.6`$V7, colour = "Error de test")) +
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-6") + xlab("Generaciones") + ylab("Classification Error") 
+
+ggplot(`ssp.gamma=10.4`, aes(as.numeric(row.names(`ssp.gamma=10.4`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.4`$V5, colour = "Error de training")) +
+geom_line(aes(y = `ssp.gamma=10.4`$V7, colour = "Error de test")) +
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-4") + xlab("Generaciones") + ylab("Classification Error") 
+
+ggplot(`ssp.gamma=10.2`, aes(as.numeric(row.names(`ssp.gamma=10.2`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.2`$V5, colour = "Error de training")) +
+geom_line(aes(y = `ssp.gamma=10.2`$V7, colour = "Error de test")) +
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-2") + xlab("Generaciones") + ylab("Classification Error") 
+
+ggplot(`ssp.gamma=10.0`, aes(as.numeric(row.names(`ssp.gamma=10.0`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.0`$V5, colour = "Error de training")) +
+geom_line(aes(y = `ssp.gamma=10.0`$V7, colour = "Error de test")) +
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=1") + xlab("Generaciones") + ylab("Classification Error") 
+
+No deberia graficarse la validacion por que no existe con lo que estamos haciendo. Ver si hay regresion en V2 y V4 por que lo pide la consigna?
