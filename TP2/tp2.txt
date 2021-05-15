@@ -395,30 +395,90 @@ theme(legend.position="bottom") + ggtitle("Ikeda: training=50%, validation=50%")
 5)
 require(ggplot2)
 
-
 ggplot(`ssp.gamma=10.8`, aes(as.numeric(row.names(`ssp.gamma=10.8`))*200)) +
-geom_line(aes(y = `ssp.gamma=10.8`$V5, colour = "Error de training")) +
+geom_line(aes(y = `ssp.gamma=10.8`$V3, colour = "Termino de penalizacion")) +
 geom_line(aes(y = `ssp.gamma=10.8`$V7, colour = "Error de test")) +
-theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-8") + xlab("Generaciones") + ylab("Classification Error") 
+geom_line(aes(y = `ssp.gamma=10.8`$V5, colour = "Error de training")) +
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-8") + xlab("Generaciones") + ylab("Error") 
 
 ggplot(`ssp.gamma=10.6`, aes(as.numeric(row.names(`ssp.gamma=10.6`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.6`$V3, colour = "Termino de penalizacion")) +
 geom_line(aes(y = `ssp.gamma=10.6`$V5, colour = "Error de training")) +
 geom_line(aes(y = `ssp.gamma=10.6`$V7, colour = "Error de test")) +
-theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-6") + xlab("Generaciones") + ylab("Classification Error") 
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-6") + xlab("Generaciones") + ylab("Error") 
 
 ggplot(`ssp.gamma=10.4`, aes(as.numeric(row.names(`ssp.gamma=10.4`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.4`$V3, colour = "Termino de penalizacion")) +
 geom_line(aes(y = `ssp.gamma=10.4`$V5, colour = "Error de training")) +
 geom_line(aes(y = `ssp.gamma=10.4`$V7, colour = "Error de test")) +
-theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-4") + xlab("Generaciones") + ylab("Classification Error") 
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-4") + xlab("Generaciones") + ylab("Error") 
 
 ggplot(`ssp.gamma=10.2`, aes(as.numeric(row.names(`ssp.gamma=10.2`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.2`$V3, colour = "Termino de penalizacion")) +
 geom_line(aes(y = `ssp.gamma=10.2`$V5, colour = "Error de training")) +
 geom_line(aes(y = `ssp.gamma=10.2`$V7, colour = "Error de test")) +
-theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-2") + xlab("Generaciones") + ylab("Classification Error") 
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-2") + xlab("Generaciones") + ylab("Error") 
 
 ggplot(`ssp.gamma=10.0`, aes(as.numeric(row.names(`ssp.gamma=10.0`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.0`$V3, colour = "Termino de penalizacion")) +
 geom_line(aes(y = `ssp.gamma=10.0`$V5, colour = "Error de training")) +
 geom_line(aes(y = `ssp.gamma=10.0`$V7, colour = "Error de test")) +
-theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=1") + xlab("Generaciones") + ylab("Classification Error") 
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=1") + xlab("Generaciones") + ylab("Error") 
 
 No deberia graficarse la validacion por que no existe con lo que estamos haciendo. Ver si hay regresion en V2 y V4 por que lo pide la consigna?
+
+6)
+
+require(ggplot2)
+
+ggplot(`paralelo.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`, aes(2**as.numeric(row.names(`paralelo.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`)))) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`$V5, colour = "Error de validacion")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`$V6, colour = "Error de test")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`$V7, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Paralelo: ITER=40000, ETA=0.01, u=0.9, NERROR=200") + xlab("Generaciones") + ylab("Classification Error") 
+
+ggplot(`paralelo.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`, aes(2**as.numeric(row.names(`paralelo.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`)))) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`$V5, colour = "Error de validacion")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`$V6, colour = "Error de test")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`$V7, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Paralelo: ITER=40000, ETA=0.01, u=0.1, NERROR=200") + xlab("Generaciones") + ylab("Classification Error") 
+
+ggplot(`paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`, aes(2**as.numeric(row.names(`paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`)))) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$V5, colour = "Error de validacion")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$V6, colour = "Error de test")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$V7, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Paralelo: ITER=40000, ETA=0.01, u=0.3, NERROR=200") + xlab("Generaciones") + ylab("Classification Error") 
+
+ggplot(`paralelo.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`, aes(2**as.numeric(row.names(`paralelo.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`)))) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`$V5, colour = "Error de validacion")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`$V6, colour = "Error de test")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`$V7, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Paralelo: ITER=40000, ETA=0.01, u=0.75, NERROR=200") + xlab("Generaciones") + ylab("Classification Error") 
+
+
+
+
+
+ggplot(`diagonal.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`, aes(2**as.numeric(row.names(`diagonal.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`)))) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`$V5, colour = "Error de validacion")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`$V6, colour = "Error de test")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`$V7, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Diagonal: ITER=40000, ETA=0.01, u=0.9, NERROR=200") + xlab("Generaciones") + ylab("Classification Error") 
+
+ggplot(`diagonal.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`, aes(2**as.numeric(row.names(`diagonal.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`)))) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`$V5, colour = "Error de validacion")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`$V6, colour = "Error de test")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`$V7, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Diagonal: ITER=40000, ETA=0.01, u=0.1, NERROR=200") + xlab("Generaciones") + ylab("Classification Error") 
+
+ggplot(`diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`, aes(2**as.numeric(row.names(`diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`)))) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$V5, colour = "Error de validacion")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$V6, colour = "Error de test")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$V7, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Diagonal: ITER=40000, ETA=0.01, u=0.3, NERROR=200") + xlab("Generaciones") + ylab("Classification Error") 
+
+ggplot(`diagonal.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`, aes(2**as.numeric(row.names(`diagonal.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`)))) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`$V5, colour = "Error de validacion")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`$V6, colour = "Error de test")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`$V7, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Diagonal: ITER=40000, ETA=0.01, u=0.75, NERROR=200") + xlab("Generaciones") + ylab("Classification Error") 

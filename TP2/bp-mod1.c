@@ -332,6 +332,7 @@ int arquitec(char *filename,struct MLP *nn,struct DATOS *datos){
   printf("\nEpocas: %d",nn->ITER);
   printf("\nLearning Rate: %f",nn->ETA);
   printf("\nMomentum: %f",nn->u);
+  printf("\nGamma: %f",nn->GAMMA);
   printf("\nFrecuencia para grabar resultados: %d EPOCAS",nn->NERROR);
   printf("\nArchivo con sinapsis iniciales: %d.WTS",nn->WTS); 
   printf("\nSemilla para la funcion rand(): %d",nn->SEED); 
@@ -561,6 +562,9 @@ int train(struct MLP *nn,struct DATOS *datos){
     shuffle(datos->PTOT,datos);
   }
 
+  /*inicializo el termino de penalizacion*/
+  float penalizacion=0;
+
   /* for principal: ITER iteraciones -- iter es la epoca */
   for (iter=1; iter<=nn->ITER; iter++) {
 
@@ -595,7 +599,14 @@ int train(struct MLP *nn,struct DATOS *datos){
 		 nn->grad2[j] = suma * (1.0- nn->x2[j]) * nn->x2[j];
 	  }
 
-    //esta dando -nan en algunas partes
+
+
+    /*calcular pesos penalizacion*/
+    for( i=1; i<=nn->N3; i++) for( j=0; j<=nn->N2; j++) penalizacion+=nn->w2[i][j]*nn->w2[i][j];
+    for( j=1; j<=nn->N2; j++) for( k=0; k<=nn->N1; k++) penalizacion+=nn->w1[j][k]*nn->w1[j][k];
+    penalizacion*=nn->GAMMA;
+
+
 
 	  /*calcular dw2 y corregir w2*/
 	  for( i=1; i<=nn->N3; i++) for( j=0; j<=nn->N2; j++){
@@ -652,8 +663,13 @@ int train(struct MLP *nn,struct DATOS *datos){
           evaluar(nn,datos,datos->test,0,datos->PTEST,0,&mse_test,&disc_test);
       }else  mse_test = disc_test = 0.;
 
+
+
+
+
+
       /*guardo todos los errores en el archivo .mse*/
-      fprintf(ferror,"%f\t%f\t%f\t%f\t",mse,mse_train,mse_valid,mse_test);
+      fprintf(ferror,"%f\t%f\t%f\t%f\t",mse,mse_train,penalizacion,mse_test);
       fprintf(ferror,"%f\t%f\t%f\n",disc_train,disc_valid,disc_test);
       if(CONTROL) fflush(NULL);
 
