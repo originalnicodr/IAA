@@ -1,0 +1,545 @@
+Ej1)
+
+require(ggplot2)
+
+ggplot(`i2_faces_lr`, aes(as.numeric(row.names(`i4_faces_lr`)))) +
+geom_line(aes(y = `i4_faces_lr`$V5, colour = "training error eta=0.001, m=0.9")) +
+geom_line(aes(y = `i4_faces_lr`$V7, colour = "test error eta=0.001, m=0.9")) +
+geom_line(aes(y = `eta=0.0001,m=0.5_faces_lr`$V5, colour = "training error eta=0.0001, m=0.5")) +
+geom_line(aes(y = `eta=0.0001,m=0.5_faces_lr`$V7, colour = "test error eta=0.0001, m=0.5")) +
+geom_line(aes(y = `eta=0.01,m=0.9_faces_lr`$V5, colour = "training error eta=0.01, m=0.9")) +
+geom_line(aes(y = `eta=0.01,m=0.9_faces_lr`$V7, colour = "test error eta=0.01, m=0.9")) +
+theme(legend.position="bottom")
+
+
+
+
+
+
+
+
+
+
+ggplot(`i2_faces_lr`, aes(as.numeric(row.names(`i4_faces_lr`)))) +
+geom_line(aes(y = `i4_faces_lr`$V5, colour = "training error capa intermedia=4")) +
+geom_line(aes(y = `i4_faces_lr`$V7, colour = "test error  capa intermedia=4")) +
+geom_line(aes(y = `i2_faces_lr`$V5, colour = "training error  capa intermedia=2")) +
+geom_line(aes(y = `i2_faces_lr`$V7, colour = "test error  capa intermedia=2")) +
+geom_line(aes(y = `i8_faces_lr`$V5, colour = "training error  capa intermedia=8")) +
+geom_line(aes(y = `i8_faces_lr`$V7, colour = "test error  capa intermedia=8")) +
+theme(legend.position="bottom")
+
+ggplot(`i2_faces_lr`, aes(as.numeric(row.names(`i4_faces_lr`)))) +
+geom_line(aes(y = `i4_faces_lr`$V2, colour = "training mse capa intermedia=4")) +
+geom_line(aes(y = `i4_faces_lr`$V4, colour = "test mse capa intermedia=4")) +
+geom_line(aes(y = `i2_faces_lr`$V2, colour = "training mse capa intermedia=2")) +
+geom_line(aes(y = `i2_faces_lr`$V4, colour = "test mse capa intermedia=2")) +
+geom_line(aes(y = `i8_faces_lr`$V2, colour = "training mse capa intermedia=8")) +
+geom_line(aes(y = `i8_faces_lr`$V4, colour = "test mse capa intermedia=8")) +
+theme(legend.position="bottom")
+
+2)
+
+plot(espirales_2.predic$V1, espirales_2.predic$V2, main="Capa intermedia=2", xlab="X", ylab="Y", col=ifelse(espirales_2.predic$V3==1, "blue","red"))
+plot(espirales_10.predic$V1, espirales_10.predic$V2, main="Capa intermedia=10", xlab="X", ylab="Y", col=ifelse(espirales_10.predic$V3==1, "blue","red"))
+plot(espirales_40.predic$V1, espirales_40.predic$V2, main="Capa intermedia=40", xlab="X", ylab="Y", col=ifelse(espirales_40.predic$V3==1, "blue","red"))
+
+capa intermedia=2
+
+Error final:
+Entrenamiento(est):0.191583
+Entrenamiento(med):0.191829
+Validacion:0.191084
+Test:0.191472
+
+Error minimo en validacion:
+Epoca:35200
+Validacion:0.188451
+Test:0.191649
+Test discreto:36.300001%
+
+
+capa intermedia=10
+
+Error final:
+Entrenamiento(est):0.116764
+Entrenamiento(med):0.116859
+Validacion:0.138254
+Test:0.134924
+
+Error minimo en validacion:
+Epoca:24800
+Validacion:0.129391
+Test:0.131645
+Test discreto:16.800000%
+
+
+capa intermedia=40
+
+Error final:
+Entrenamiento(est):0.146261
+Entrenamiento(med):0.145104
+Validacion:0.148072
+Test:0.158022
+
+Error minimo en validacion:
+Epoca:10000
+Validacion:0.145818
+Test:0.163019
+Test discreto:28.749999%
+
+
+
+
+
+
+
+
+
+
+capa intermedia=2
+
+Error final:
+Entrenamiento(est): 0.1911496
+Entrenamiento(med): 0.1926872
+Validacion: 0.1928262
+Test: 0.1946437
+
+Error minimo en validacion:
+Epoca: 33800.0
+Validacion: 0.1892466
+Test: 0.1917088
+Test discreto: 37.0099999
+
+
+capa intermedia=10
+
+Error final:
+Entrenamiento(est): 0.1363655
+Entrenamiento(med): 0.1346872
+Validacion: 0.1382135
+Test: 0.1472367
+
+Error minimo en validacion:
+Epoca: 34120.0
+Validacion: 0.1361911
+Test: 0.1460701
+Test discreto: 23.23
+
+
+capa intermedia=40
+
+
+Error final:
+Entrenamiento(est): 0.0858947
+Entrenamiento(med): 0.0882111
+Validacion: 0.1021763
+Test: 0.1024626
+
+Error minimo en validacion:
+Epoca: 35480.0
+Validacion: 0.0966643
+Test: 0.0982295
+Test discreto: 12.2250001
+
+3)
+require(ggplot2)
+
+Me interesa el error de test
+Problema: Cuando me quedo en un minimo local y cuando no
+
+ggplot(`dos_elipses.m=0,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.1`$V5, colour = "m=0, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V5, colour = "m=0.5, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.1`$V5, colour = "m=0.9, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.01`$V5, colour = "m=0, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.01`$V5, colour = "m=0.5, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V5, colour = "m=0.9, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.001`$V5, colour = "m=0, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.001`$V5, colour = "m=0.5, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.001`$V5, colour = "m=0.9, eta=0.001")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: Error on training set") + xlab("Generaciones") + ylab("Error") 
+
+ggplot(`dos_elipses.m=0,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.1`$V6, colour = " m=0, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V6, colour = " m=0.5, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.1`$V6, colour = " m=0.9, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.01`$V6, colour = " m=0, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.01`$V6, colour = " m=0.5, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V6, colour = " m=0.9, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.001`$V6, colour = " m=0, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.001`$V6, colour = " m=0.5, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.001`$V6, colour = " m=0.9, eta=0.001")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: Error on validation set") + xlab("Generaciones") + ylab("Error") 
+
+ggplot(`dos_elipses.m=0,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.1`$V7, colour = " m=0, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V7, colour = " m=0.5, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.1`$V7, colour = " m=0.9, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.01`$V7, colour = " m=0, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.01`$V7, colour = " m=0.5, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V7, colour = " m=0.9, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.001`$V7, colour = " m=0, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.001`$V7, colour = " m=0.5, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.001`$V7, colour = " m=0.9, eta=0.001")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: Error on test set") + xlab("Generaciones") + ylab("Error") 
+
+
+
+
+
+
+ggplot(`dos_elipses.m=0,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V5, colour = "m=0.5, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0.25,eta=0.01`$V5, colour = "m=0.25, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.001`$V5, colour = "m=0.9, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.01`$V5, colour = "m=0.75, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.001`$V5, colour = "m=0.75, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.1`$V5, colour = "m=0.75, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.01`$V5, colour = "m=0.8, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.001`$V5, colour = "m=0.8, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.85,eta=0.01`$V5, colour = "m=0.85, eta=0.01")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: Error on training set") + xlab("Generaciones") + ylab("Error") 
+
+ggplot(`dos_elipses.m=0,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.25,eta=0.01`$V6, colour = "m=0.25, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V6, colour = "m=0.5, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.001`$V6, colour = "m=0.9, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.01`$V6, colour = "m=0.75, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.001`$V6, colour = "m=0.75, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.01`$V6, colour = "m=0.8, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.001`$V6, colour = "m=0.8, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.85,eta=0.01`$V6, colour = "m=0.85, eta=0.01")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: Error on validation set") + xlab("Generaciones") + ylab("Error") 
+
+ggplot(`dos_elipses.m=0,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.25,eta=0.01`$V7, colour = "m=0.25, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V7, colour = "m=0.5, eta=0.1")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.001`$V7, colour = "m=0.9, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.01`$V7, colour = "m=0.75, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.001`$V7, colour = "m=0.75, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.01`$V7, colour = "m=0.8, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.001`$V7, colour = "m=0.8, eta=0.001")) +
+geom_line(aes(y = `dos_elipses.m=0.85,eta=0.01`$V7, colour = "m=0.85, eta=0.01")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: Error on test set") + xlab("Generaciones") + ylab("Error") 
+
+
+
+
+
+
+
+
+
+ggplot(`dos_elipses.m=0,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.01`$V5, colour = "m=0.8, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V5, colour = "m=0.9, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.6,eta=0.01`$V5, colour = "m=0.6, eta=0.01")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: Error on training set") + xlab("Generaciones") + ylab("Error") 
+
+ggplot(`dos_elipses.m=0,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.01`$V6, colour = "m=0.8, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V6, colour = "m=0.9, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.6,eta=0.01`$V6, colour = "m=0.6, eta=0.01")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: Error on validation set") + xlab("Generaciones") + ylab("Error") 
+
+ggplot(`dos_elipses.m=0,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.01`$V7, colour = "m=0.8, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V7, colour = "m=0.9, eta=0.01")) +
+geom_line(aes(y = `dos_elipses.m=0.6,eta=0.01`$V7, colour = "m=0.6, eta=0.01")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: Error on test set") + xlab("Generaciones") + ylab("Error") 
+
+-------------------------------------------------------------------------------------------------------------------
+ggplot(`dos_elipses.m=0,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.1`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.1`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.1`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0, eta=0.1") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.5,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0.5,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.1`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.5, eta=0.1") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.9,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0.9,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.1`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.1`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.1`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.9, eta=0.1") + xlab("Generaciones") + ylab("Error mse")
+
+
+
+ggplot(`dos_elipses.m=0,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.5,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.5,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.5, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.9,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.9,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.9, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+
+
+ggplot(`dos_elipses.m=0,eta=0.001`, aes(as.numeric(row.names(`dos_elipses.m=0,eta=0.001`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.001`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.001`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0,eta=0.001`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0, eta=0.001") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.5,eta=0.001`, aes(as.numeric(row.names(`dos_elipses.m=0.5,eta=0.001`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.001`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.001`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.5,eta=0.001`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.5, eta=0.001") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.9,eta=0.001`, aes(as.numeric(row.names(`dos_elipses.m=0.9,eta=0.001`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.001`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.001`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.9,eta=0.001`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.9, eta=0.001") + xlab("Generaciones") + ylab("Error mse")
+
+
+
+ggplot(`dos_elipses.m=0.25,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.25,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.25,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.25,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.25,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.25, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.75,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.75,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.75, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.75,eta=0.001`, aes(as.numeric(row.names(`dos_elipses.m=0.75,eta=0.001`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.001`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.001`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.001`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.75, eta=0.001") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.75,eta=0.1`, aes(as.numeric(row.names(`dos_elipses.m=0.75,eta=0.1`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.1`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.1`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.75,eta=0.1`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.75, eta=0.1") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.8,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.8,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.8, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.8,eta=0.001`, aes(as.numeric(row.names(`dos_elipses.m=0.8,eta=0.001`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.001`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.001`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.8,eta=0.001`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.8, eta=0.001") + xlab("Generaciones") + ylab("Error mse")
+
+ggplot(`dos_elipses.m=0.85,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.85,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.85,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.85,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.85,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.85, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+
+ggplot(`dos_elipses.m=0.6,eta=0.01`, aes(as.numeric(row.names(`dos_elipses.m=0.6,eta=0.01`))*200)) +
+geom_line(aes(y = `dos_elipses.m=0.6,eta=0.01`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `dos_elipses.m=0.6,eta=0.01`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `dos_elipses.m=0.6,eta=0.01`$V4, colour = "Error sobre test set")) +
+theme(legend.position="bottom") + ggtitle("dos_elipses: m=0.6, eta=0.01") + xlab("Generaciones") + ylab("Error mse")
+
+4)
+Regularizacion: Como encontrar la solucion optima en complejidad
+(ej de que grado es el polinomio ideal para mi problema)
+
+Hacer que la red tenga la complejidad adecuada. Hacer que no siga complejizandose
+
+ikeda=predecir sistema caotico (muy dificil de predecir)
+
+error de tipo continuo (mse)
+
+early stopping
+ver relacion curva validacion y curva test
+
+require(ggplot2)
+
+ggplot(`ikeda.95.5`, aes(as.numeric(row.names(`ikeda.95.5`))*200)) +
+geom_line(aes(y = `ikeda.95.5`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `ikeda.95.5`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `ikeda.95.5`$V4, colour = "Error sobre testing set")) +
+theme(legend.position="bottom") + ggtitle("Ikeda: training=95%, validation=5%") + xlab("Generaciones") + ylab("Error mse") 
+
+ggplot(`ikeda.75.25`, aes(as.numeric(row.names(`ikeda.75.25`))*200)) +
+geom_line(aes(y = `ikeda.75.25`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `ikeda.75.25`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `ikeda.75.25`$V4, colour = "Error sobre testing set")) +
+theme(legend.position="bottom") + ggtitle("Ikeda: training=75%, validation=25%") + xlab("Generaciones") + ylab("Error mse") 
+
+ggplot(`ikeda.50.50`, aes(as.numeric(row.names(`ikeda.50.50`))*200)) +
+geom_line(aes(y = `ikeda.50.50`$V2, colour = "Error sobre training set")) +
+geom_line(aes(y = `ikeda.50.50`$V3, colour = "Error sobre validation set")) +
+geom_line(aes(y = `ikeda.50.50`$V4, colour = "Error sobre testing set")) +
+theme(legend.position="bottom") + ggtitle("Ikeda: training=50%, validation=50%") + xlab("Generaciones") + ylab("Error mse") 
+
+5)
+require(ggplot2)
+
+ggplot(`ssp.gamma=10.8`, aes(as.numeric(row.names(`ssp.gamma=10.8`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.8`$V3*100000, colour = "Termino de penalizacion")) +
+geom_line(aes(y = `ssp.gamma=10.8`$V7, colour = "Error de test")) +
+geom_line(aes(y = `ssp.gamma=10.8`$V5, colour = "Error de training")) +
+scale_y_continuous(name = "Error", sec.axis = sec_axis(~./100000, name="Peso del termino de Penalizacion")) +
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-8") + xlab("Generaciones") + ylab("Error") 
+
+ggplot(`ssp.gamma=10.6`, aes(as.numeric(row.names(`ssp.gamma=10.6`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.6`$V3*1000, colour = "Termino de penalizacion")) +
+geom_line(aes(y = `ssp.gamma=10.6`$V5, colour = "Error de training")) +
+geom_line(aes(y = `ssp.gamma=10.6`$V7, colour = "Error de test")) +
+scale_y_continuous(name = "Error", sec.axis = sec_axis(~./1000, name="Peso del termino de Penalizacion")) +
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-6") + xlab("Generaciones") + ylab("Error") 
+
+ggplot(`ssp.gamma=10.4`, aes(as.numeric(row.names(`ssp.gamma=10.4`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.4`$V3*100, colour = "Termino de penalizacion")) +
+geom_line(aes(y = `ssp.gamma=10.4`$V5, colour = "Error de training")) +
+geom_line(aes(y = `ssp.gamma=10.4`$V7, colour = "Error de test")) +
+scale_y_continuous(name = "Error", sec.axis = sec_axis(~./100, name="Peso del termino de Penalizacion")) +
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-4") + xlab("Generaciones") + ylab("Error") 
+
+ggplot(`ssp.gamma=10.2`, aes(as.numeric(row.names(`ssp.gamma=10.2`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.2`$V3*25, colour = "Termino de penalizacion")) +
+geom_line(aes(y = `ssp.gamma=10.2`$V5, colour = "Error de training")) +
+geom_line(aes(y = `ssp.gamma=10.2`$V7, colour = "Error de test")) +
+scale_y_continuous(name = "Error", sec.axis = sec_axis(~./25, name="Peso del termino de Penalizacion")) +
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-2") + xlab("Generaciones") + ylab("Error") 
+
+ggplot(`ssp.gamma=10.0`, aes(as.numeric(row.names(`ssp.gamma=10.0`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.0`$V3*10, colour = "Termino de penalizacion")) +
+geom_line(aes(y = `ssp.gamma=10.0`$V5, colour = "Error de training")) +
+geom_line(aes(y = `ssp.gamma=10.0`$V7, colour = "Error de test")) +
+scale_y_continuous(name = "Error", sec.axis = sec_axis(~./10, name="Peso del termino de Penalizacion")) +
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=1") + xlab("Generaciones") + ylab("Error") 
+
+No deberia graficarse la validacion por que no existe con lo que estamos haciendo. Ver si hay regresion en V2 y V4 por que lo pide la consigna?
+
+ggplot(`ssp.gamma=10.5`, aes(as.numeric(row.names(`ssp.gamma=10.5`))*200)) +
+geom_line(aes(y = `ssp.gamma=10.5`$V3*200, colour = "Termino de penalizacion")) +
+geom_line(aes(y = `ssp.gamma=10.5`$V5, colour = "Error de training")) +
+geom_line(aes(y = `ssp.gamma=10.5`$V7, colour = "Error de test")) +
+scale_y_continuous(name = "Error", sec.axis = sec_axis(~./200, name="Peso del termino de Penalizacion")) +
+theme(legend.position="bottom") + ggtitle("Sunspots problem: gamma=10^-5") + xlab("Generaciones")
+
+
+
+
+
+
+
+
+
+6)
+
+require(ggplot2)
+
+ggplot(`paralelo.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`, aes(2**as.numeric(row.names(`paralelo.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`)))) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`$ValidacionMinima, colour = "Error de validacion")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`$TestMinimo, colour = "Error de test")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`$TestDiscreto/100, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Paralelo: ITER=40000, ETA=0.01, u=0.9, NERROR=200") + xlab("Dimensiones") + ylab("Classification Error") 
+
+ggplot(`paralelo.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`, aes(2**as.numeric(row.names(`paralelo.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`)))) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`$ValidacionMinima, colour = "Error de validacion")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`$TestMinimo, colour = "Error de test")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`$TestDiscreto/100, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Paralelo: ITER=40000, ETA=0.01, u=0.1, NERROR=200") + xlab("Dimensiones") + ylab("Classification Error") 
+
+ggplot(`paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`, aes(2**as.numeric(row.names(`paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`)))) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$ValidacionMinima, colour = "Error de validacion")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$TestMinimo, colour = "Error de test")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$TestDiscreto/100, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Paralelo: ITER=40000, ETA=0.01, u=0.3, NERROR=200") + xlab("Dimensiones") + ylab("Classification Error") 
+
+ggplot(`paralelo.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`, aes(2**as.numeric(row.names(`paralelo.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`)))) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`$ValidacionMinima, colour = "Error de validacion")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`$TestMinimo, colour = "Error de test")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`$TestDiscreto/100, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Paralelo: ITER=40000, ETA=0.01, u=0.75, NERROR=200") + xlab("Dimensiones") + ylab("Classification Error") 
+
+
+
+
+
+
+ggplot(`diagonal.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`, aes(2**as.numeric(row.names(`diagonal.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`)))) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`$ValidacionMinima, colour = "Error de validacion")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`$TestMinimo, colour = "Error de test")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.9,.NERROR=200`$TestDiscreto, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Diagonal: ITER=40000, ETA=0.01, u=0.9, NERROR=200") + xlab("Dimensiones") + ylab("Classification Error") 
+
+ggplot(`diagonal.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`, aes(2**as.numeric(row.names(`diagonal.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`)))) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`$ValidacionMinima, colour = "Error de validacion")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`$TestMinimo, colour = "Error de test")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.1,.NERROR=200`$TestDiscreto, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Diagonal: ITER=40000, ETA=0.01, u=0.1, NERROR=200") + xlab("Dimensiones") + ylab("Classification Error") 
+
+ggplot(`diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`, aes(2**as.numeric(row.names(`diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`)))) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$ValidacionMinima, colour = "Error de validacion")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$TestMinimo, colour = "Error de test")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$TestDiscreto, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Diagonal: ITER=40000, ETA=0.01, u=0.3, NERROR=200") + xlab("Dimensiones") + ylab("Classification Error") 
+
+ggplot(`diagonal.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`, aes(2**as.numeric(row.names(`diagonal.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`)))) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`$ValidacionMinima, colour = "Error de validacion")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`$TestMinimo, colour = "Error de test")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.75,.NERROR=200`$TestDiscreto, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Diagonal: ITER=40000, ETA=0.01, u=0.75, NERROR=200") + xlab("Dimensiones") + ylab("Classification Error") 
+
+
+
+
+
+ggplot(`paralelo.ITER=80000,.ETA=0.01,.u=0.9,.NERROR=200`, aes(2**as.numeric(row.names(`paralelo.ITER=80000,.ETA=0.01,.u=0.9,.NERROR=200`)))) +
+geom_line(aes(y = `paralelo.ITER=80000,.ETA=0.01,.u=0.9,.NERROR=200`$ValidacionMinima, colour = "Error de validacion")) +
+geom_line(aes(y = `paralelo.ITER=80000,.ETA=0.01,.u=0.9,.NERROR=200`$TestMinimo, colour = "Error de test")) +
+geom_line(aes(y = `paralelo.ITER=80000,.ETA=0.01,.u=0.9,.NERROR=200`$TestDiscreto, colour = "Error de discreto")) +
+theme(legend.position="bottom") + ggtitle("Diagonal: ITER=40000, ETA=0.01, u=0.75, NERROR=200") + xlab("Dimensiones") + ylab("Classification Error") 
+
+
+
+
+ggplot(`ej7.parallel`, aes(2**as.numeric(row.names(`ej7.parallel`)))) +
+geom_line(aes(y = `ej7.parallel`$TrainingAfterPrunningError/100, colour = "Tree Training Error")) +
+geom_line(aes(y = `ej7.parallel`$TestingAfterPrunningError/100, colour = "Tree Testing Error")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$TestMinimo, colour = "Neural Network Test Error Minimo")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$TrainingError, colour = "Neural Network Training Error")) +
+theme(legend.position="bottom") + ggtitle("Problema Paralelo") + xlab("Dimensiones") + ylab("Classification Error")
+
+
+ggplot(`ej7.parallel`, aes(2**as.numeric(row.names(`ej7.parallel`)))) +
+geom_line(aes(y = `ej7.parallel`$TrainingAfterPrunningError/100, colour = "Tree Training Error")) +
+geom_line(aes(y = `ej7.parallel`$TestingAfterPrunningError/100, colour = "Tree Testing Error")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=10`$TestMinimo, colour = "Neural Network Test Error Minimo")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=10`$TrainingError, colour = "Neural Network Training Error")) +
+theme(legend.position="bottom") + ggtitle("Problema Paralelo") + xlab("Dimensiones") + ylab("Classification Error")
+
+
+
+
+ggplot(`ej7.diagonal`, aes(2**as.numeric(row.names(`ej7.diagonal`)))) +
+geom_line(aes(y = `ej7.diagonal`$TrainingAfterPrunningError/100, colour = "Tree Training Error")) +
+geom_line(aes(y = `ej7.diagonal`$TestingAfterPrunningError/100, colour = "Tree Testing Error")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=100`$TestMinimo, colour = "Neural Network Test Error Minimo")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=100`$TrainingError, colour = "Neural Network Training Error")) +
+theme(legend.position="bottom") + ggtitle("Problema Diagonal") + xlab("Dimensiones") + ylab("Classification Error") 
+
+

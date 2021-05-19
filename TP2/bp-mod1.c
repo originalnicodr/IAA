@@ -544,7 +544,8 @@ int train(struct MLP *nn,struct DATOS *datos){
     return 1;
   }
   sprintf(filepat,"%s.mse",datos->filename);
-  ferror=fopen(filepat,"a");
+  //ferror=fopen(filepat,"a");
+  ferror=fopen(filepat,"w");
   error=(ferror==NULL);
   if(error){
     printf("Error al abrir archivo para guardar curvas\n");
@@ -563,12 +564,13 @@ int train(struct MLP *nn,struct DATOS *datos){
   }
 
   /*inicializo el termino de penalizacion*/
-  float penalizacion=0;
+  float penalizacion;
 
   /* for principal: ITER iteraciones -- iter es la epoca */
   for (iter=1; iter<=nn->ITER; iter++) {
 
     mse = 0.0;
+    penalizacion= 0.0;
 
     shuffle(datos->PR,datos); /*reordeno al azar SOLO los patrones de entrenamiento*/
 
@@ -600,27 +602,19 @@ int train(struct MLP *nn,struct DATOS *datos){
 	  }
 
 
-
-    /*calcular pesos penalizacion*/
-    for( i=1; i<=nn->N3; i++) for( j=0; j<=nn->N2; j++) penalizacion+=nn->w2[i][j]*nn->w2[i][j];
-    for( j=1; j<=nn->N2; j++) for( k=0; k<=nn->N1; k++) penalizacion+=nn->w1[j][k]*nn->w1[j][k];
-    penalizacion*=nn->GAMMA;
-
-
-
 	  /*calcular dw2 y corregir w2*/
 	  for( i=1; i<=nn->N3; i++) for( j=0; j<=nn->N2; j++){
 		nn->dw2[i][j]= nn->u*nn->dw2[i][j] + eta*nn->grad3[i]*nn->x2[j]; //+ 2*nn->GAMMA*nn->w2[i][j];   /*termino de momentum + correcccion actual*/
-		nn->dw2[i][j] *=(1-2*nn->GAMMA*eta);
     nn->w2[i][j] += nn->dw2[i][j];                               /*correccion*/
+    nn->w2[i][j] *=(1-2*nn->GAMMA*eta);
 	  }
     
 
 	  /*calcular dw1 y corregir w1*/
 	  for( j=1; j<=nn->N2; j++) for( k=0; k<=nn->N1; k++){
 		nn->dw1[j][k]= nn->u*nn->dw1[j][k] + eta*nn->grad2[j]*nn->x1[k]; //+ 2*nn->GAMMA*nn->w1[j][k];   /*termino de momentum + correcccion actual*/
-		nn->dw1[i][j] *=(1-2*nn->GAMMA*eta);
     nn->w1[j][k] += nn->dw1[j][k];                               /*correccion*/
+    nn->w1[j][k] *=(1-2*nn->GAMMA*eta);
 	  }
 
 	  /*actualizar el mse sumando el error en el patron presentado*/
@@ -643,6 +637,12 @@ int train(struct MLP *nn,struct DATOS *datos){
 
     /* controles: grabar error cada NERROR iteraciones*/
     if ((iter % nn->NERROR) == 0) {
+
+      /*calcular pesos penalizacion*/
+      for( i=1; i<=nn->N3; i++) for( j=0; j<=nn->N2; j++) penalizacion+=nn->w2[i][j]*nn->w2[i][j];
+      for( j=1; j<=nn->N2; j++) for( k=0; k<=nn->N1; k++) penalizacion+=nn->w1[j][k]*nn->w1[j][k];
+      penalizacion*=nn->GAMMA;
+      mse+=penalizacion;
 
       /*mse es el errro estocastico sobre el conjunto de entrenamiento*/
       mse /= ((float)datos->PR);

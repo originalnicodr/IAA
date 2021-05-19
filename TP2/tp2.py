@@ -156,23 +156,27 @@ def ej5():
     
 def ej6():
     f = open("ej6.txt", "a")
+    f.write("Error(est) Error(med) ValidacionFinal TestFinal Epoca Archivo ValidacionMinima TestMinimo TestDiscreto\n")
 
     valoresd=[2, 4, 8, 16, 32]
     for d in valoresd:
         valores_guardados=[]
-        subprocess.check_output("./TP0.out a 10000 "+str(d)+" 0.78", shell=True, universal_newlines=True)
-        os.rename('ej.data', 'ej.test')
-        subprocess.check_output("./TP0.out a 250 "+str(d)+" 0.78", shell=True, universal_newlines=True)
+        subprocess.check_output("./TP0.out b 10000 "+str(d)+" 0.78", shell=True, universal_newlines=True)
+        os.rename('ej.data', 'ej-'+str(d)+'.test')
+        subprocess.check_output("./TP0.out b 250 "+str(d)+" 0.78", shell=True, universal_newlines=True)
+        os.rename('ej.data', 'ej-'+str(d)+'.data')
 
 
         for i in range(0,10):
             #estoy corriendo python 2 aca
             print("Entrenando red numero " + str(i))
-            output= subprocess.check_output("./bp.o ej", shell=True, universal_newlines=True)
+            output= subprocess.check_output("./bp.o ej-"+str(d), shell=True, universal_newlines=True)
             s= output.split('Error final:', 1)[1]
             #print(output)
-            valores_guardados.append(get_values(s))
-            os.rename('ej.mse', 'ej_'+str(i)+'.mse')
+            s2=get_values(s)
+            #print(s2)
+            valores_guardados.append(s2)
+            os.rename('ej-'+str(d)+'.mse', 'ej-'+str(d)+'_'+str(i)+'.mse')
             time.sleep(1)
 
         r=[]
@@ -199,12 +203,12 @@ def ej6():
             print(imprimir_errores(dif[i]))
 
         print("Nos quedamos con la red n "+str(m)+" por que es la mas cercana a la media segun el error de Test en \'Error minimo\'")
-
+        #Error(est) Error(med)  ValidacionFinal  TestFinal    ValidacionMinima  TestMinimo  TestDiscreto
         
-        f.write(str(valores_guardados[m][0])+" "+str(valores_guardados[m][1])+" "+str(valores_guardados[m][2])+" "+str(valores_guardados[m][3])+" "+str(valores_guardados[m][5])+" "+str(valores_guardados[m][6])+" "+str(valores_guardados[m][7])+"\n")
+        f.write(str(valores_guardados[m][0])+" "+str(valores_guardados[m][1])+" "+str(valores_guardados[m][2])+" "+str(valores_guardados[m][3])+" "+str(valores_guardados[m][4])+" "+str(m)+" "+str(valores_guardados[m][5])+" "+str(valores_guardados[m][6])+" "+str(valores_guardados[m][7])+"\n")
 
 
 #ej3()
 #ej4()
-ej5()
-#ej6()
+#ej5()
+ej6()
