@@ -114,24 +114,40 @@ int identificar_espiral(float theta, float r){
     }
     else return 2; //no deberia llegar nunca aca
 }
+
+//Funciones para loopear los radianes entre 0 y 2*PI
+/* wrap x -> [0,max) */
+double wrapMax(double x, double max)
+{
+    /* integer math: `(max + x % max) % max` */
+    return fmod(max + fmod(x, max), max);
+}
+/* wrap x -> [min,max) */
+double wrapMinMax(double x, double min, double max)
+{
+    return min + wrapMax(x - min, max - min);
+}
+
 /*
 void generar_espirales(int n, FILE *names, FILE *data){
     fprintf(names,"0, 1. \n\nx: continuous. \ny: continuous.");
     for(int i=0;i<n;i++){
         float r = rand_max(1);
         float theta= rand_max(2*M_PI);
-        int color=identificar_espiral(theta,r);
+        int color=identificar_espiral(theta*M_PI,r);
 
         //conversion coords polares a coords cartesianas
         float x=r*cos(theta);
         float y=r*sin(theta);
 
-        printf("%f, %f, %d\n",x,y,color);
+        //printf("%f, %f, %d\n",x,y,color);
+        printf("%f, %f\n",theta,r);
         fprintf(data,"%f, %f, %d\n",x,y,color);
     }
 
 }
 */
+
 
 void generar_espirales(int n, FILE *names, FILE *data){
     fprintf(names,"0, 1. \n\nx: continuous. \ny: continuous.");
@@ -146,12 +162,14 @@ void generar_espirales(int n, FILE *names, FILE *data){
 
             r = sqrt(x*x+y*y);
         }
+        float theta = wrapMinMax(atan2(y,x), 0, 2*M_PI);
 
-        int color=identificar_espiral(atan2(y,x),r);
+
+        int color=identificar_espiral(theta,r);
 
         //conversion coords polares a coords cartesianas
-
-        printf("%f, %f, %d\n",x,y,color);
+        printf("x=%f, y=%f, angulo=%f, r=%f\n",x,y,theta,r);
+        //printf("%f, %f, %d\n",x,y,color);
         fprintf(data,"%f, %f, %d\n",x,y,color);
     }
 
