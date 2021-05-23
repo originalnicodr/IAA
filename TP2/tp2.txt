@@ -455,7 +455,7 @@ ggplot(`ej7.parallel`, aes(2**as.numeric(row.names(`ej7.parallel`)))) +
 geom_line(aes(y = `ej7.parallel`$TrainingAfterPrunningError, colour = "Tree Training Error")) +
 geom_line(aes(y = `ej7.parallel`$TestingAfterPrunningError, colour = "Tree Testing Error")) +
 geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$TestDiscreto, colour = "Neural Network Test Error Minimo")) +
-geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$TrainingError, colour = "Neural Network Training Error")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=200`$TrainingError*100, colour = "Neural Network Training Error")) +
 theme(legend.position="bottom") + ggtitle("Problema Paralelo") + xlab("Dimensiones") + ylab("Classification Error")
 
 
@@ -463,7 +463,7 @@ ggplot(`ej7.parallel`, aes(2**as.numeric(row.names(`ej7.parallel`)))) +
 geom_line(aes(y = `ej7.parallel`$TrainingAfterPrunningError, colour = "Tree Training Error")) +
 geom_line(aes(y = `ej7.parallel`$TestingAfterPrunningError, colour = "Tree Testing Error")) +
 geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=10`$TestDiscreto, colour = "Neural Network Test Error Minimo")) +
-geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=10`$TrainingError, colour = "Neural Network Training Error")) +
+geom_line(aes(y = `paralelo.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=10`$TrainingError*100, colour = "Neural Network Training Error")) +
 theme(legend.position="bottom") + ggtitle("Problema Paralelo") + xlab("Dimensiones") + ylab("Classification Error")
 
 
@@ -471,7 +471,7 @@ ggplot(`ej7.parallel`, aes(2**as.numeric(row.names(`ej7.parallel`)))) +
 geom_line(aes(y = `ej7.parallel`$TrainingAfterPrunningError, colour = "Tree Training Error")) +
 geom_line(aes(y = `ej7.parallel`$TestingAfterPrunningError, colour = "Tree Testing Error")) +
 geom_line(aes(y = `paralelo.ITER=4000,.ETA=0.01,.u=0.3,.NERROR=1`$TestDiscreto, colour = "Neural Network Test Error Minimo")) +
-geom_line(aes(y = `paralelo.ITER=4000,.ETA=0.01,.u=0.3,.NERROR=1`$TrainingError, colour = "Neural Network Training Error")) +
+geom_line(aes(y = `paralelo.ITER=4000,.ETA=0.01,.u=0.3,.NERROR=1`$TrainingError*100, colour = "Neural Network Training Error")) +
 theme(legend.position="bottom") + ggtitle("Problema Paralelo") + xlab("Dimensiones") + ylab("Classification Error")
 
 
@@ -482,7 +482,7 @@ ggplot(`ej7.diagonal`, aes(2**as.numeric(row.names(`ej7.diagonal`)))) +
 geom_line(aes(y = `ej7.diagonal`$TrainingAfterPrunningError, colour = "Tree Training Error")) +
 geom_line(aes(y = `ej7.diagonal`$TestingAfterPrunningError, colour = "Tree Testing Error")) +
 geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=100`$TestDiscreto, colour = "Neural Network Test Error Minimo")) +
-geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=100`$TrainingError, colour = "Neural Network Training Error")) +
+geom_line(aes(y = `diagonal.ITER=40000,.ETA=0.01,.u=0.3,.NERROR=100`$TrainingError*100, colour = "Neural Network Training Error")) +
 theme(legend.position="bottom") + ggtitle("Problema Diagonal") + xlab("Dimensiones") + ylab("Classification Error") 
 
 
@@ -490,6 +490,6 @@ ggplot(`ej7.diagonal`, aes(2**as.numeric(row.names(`ej7.diagonal`)))) +
 geom_line(aes(y = `ej7.diagonal`$TrainingAfterPrunningError, colour = "Tree Training Error")) +
 geom_line(aes(y = `ej7.diagonal`$TestingAfterPrunningError, colour = "Tree Testing Error")) +
 geom_line(aes(y = `diagonal.ITER=4000,.ETA=0.01,.u=0.3,.NERROR=1`$TestDiscreto, colour = "Neural Network Test Error Minimo")) +
-geom_line(aes(y = `diagonal.ITER=4000,.ETA=0.01,.u=0.3,.NERROR=1`$TrainingError, colour = "Neural Network Training Error")) +
+geom_line(aes(y = `diagonal.ITER=4000,.ETA=0.01,.u=0.3,.NERROR=1`$TrainingError*100, colour = "Neural Network Training Error")) +
 theme(legend.position="bottom") + ggtitle("Problema Diagonal") + xlab("Dimensiones") + ylab("Classification Error") 
 
