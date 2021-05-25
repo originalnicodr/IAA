@@ -69,8 +69,8 @@ int define_matrix_nb(struct NB *nb){
   int i;
 
   nb->Prob=(float *)calloc(nb->N_Class+1,sizeof(float));
-  nb->Media=(float **)calloc(nb->N_IN+1,sizeof(float));
-  nb->Varianza=(float **)calloc(nb->N_IN+1,sizeof(float));
+  nb->Media=(float **)calloc(nb->N_Class+1,sizeof(float));
+  nb->Varianza=(float **)calloc(nb->N_Class+1,sizeof(float));
   for(i=0;i<=nb->N_Class;i++){
     nb->Media[i]=(float *)calloc(nb->N_IN+1,sizeof(float));
     nb->Varianza[i]=(float *)calloc(nb->N_IN+1,sizeof(float));
@@ -286,9 +286,11 @@ float prob(struct NB *nb,float x,int feature,int clase)  { //feature es a que co
   float u=nb->Media[clase][feature];
   float var=nb->Varianza[clase][feature];//esto esta al cuadrado?
 
-  prob= (1/(sqrt(2*PI)*var))*exp(-1/(2*pow(var,2))*pow(x-u,2));//gauss
+  //prob= (1/(sqrt(2*PI)*var))*exp((-1/2)*pow((x-u)/var,2));//gauss
+  prob = (1/(sqrt(2*PI)*var))*exp(-1/(2*pow(var,2))*pow(x-u,2));
+  //printf("x=%f, media=%f, varianza=%f, gauss= %f\n",x,u,var,fmax(LOW,prob));
   
-  return prob;  
+  return fmax(LOW,prob);  
 }
 /* ------------------------------------------------------------------------------ */
 /*output: calcula la probabilidad de cada clase dado un vector de entrada *input
@@ -382,11 +384,12 @@ int train(struct NB *nb,struct DATOS *datos){
   /*IMPLEMENTAR*/
   /*Calcular probabilidad intrinseca de cada clase*/
   for(i=0;i<nb->N_Class;i++){
-    for(j=0;j<datos->PTEST;j++){
-      nb->Prob[i]=0;//no estoy seguro del valor que tiene antes, mejor ponerlo en 0 por las dudas
-      if (datos->pred[j]==i) nb->Prob[i]++; //ver si esta bien usar pred para esto
+    nb->Prob[i]=0;//no estoy seguro del valor que tiene antes, mejor ponerlo en 0 por las dudas
+    for(j=0;j<datos->PR;j++){
+      if (datos->data[j][datos->N_IN]==i) nb->Prob[i]++; //ver si esta bien usar pred para esto
     }
-    nb->Prob[i]/= datos->PTEST;
+    nb->Prob[i]/= datos->PR;
+    printf("probabilidad[%d]=%f\n",i,nb->Prob[i]);
   }
   
   /*Calcular media y desv.est. por clase y cada atributo*/
@@ -405,28 +408,31 @@ int train(struct NB *nb,struct DATOS *datos){
   }
   */
   //deberia inicializarlos en 0 a las media?
-  for(j=0;j<datos->PTEST;j++){
+  for(j=0;j<datos->PR;j++){
       for(k=0;k<nb->N_IN;k++){
-        int c=datos->pred[j];
-        nb->Media[c][k]+=datos->test[j][k];
+        int c=datos->data[j][datos->N_IN];//ver si esta es la clase
+        //printf("clase=%f\n",datos->data[j][nb->N_IN]);
+        nb->Media[c][k]+=datos->data[j][k];
       }
     }
   for(i=0;i<nb->N_Class;i++){ 
     for(k=0;k<nb->N_IN;k++){
-      nb->Media[i][k]/=datos->PTEST;
+      nb->Media[i][k]/=datos->PR;
+      printf("media[%d][%d]=%f\n",i,k,nb->Media[i][k]);
     }
   }
 
 
-  for(j=0;j<datos->PTEST;j++){
+  for(j=0;j<datos->PR;j++){
       for(k=0;k<nb->N_IN;k++){
-        int c=datos->pred[j];
-        nb->Varianza[c][k]+=pow(datos->test[j][k]-nb->Media[c][k],2);
+        int c=datos->data[j][datos->N_IN];
+        nb->Varianza[c][k]+=pow(datos->data[j][k]-nb->Media[c][k],2);
       }
     }
   for(i=0;i<nb->N_Class;i++){ 
     for(k=0;k<nb->N_IN;k++){
-      nb->Varianza[i][k]/=datos->PTEST;
+      nb->Varianza[i][k]/=datos->PR;
+      printf("varianza[%d][%d]=%f\n",i,k,nb->Varianza[i][k]);
     }
   }
 

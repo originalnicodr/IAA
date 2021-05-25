@@ -1,0 +1,6 @@
+ErrorEntrenamiento ErrorValidacion ErrorTest
+8.0 8.0 11.1
+10.8 10.8 18.4
+20.8 20.8 10.0
+20.8 20.8 12.800001
+23.6 23.6 17.5
