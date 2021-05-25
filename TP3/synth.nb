@@ -1,0 +1,24 @@
+2
+2
+250
+187
+1000
+0
+0
+
+# los parametros corresponden a:
+# N_IN:        CANTIDAD DE ENTRADAS
+# N_Class:     CANTIDAD DE CLASES
+# PTOT:   cantidad TOTAL de patrones en el archivo .data
+# PR:     cantidad de patrones de ENTRENAMIENTO
+# PTEST:  cantidad de patrones de test (archivo .test)
+# SEED:   semilla para el rand()
+# CONTROL:verbosity
+
+# Comentarios:
+# cantidad de patrones de validacion: PTOT - PR
+# SEED: -1: No mezclar los patrones: usar los primeros PR para entrenar y
+#           el resto para validar.
+#        0: Seleccionar semilla con el reloj, y mezclar los patrones.
+#       >0: Usa el numero como semilla, y mezcla los patrones.
+# verbosity: 0:resumen, 1:0 + pesos, 2:1 + datos
