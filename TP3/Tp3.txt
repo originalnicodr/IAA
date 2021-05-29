@@ -1,5 +1,9 @@
 2)
 
+Funciona MUY bien, por que funciona muy bien?
+
+Por que la parte de las gaussianas no usa validacion?
+
 require(ggplot2)
 
 ggplot(`arboles.parallel`, aes(2**as.numeric(row.names(`arboles.parallel`)))) +
@@ -11,6 +15,8 @@ geom_line(aes(y = `bayes.parallel`$ErrorTest, colour = "Bayes Test Error")) +
 geom_line(aes(y = `bayes.parallel`$ErrorEntrenamiento, colour = "Bayes Training Error")) +
 theme(legend.position="bottom") + ggtitle("Problema Paralelo") + xlab("Dimensiones") + ylab("Classification Error")
 
+
+
 ggplot(`arboles.diagonal`, aes(2**as.numeric(row.names(`arboles.diagonal`)))) +
 geom_line(aes(y = `arboles.diagonal`$TrainingAfterPrunningError, colour = "Tree Training Error")) +
 geom_line(aes(y = `arboles.diagonal`$TestingAfterPrunningError, colour = "Tree Testing Error")) +
@@ -18,9 +24,13 @@ geom_line(aes(y = `neuralnetworks.diagonal`$TestDiscreto, colour = "Neural Netwo
 geom_line(aes(y = `neuralnetworks.diagonal`$TrainingError*100, colour = "Neural Network Training Error")) +
 geom_line(aes(y = `bayes.diagonal`$ErrorTest, colour = "Bayes Test Error")) +
 geom_line(aes(y = `bayes.diagonal`$ErrorEntrenamiento, colour = "Bayes Training Error")) +
-theme(legend.position="bottom") + ggtitle("Problema Paralelo") + xlab("Dimensiones") + ylab("Classification Error")
+theme(legend.position="bottom") + ggtitle("Problema Diagonal") + xlab("Dimensiones") + ylab("Classification Error")
 
 3)
+
+Funciona muy mal, por que funciona muy mal?
+
+Espacio de hipotesis, metodos de busqueda
 
 plot(espirales.150$V1, espirales.150$V2, main="Espirales - 150", xlab="X", ylab="Y", col=ifelse(espirales.150$V3==1, "blue","red"))
 plot(espirales.600$V1, espirales.600$V2, main="Espirales - 600", xlab="X", ylab="Y", col=ifelse(espirales.600$V3==1, "blue","red"))

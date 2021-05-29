@@ -1,2 +1,4 @@
 ErrorEntrenamiento ErrorValidacion ErrorTest
-27.250001	27.000001	24.349999
+25.000000%	25.000000%	24.349999%
+
+

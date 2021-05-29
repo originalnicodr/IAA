@@ -279,13 +279,10 @@ void shuffle(int hasta,struct DATOS *datos){
 /*Prob:Calcula la probabilidad de obtener el valor x para el input feature y la clase
   Aproxima las probabilidades por distribuciones normales */
 /* ------------------------------------------------------------------- */
-float prob(struct NB *nb,float x,int feature,int clase)  { //feature es a que coordenada del input el x pertenece
+float prob(struct NB *nb,float x,int feature,int clase,int bins)  { //feature es a que coordenada del input el x pertenece
 
   float prob;
   /*IMPLEMENTAR*/
-
-  float u=nb->Media[clase][feature];
-  float var=nb->Varianza[clase][feature];//esto esta al cuadrado?
 
   //prob= (1/(sqrt(2*PI)*var))*exp((-1/2)*pow((x-u)/var,2));//gauss
   prob = (1/(sqrt(2*PI)*var))*exp(-1/(2*pow(var,2))*pow(x-u,2));
