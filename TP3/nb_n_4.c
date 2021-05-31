@@ -29,12 +29,16 @@ struct NB {
 
     //Una por cada clase
 
-    float **Media;                     /* Media de la clase */
-    float **Varianza;                     /* Varianza de la clase */
-    float *Prob;                     /*Probabilidad priori de la clase */
-
+    //float **Media;                     /* Media de la clase */
+    //float **Varianza;                     /* Varianza de la clase */
+    int N_Bins;                             /*Cantidad de bins utilizados*/
+    int *ClassElems;                     /*Cantidad elementos de training en cada clase*/
+    float ***Prob;                        /*Probabilidad de la clase para cada bin de cada atributo*/
+    //bool *M_Estimate_Flags;               /*Usado para determinar si se estan usando valores artificailes en una clase*/
+    float **Bounds;                         /*Cotas superior e inferior del conjunto de bins*/
     /* MATRICES DEL CLASIFICADOR
        DECLARAR ACA LAS MATRICES NECESARIAS */
+
 
 
 
@@ -68,14 +72,21 @@ int define_matrix_nb(struct NB *nb){
 
   int i;
 
-  nb->Prob=(float *)calloc(nb->N_Class,sizeof(float));
-  nb->Media=(float **)calloc(nb->N_Class,sizeof(float));
-  nb->Varianza=(float **)calloc(nb->N_Class,sizeof(float));
-  for(i=0;i<=nb->N_Class;i++){
-    nb->Media[i]=(float *)calloc(nb->N_IN+1,sizeof(float));
-    nb->Varianza[i]=(float *)calloc(nb->N_IN+1,sizeof(float));
+  nb->Prob=(float ***)calloc(nb->N_Class,sizeof(float));
+  for(i=0;i<nb->N_Class;i++){
+    nb->Prob[i]=(float **)calloc(nb->N_IN,sizeof(float));
+    for(int j=0;i<nb->N_IN;i++){
+      nb->Prob[i][j]=(float *)calloc(nb->N_Bins,sizeof(float));
+    }
   }
+  nb->ClassElems=(int *)calloc(nb->N_Class,sizeof(float));
 
+  nb->Bounds=(float **)calloc(nb->N_IN,sizeof(float));
+  for(i=0;i<nb->N_IN;i++){
+    nb->Bounds[i]=(float *)calloc(2,sizeof(float));
+  }
+  //nb->M_Estimate_Flags=(bool *)calloc(nb->N_Class,sizeof(float));
+  
   /*ALLOCAR ESPACIO PARA LAS MATRICES DEL CLASIFICADOR
    medias, varianzas, prop a priori*/
 
@@ -118,7 +129,7 @@ int define_matrix_datos(struct DATOS *datos){
 /*arquitec: Lee el archivo .nb e inicializa el algoritmo en funcion de los valores leidos
   filename es el nombre del archivo .nb (sin la extension) */
 /* ---------------------------------------------------------------------------------- */
-int arquitec(char *filename,struct NB *nb,struct DATOS *datos){
+int arquitec(char *filename,struct NB *nb,struct DATOS *datos,int bins){
   FILE *b;
   char filepat[100];
   int i,j;
@@ -135,6 +146,8 @@ int arquitec(char *filename,struct NB *nb,struct DATOS *datos){
     printf("Error al abrir el archivo de parametros\n");
     return 1;
   }
+
+  nb->N_Bins=bins;
 
   /* Dimensiones */
   fscanf(b,"%d",&nb->N_IN);
@@ -279,7 +292,7 @@ void shuffle(int hasta,struct DATOS *datos){
 /*Prob:Calcula la probabilidad de obtener el valor x para el input feature y la clase
   Aproxima las probabilidades por distribuciones normales */
 /* ------------------------------------------------------------------- */
-float prob(struct NB *nb,float x,int feature,int clase,int bins)  { //feature es a que coordenada del input el x pertenece
+float prob(struct NB *nb,float x,int feature,int clase)  { //feature es a que coordenada del input el x pertenece
 
   float prob;
   /*IMPLEMENTAR*/
@@ -290,6 +303,7 @@ float prob(struct NB *nb,float x,int feature,int clase,int bins)  { //feature es
   
   return fmax(LOW,prob);  
 }
+
 /* ------------------------------------------------------------------------------ */
 /*output: calcula la probabilidad de cada clase dado un vector de entrada *input
   usa el log(p(x)) (sumado)
@@ -300,6 +314,19 @@ int output(struct NB *nb,float *input){
   float prob_de_clase;
   float max_prob=-1e40;
   int clase_MAP;
+
+  bool flag=false;//es necesario agregar el m-estimate?
+  //hacerlo para cada clase? no se si es necesario
+
+  //nb->Prob[i][j][k] //i: clase, j: dimension, k: bin
+  
+
+  for(i=0;i<nb->N_Class;i++){
+    if (nb->Prob[i][j][k]==0){//adaptarlo
+      flag=true;
+      break;
+    }
+  }
   
   for(k=0;k<nb->N_Class;k++) {
     prob_de_clase=0.;
@@ -379,66 +406,40 @@ int train(struct NB *nb,struct DATOS *datos){
     shuffle(datos->PTOT,datos);
   }
 
-  /*IMPLEMENTAR*/
-  /*Calcular probabilidad intrinseca de cada clase*/
-  for(i=0;i<nb->N_Class;i++){
-    //nb->Prob[i]=0;//no estoy seguro del valor que tiene antes, mejor ponerlo en 0 por las dudas
-    for(j=0;j<datos->PR;j++){
-      if (datos->data[j][datos->N_IN]==i) nb->Prob[i]++; //ver si esta bien usar pred para esto
+    //calculos de minimos y maximos
+  for(k=0;k<nb->N_IN;k++){
+    nb->Bounds[k][0]=datos->data[0][k];
+    nb->Bounds[k][1]=datos->data[0][k];
+    for(i=0;i<datos->PR;i++){
+      if (datos->data[i][k]<nb->Bounds[k][0]) nb->Bounds[k][0]=datos->data[i][k];
+      if (datos->data[i][k]>nb->Bounds[k][1]) nb->Bounds[k][1]=datos->data[i][k];
     }
-    nb->Prob[i]/= datos->PR;
-    printf("probabilidad[%d]=%f\n",i,nb->Prob[i]);
   }
-  
-  /*Calcular media y desv.est. por clase y cada atributo*/
-  /*
-  for(i=0;i<nb->N_Class;i++){
-    for(j=0;j<datos->PTEST;j++){
-      if (datos->pred[j]==i){//suponiendo que pred sea donde se guardan las clases de cada patron de entrenamiento (creo que no)
-        for(k=0;k<nb->N_IN;k++){
-          nb->Media[i][k]+=datos->test[j][k];
+
+    /*IMPLEMENTAR*/
+  /*Cuento la cantidad de elementos en cada bin de cada coordenada de cada clase*/
+  for(k=0;k<datos->PR;k++){
+    int clase=datos->data[k][datos->N_IN];
+
+    nb->ClassElems[clase]++;
+
+    for(i=0;i<nb->N_IN;i++){
+      float bmin= nb->Bounds[i][0];
+      float bmax= nb->Bounds[i][1];
+      float d=(bmax-bmin)/nb->N_Bins;
+      /*
+      for(j=0;j<nb->N_Bins;j++){
+        if(datos->data[k][i]<min+d*i){
+          nb->Prob[clase][i][j]++;
+          break;
         }
       }
-  
-    for(k=0;k<nb->N_IN;k++){
-      nb->Media[i][k]/=nb->Prob[i]*datos->PTEST;
+      if (j==nb->N_Bins) nb->Prob[clase][i][j]++;
+      */
+      int b=min(bmax,max(0,(datos->data[k][i]-bmin)/d));
+
     }
   }
-  */
-  //deberia inicializarlos en 0 a las media?
-  for(j=0;j<datos->PR;j++){
-      int c=datos->data[j][datos->N_IN];//ver si esta es la clase
-      for(k=0;k<nb->N_IN;k++){
-        printf("clase=%f\n",datos->data[j][nb->N_IN]);
-        nb->Media[c][k]+=datos->data[j][k];
-      }
-    }
-  for(i=0;i<nb->N_Class;i++){ 
-    for(k=0;k<nb->N_IN;k++){
-      nb->Media[i][k]/=nb->Prob[i]*datos->PR;
-      printf("media[%d][%d]=%f\n",i,k,nb->Media[i][k]);
-    }
-  }
-
-
-  for(j=0;j<datos->PR;j++){
-      int c=datos->data[j][datos->N_IN];
-      for(k=0;k<nb->N_IN;k++){
-        nb->Varianza[c][k]+=pow(datos->data[j][k]-nb->Media[c][k],2);
-      }
-    }
-  for(i=0;i<nb->N_Class;i++){ 
-    for(k=0;k<nb->N_IN;k++){
-      nb->Varianza[i][k]/=nb->Prob[i]*datos->PR;
-      nb->Varianza[i][k]=sqrt(nb->Varianza[i][k]);
-      printf("varianza[%d][%d]=%f\n",i,k,nb->Varianza[i][k]);
-    }
-  }
-
-  
-  
-  
-
 
   /*calcular error de entrenamiento*/
   train_error=evaluar(nb,datos,datos->data,0,datos->PR,1);
@@ -478,16 +479,18 @@ int main(int argc, char **argv){
   /*bandera de error*/
   int error;
  
-  if(argc!=2){
-    printf("Modo de uso: nb <filename>\ndonde filename es el nombre del archivo (sin extension)\n");
+  if(argc!=3){
+    printf("Modo de uso: nb <filename> <binnum>\ndonde filename es el nombre del archivo (sin extension)\ny binnum es el numero de bins usado\n");
     return 0;
   }
 
   struct NB nb;
   struct DATOS datos;
+
+  int bins=atoi(argv[2]);
   
   /* defino la estructura*/
-  error=arquitec(argv[1],&nb,&datos);
+  error=arquitec(argv[1],&nb,&datos,bins);
   if(error){
     printf("Error en la definicion del clasificador\n");
     return 1;

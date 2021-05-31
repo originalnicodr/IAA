@@ -37,3 +37,6 @@ plot(espirales.600$V1, espirales.600$V2, main="Espirales - 600", xlab="X", ylab=
 plot(espirales.3000$V1, espirales.3000$V2, main="Espirales - 3000", xlab="X", ylab="Y", col=ifelse(espirales.3000$V3==1, "blue","red"))
 
 plot(dos_elipses$V1, dos_elipses$V2, main="Dos elipses", xlab="X", ylab="Y", col=ifelse(dos_elipses$V3==1, "blue","red"))
+
+
+plot(espirales.predic$V1, espirales.predic$V2, main="Espirales - redes neuronales", xlab="X", ylab="Y", col=ifelse(espirales.predic$V3==1, "blue","red"))
