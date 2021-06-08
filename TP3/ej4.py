@@ -43,3 +43,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+"""
+def test():
+    output= subprocess.check_output("./nb_n_4.out test_diagonal 6", shell=True, universal_newlines=True)
+    f = open("test_diagonal.txt", "w")
+    f.write(output)
+    f.close()
+
+test()
+"""
+

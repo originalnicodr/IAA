@@ -14,9 +14,6 @@ PMG - Ultima revision: 20/05/2019
 #define LOW 1.e-14                 /*Minimo valor posible para una probabilidad*/
 #define PI  3.141592653
 
-#define true 1
-#define false 0
-
 /*defino una estructura para el clasificador naive bayes*/
 struct NB {
     int N_IN;           /*Total numbre of inputs*/
@@ -33,7 +30,7 @@ struct NB {
     int N_Bins;                             /*Cantidad de bins utilizados*/
     float *ClassProb;                     /*Probabilidad de cada clase*/
     float ***Prob;                        /*Probabilidad de la clase para cada bin de cada atributo*/
-    float **Bounds;                         /*Cotas superior e inferior del conjunto de bins*/
+    float ***Bounds;                         /*Cotas superior e inferior del conjunto de bins*/
     /* MATRICES DEL CLASIFICADOR
        DECLARAR ACA LAS MATRICES NECESARIAS */
     
@@ -78,16 +75,21 @@ int define_matrix_nb(struct NB *nb){
   }
   nb->ClassProb=(float *)calloc(nb->N_Class,sizeof(float));
 
-  nb->Bounds=(float **)calloc(nb->N_IN,sizeof(float*));
-  for(i=0;i<nb->N_IN;i++){
-    nb->Bounds[i]=(float *)calloc(2,sizeof(float));
-    if(nb->Bounds[i]==NULL) return 1;
+
+  nb->Bounds=(float ***)calloc(nb->N_Class,sizeof(float**));
+  for(int c=0;c<nb->N_Class;c++){
+    nb->Bounds[c]=(float **)calloc(nb->N_IN,sizeof(float*));
+    for(i=0;i<nb->N_IN;i++){
+      nb->Bounds[c][i]=(float *)calloc(2,sizeof(float));
+      if(nb->Bounds[c][i]==NULL) return 1;
+    }
+  }
 
     //printf("nb->Bounds[%d][0]=%f\n",i,nb->Bounds[i][0]);
     //printf("nb->Bounds[%d][1]=%f\n",i,nb->Bounds[i][1]);
     //nb->Bounds[i][0]=1;
     //nb->Bounds[i][1]=1;
-  }
+
   //nb->M_Estimate_Flags=(bool *)calloc(nb->N_Class,sizeof(float));
   
   /*ALLOCAR ESPACIO PARA LAS MATRICES DEL CLASIFICADOR
@@ -296,19 +298,22 @@ void shuffle(int hasta,struct DATOS *datos){
 /* ------------------------------------------------------------------- */
 /*Calcula en que bin cae el valor dado */
 /* ------------------------------------------------------------------- */
-float obtener_bin(struct NB *nb,float x,int feature,int clase)  { //feature es a que coordenada del input el x pertenece
+int obtener_bin(struct NB *nb,float x,int feature,int clase)  { //feature es a que coordenada del input el x pertenece
 
-  float bmin= nb->Bounds[feature][0];
-  float bmax= nb->Bounds[feature][1];
+  float bmin= nb->Bounds[clase][feature][0];
+  float bmax= nb->Bounds[clase][feature][1];
   float d=(bmax-bmin)/nb->N_Bins;
 
-  int bin=fmin(nb->N_Bins,fmax(0,(x-bmin)/d));
+  int bin=fmin(nb->N_Bins-1,fmax(0,(x-bmin)/d));
+
+  //printf("d=(%f-%f)/%d=%f\n",bmin,bmax,nb->N_Bins,d);
+  //printf("bin=min(%d,max(0,(%f-%f)/%f)=%d\n\n",nb->N_Bins,x,bmin,d,bin);
+
   return bin;
 }
 
 /* ------------------------------------------------------------------- */
-/*Prob:Calcula la probabilidad de obtener el valor x para el input feature y la clase
-  Aproxima las probabilidades por distribuciones normales */
+/*Prob:Calcula la probabilidad de obtener el valor x para el input feature y la clase*/
 /* ------------------------------------------------------------------- */
 float prob(struct NB *nb,float x,int feature,int clase)  { //feature es a que coordenada del input el x pertenece
 
@@ -347,6 +352,26 @@ int output(struct NB *nb,float *input){
       clase_MAP=k;
     }
   }
+
+  /*
+  printf("El punto: [");
+  for(int k=0;k<nb->N_IN;k++){
+    printf("%f, ",input[k]);
+  }
+  printf("] cayo en los bines:\n");
+  for(int c=0;c<nb->N_Class;c++){
+    printf("Clase %d:",c);
+      for(int k=0;k<nb->N_IN;k++){
+      //prob(nb, input[k],k,c)
+      int b=obtener_bin(nb,input[k],k,c);
+      printf("         %d",b);
+      //printf("El punto %f entro en el bin %d de la clase %d para la coord %d\n",input[k],b,c,k);
+    }
+    printf("\n");
+  }
+  printf("\nClase final: %d\n",clase_MAP);
+  */
+
   
   return clase_MAP;
 }
@@ -399,8 +424,8 @@ int train(struct NB *nb,struct DATOS *datos){
   char filepat[100];
 
   /*Asigno todos los patrones del .data como entrenamiento porque este metodo (gaussianas) no requiere validacion*/
-  N_TOTAL=datos->PTOT;
-  /*N_TOTAL=datos->PR; si hay validacion*/
+  //N_TOTAL=datos->PTOT;
+  N_TOTAL=datos->PR;
 
   /*efectuar shuffle inicial de los datos de entrenamiento si SEED != -1 (y hay validacion)*/
   if(nb->SEED>-1 && N_TOTAL<datos->PTOT){
@@ -418,38 +443,53 @@ int train(struct NB *nb,struct DATOS *datos){
   */
 
     //calculos de minimos y maximos
-  for(i=0;i<nb->N_IN;i++){
+  for(int c=0;c<nb->N_Class;c++){
+    for(i=0;i<nb->N_IN;i++){
     //printf("i=%d\n",i);
     //printf("nb->Bounds[%d][0]=%f, va a pasar a ser %f\n",i,nb->Bounds[i][0],datos->data[0][i]);
     //printf("nb->Bounds[%d][1]=%f, va a pasar a ser %f\n",i,nb->Bounds[i][1],datos->data[0][i]);
 
-    nb->Bounds[i][0]=datos->data[0][i];
-    nb->Bounds[i][1]=datos->data[0][i];
-
+    //busco para inicializar
+    for(j=0;j<datos->PR;j++){
+      int s=datos->seq[j];//shuffle index
+      if (c==datos->data[s][datos->N_IN]){
+        nb->Bounds[c][i][0]=datos->data[s][i];
+        nb->Bounds[c][i][1]=datos->data[s][i];
+        break;
+      }
+    }
     //printf("nb->Bounds[%d][0]=%f\n",i,nb->Bounds[i][0]);
     //printf("nb->Bounds[%d][1]=%f\n",i,nb->Bounds[i][1]);
 
     for(j=0;j<datos->PR;j++){
-      if (datos->data[j][i]<nb->Bounds[i][0]) nb->Bounds[i][0]=datos->data[j][i];
-      if (datos->data[j][i]>nb->Bounds[i][1]) nb->Bounds[i][1]=datos->data[j][i];
+      int s=datos->seq[j];//shuffle index
+      if (c==datos->data[s][datos->N_IN]){
+        if (datos->data[s][i]<nb->Bounds[c][i][0]) nb->Bounds[c][i][0]=datos->data[s][i];
+        if (datos->data[s][i]>nb->Bounds[c][i][1]) nb->Bounds[c][i][1]=datos->data[s][i];
+      }
     }
     //printf("testean2\n");
   }
+
+  }
+
 
   
 
     /*IMPLEMENTAR*/
   /*Cuento la cantidad de elementos en cada bin de cada coordenada de cada clase*/
   for(k=0;k<datos->PR;k++){
-    int clase=datos->data[k][datos->N_IN];
+    int s=datos->seq[k];
+    int clase=datos->data[s][datos->N_IN];
     nb->ClassProb[clase]++;
 
     for(i=0;i<nb->N_IN;i++){
-      int b=obtener_bin(nb, datos->data[k][i],i,clase);
+      int b=obtener_bin(nb, datos->data[s][i],i,clase);
       nb->Prob[clase][i][b]++;
 
     }
   }
+
 
   
   //A partir de lo contado calculo la prob
@@ -457,15 +497,25 @@ int train(struct NB *nb,struct DATOS *datos){
     for(k=0;k<nb->N_IN;k++){
       for(int b=0;b<nb->N_Bins;b++){
         //printf("nb->Prob[%d][%d][%d]=(%f+1/%d)/(%d+1)= ",i,k,b,nb->Prob[i][k][b],nb->N_Bins,datos->PR);
-        //nb->Prob[i][k][b]=fmax(LOW,(nb->Prob[i][k][b]+1/nb->N_Bins)/(datos->PR+1));
-        nb->Prob[i][k][b]=fmax(LOW,(nb->Prob[i][k][b]+1/nb->N_Bins)/(nb->ClassProb[i]+1));//en este punto ClassProb[i] no es la probabilidad sino que la cantidad de elementos de esa clase, por eso no necesito multiplicarlo por datos->PR
+        nb->Prob[i][k][b]=fmax(LOW,(nb->Prob[i][k][b]+1.0/nb->N_Bins)/((float)nb->ClassProb[i]+1.0));//en este punto Prob[i][k][b] no es la probabilidad sino que la cantidad de elementos de esa clase, por eso no necesito multiplicarlo por datos->PR
         //printf("%f\n",nb->Prob[i][k][b]);
       }
     }
     nb->ClassProb[i]=nb->ClassProb[i]/datos->PR;
   }
+
+    for(int c=0;c<nb->N_Class;c++){
+    for(int i=0;i<nb->N_IN;i++){
+      for(int j=0;j<nb->N_Bins;j++){
+        float d=(nb->Bounds[c][i][1]-nb->Bounds[c][i][0])/nb->N_Bins;
+        float b_inicio=nb->Bounds[c][i][0]+d*j;
+        float b_fin=nb->Bounds[c][i][0]+d*(j+1);
+        printf("nb->Prob[%d][%d][%d]: La prob entre %f y %f es de %f\n",c,i,j,b_inicio,b_fin, nb->Prob[c][i][j]);
+      }
+    }
+  }
   
-/*
+
   printf("nb->ClassProb[0]=%f\nnb->ClassProb[1]=%f\n",nb->ClassProb[0],nb->ClassProb[1]);
 
   for(k=0;k<nb->N_IN;k++){
@@ -474,10 +524,10 @@ int train(struct NB *nb,struct DATOS *datos){
       for(int b=0;b<nb->N_Bins;b++){
         test+=nb->Prob[i][k][b];
       }//sumo prob de todos los bins de esa coordenada, deberia ser igual a cl
-      printf("test=%f\n",test);
+      printf("Suma de las prob de los bins de la clase %d y componente %d=%f\n",i,k,test);
     }
   }
-
+/*
   for(k=0;k<nb->N_IN;k++){
     for(int b=0;b<nb->N_Bins;b++){
       float test=0;
@@ -488,13 +538,14 @@ int train(struct NB *nb,struct DATOS *datos){
     }
   }
 */
-  /*
-  for(i=0;i<nb->N_IN;i++){
-    //printf("i=%d\n",i);
-    printf("nb->Bounds[%d][0]=%f\n",i,nb->Bounds[i][0]);
-    printf("nb->Bounds[%d][1]=%f\n",i,nb->Bounds[i][1]);
+  for(int c=0;c<nb->N_Class;c++){
+    for(i=0;i<nb->N_IN;i++){
+      //printf("i=%d\n",i);
+      printf("nb->Bounds[%d][%d][0]=%f\n",c,i,nb->Bounds[c][i][0]);
+      printf("nb->Bounds[%d][%d][1]=%f\n",c,i,nb->Bounds[c][i][1]);
+    }
   }
-  */
+  
 
   /*calcular error de entrenamiento*/
   train_error=evaluar(nb,datos,datos->data,0,datos->PR,1);

@@ -45,5 +45,22 @@ plot(dos_elipses.predic$V1, dos_elipses.predic$V2, main="Dos elipses - Redes Neu
 
 4)
 
+require(ggplot2)
+
 plot(espirales$V1, espirales$V2, main="Espirales predic", xlab="X", ylab="Y", col=ifelse(espirales$V3==1, "blue","red"))
+
 plot(dos_elipses$V1, dos_elipses$V2, main="Dos elipses predic", xlab="X", ylab="Y", col=ifelse(dos_elipses$V3==1, "blue","red"))
+
+ggplot(`dos_elipses_error`, aes(1+as.numeric(row.names(`dos_elipses_error`)))) +
+geom_line(aes(y = `dos_elipses_error`$ErrorEntrenamiento, colour = "Error de entrenamiento")) +
+geom_line(aes(y = `dos_elipses_error`$ErrorValidacion, colour = "Error de validacion")) +
+geom_line(aes(y = `dos_elipses_error`$ErrorTest, colour = "Error de test")) + 
+theme(legend.position="bottom") + ggtitle("Dos_elipses Error") + xlab("Bins") + ylab("Error %")
+
+ggplot(`espirales_error`, aes(1+as.numeric(row.names(`espirales_error`)))) +
+geom_line(aes(y = `espirales_error`$ErrorEntrenamiento, colour = "Error de entrenamiento")) +
+geom_line(aes(y = `espirales_error`$ErrorValidacion, colour = "Error de validacion")) +
+geom_line(aes(y = `espirales_error`$ErrorTest, colour = "Error de test")) + 
+theme(legend.position="bottom") + ggtitle("Espirales Error") + xlab("Bins") + ylab("Error %")
+
+plot(test_diagonal$V1, test_diagonal$V2, main="test_diagonal", xlab="X", ylab="Y", col=ifelse(test_diagonal$V3==1, "blue","red"))
