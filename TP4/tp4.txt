@@ -1,0 +1,34 @@
+b)
+require(ggplot2)
+
+plot(c_0$V1, c_0$V2, main="Espirales sin ruido: K-neighbours", xlab="X", ylab="Y", col=ifelse(c_0$V3==1, "blue","red"))
+
+plot(c_2$V1, c_2$V2, main="Espirales con ruido: K-neighbours", xlab="X", ylab="Y", col=ifelse(c_2$V5==1, "blue","red"))
+
+c)
+
+require(ggplot2)
+
+ggplot(`arboles.parallel`, aes(2**as.numeric(row.names(`arboles.parallel`)))) +
+geom_line(aes(y = `arboles.parallel`$TrainingAfterPrunningError, colour = "Tree Training Error")) +
+geom_line(aes(y = `arboles.parallel`$TestingAfterPrunningError, colour = "Tree Testing Error")) +
+geom_line(aes(y = `neuralnetworks.parallel`$TestDiscreto, colour = "Neural Network Test Error Minimo")) +
+geom_line(aes(y = `neuralnetworks.parallel`$TrainingError*100, colour = "Neural Network Training Error")) +
+geom_line(aes(y = `bayes.parallel`$ErrorTest, colour = "Bayes Test Error")) +
+geom_line(aes(y = `bayes.parallel`$ErrorEntrenamiento, colour = "Bayes Training Error")) +
+geom_line(aes(y = `k.vecinos.parallel`$ErrorTest, colour = "K-Vecinos Test Error")) +
+geom_line(aes(y = `k.vecinos.parallel`$ErrorEntrenamiento, colour = "K-Vecinos Training Error")) +
+theme(legend.position="bottom") + ggtitle("Problema Paralelo") + xlab("Dimensiones") + ylab("Classification Error")
+
+
+
+ggplot(`arboles.diagonal`, aes(2**as.numeric(row.names(`arboles.diagonal`)))) +
+geom_line(aes(y = `arboles.diagonal`$TrainingAfterPrunningError, colour = "Tree Training Error")) +
+geom_line(aes(y = `arboles.diagonal`$TestingAfterPrunningError, colour = "Tree Testing Error")) +
+geom_line(aes(y = `neuralnetworks.diagonal`$TestDiscreto, colour = "Neural Network Test Error Minimo")) +
+geom_line(aes(y = `neuralnetworks.diagonal`$TrainingError*100, colour = "Neural Network Training Error")) +
+geom_line(aes(y = `bayes.diagonal`$ErrorTest, colour = "Bayes Test Error")) +
+geom_line(aes(y = `bayes.diagonal`$ErrorEntrenamiento, colour = "Bayes Training Error")) +
+geom_line(aes(y = `k.vecinos.diagonal`$ErrorTest, colour = "K-Vecinos Test Error")) +
+geom_line(aes(y = `k.vecinos.diagonal`$ErrorEntrenamiento, colour = "K-Vecinos Training Error")) +
+theme(legend.position="bottom") + ggtitle("Problema Diagonal") + xlab("Dimensiones") + ylab("Classification Error")

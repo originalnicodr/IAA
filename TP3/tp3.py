@@ -16,7 +16,7 @@ def ej1():
     valoresd=[2, 4, 8, 16, 32]
     for d in valoresd:
         nb = open("ej-"+str(d)+".nb", "w")
-        nb.write(str(d)+'\n2\n250\n250\n1000\n0\n0')
+        nb.write(str(d)+'\n2\n250\n188\n1000\n0\n0')
         nb.close()
 
         valores_guardados=[]

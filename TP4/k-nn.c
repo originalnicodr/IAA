@@ -340,14 +340,18 @@ void sorttest(struct KF *kf,struct DATOS *datos){
 
   //inicializacion
   for(int k=0;k<datos->PR;k++){
-    orden[k]=k;
+    //int s=datos->seq[k];
+    orden[k]=datos->seq[k];
   }
   
   mergeSort(orden,0,datos->PR-1,datos->data,test,kf->N_IN);
   //bubbleSort(orden, datos->PR-1,datos->data, test, kf->N_IN);
 
   for(int i=0;i<datos->PR;i++){
-    printf("distancia: %f\n",dist(kf->N_IN,datos->data[orden[i]],test));
+    for(int k=0;k<datos->N_IN;k++){
+      printf("%f,   ",datos->data[orden[i]][k]);
+    }
+    printf(" - distancia: %f\n",dist(kf->N_IN,datos->data[orden[i]],test));
   }
 }
 
@@ -361,14 +365,13 @@ void sorttest(struct KF *kf,struct DATOS *datos){
 int output(struct KF *kf,struct DATOS *datos,float *input){
   
   int i,k; 	
-  float prob_de_clase;
-  float max_prob=-1e40;
 
   int orden[datos->PR];
 
   //inicializacion
   for(k=0;k<datos->PR;k++){
-    orden[k]=k;
+    //int s=datos->seq[k];
+    orden[k]=datos->seq[k];
   }
   
   float cont[kf->N_Class];
@@ -389,8 +392,9 @@ int output(struct KF *kf,struct DATOS *datos,float *input){
 
   int maxprob=0;
   for(k=0;k<kf->N_Class;k++){
-    cont[k]/=kf->N_K;
-    if(cont[maxprob]<cont[k]) maxprob=k;
+    //cont[k]/=kf->N_K;
+    if((cont[maxprob]==cont[k]) && (k<maxprob)) maxprob=k; //si hay empate le doy mas prioridad a las primeras clases
+    else if(cont[maxprob]<cont[k]) maxprob=k;
   }
   
   return maxprob;
@@ -446,6 +450,13 @@ int train(struct KF *kf,struct DATOS *datos){
   FILE *fpredic;
   char filepat[100];
   int error;
+
+  /*efectuar shuffle inicial de los datos de entrenamiento si SEED != -1 (y hay validacion)*/
+  if(kf->SEED>-1 && datos->PR<datos->PTOT){
+    srand((unsigned)kf->SEED);    
+    shuffle(datos->PTOT,datos);
+  }
+
   
 
   /*calcular error de entrenamiento*/
@@ -512,6 +523,7 @@ int main(int argc, char **argv){
 
   //sorttest(&kf,&datos);
   // entreno la red
+  
   error=train(&kf,&datos);                  
   if(error){
     printf("Error en el entrenamiento\n");
