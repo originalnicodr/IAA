@@ -41,6 +41,7 @@ def test2():
     # Train Test Split
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
 
+
     #----------------------------------------
 
     # Polynomial kernel
@@ -86,28 +87,57 @@ for y in clases:
     elem_class={}#'data':[], 'n-folder':0,'index':0} #por alguna razon me pide inicializarlo
     elem_class['data']=[x for x in datos if clase(x)==y]
     
-    elem_class['n-folder']=(len(elem_class['data'])/len(datos))*len(datos)/10
+    elem_class['n-folder']=int((float(len(elem_class['data']))/len(datos))*float(len(datos))/10)
     elem_class['index']=0
     class_data.append(elem_class)
-    print(len(datos)/10)
     #print("elem_class['n-folder']=(len(elem_class['data'])/len(datos))*len(datos)/10 = "+str(len(elem_class['data']))+"/"+str(len(datos))+"*"+str(len(datos))+"/10 = "+str(elem_class['n-folder']))
 
 for k in range(0,10):
-    folder=[]
+    test_folder={'data':[],'class':[]}
+    training_folder={'data':[],'class':[]}
     for i in range(0,len(clases)):
         #print("carpeta numero "+str(k))
         index=class_data[i]['index']
-        n=elem_class['n-folder']
+        n=class_data[i]['n-folder']
         #print("index= " + str(index))
         #print("n= "+str(n))
-        folder+=class_data[i]['data'][index:index+n]
+        test_folder['data']+=class_data[i]['data'][index:index+n]
+        training_folder['data']+=class_data[i]['data'][:index] + class_data[i]['data'][index+n:]
         class_data[i]['index']+=n
 
-#prepararlo para poder obtener lista SIN los elementos que uso para testear
 
-    print(folder)
+    test_folder['class']=pd.DataFrame([list(x)[len(test_folder['data'][0])-1] for x in test_folder['data']], columns =[len(test_folder['data'][0])])
+    test_folder['data']=pd.DataFrame([list(x)[:len(test_folder['data'][0])-1] for x in test_folder['data']], columns =range(0,len(test_folder['data'][0])-1))
 
+    training_folder['class']=pd.DataFrame([list(x)[len(training_folder['data'][0])-1] for x in training_folder['data']], columns =[len(training_folder['data'][0])])
+    training_folder['data']=pd.DataFrame([list(x)[:len(training_folder['data'][0])-1] for x in training_folder['data']], columns =range(0,len(training_folder['data'][0])-1))
+    
+    
     if k==0:
         pass
-    
+
+    #----------------------------------------
+
+    # Polynomial kernel
+    #svclassifier = SVC(kernel='poly', degree=8)
+
+    # Gaussian Kernel
+    #svclassifier = SVC(kernel='rbf')
+
+    # Sigmoid Kernel
+    svclassifier = SVC(kernel='sigmoid')
+
+    #------------------------------------------
+
+    svclassifier.fit(training_folder['data'], training_folder['class'])
+
+    # Making Predictions
+    prediccion = svclassifier.predict(test_folder['data'])
+
+    print(test_folder['class'])
+
+    print("Resultados de la carpeta numero " + str(k))
+    # Evaluating the Algorithm
+    print(confusion_matrix(test_folder['class'], prediccion))
+    print(classification_report(test_folder['class'], prediccion))
 
