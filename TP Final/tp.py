@@ -5,64 +5,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix
 
-
-def test1():
-    bankdata = pd.read_csv("bill_authentication.csv")
-    #bankdata.shape
-    #bankdata.head()
-
-    X = bankdata.drop('Class', axis=1)
-    y = bankdata['Class']
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
-    
-    svclassifier = SVC(kernel='linear')
-    svclassifier.fit(X_train, y_train)
-
-    y_pred = svclassifier.predict(X_test)
-
-    print(confusion_matrix(y_test,y_pred))
-    print(classification_report(y_test,y_pred))
-
-def test2():
-    url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
-
-    # Assign colum names to the dataset
-    colnames = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'Class']
-    #colnames = ['Variance', 'Skewness', 'Curtosis', 'Entropy', 'Class']
-
-    # Read dataset to pandas dataframe
-    irisdata = pd.read_csv(url, names=colnames)
-
-    # Preprocessing
-    X = irisdata.drop('Class', axis=1)
-    y = irisdata['Class']
-
-    # Train Test Split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
-
-
-    #----------------------------------------
-
-    # Polynomial kernel
-    #svclassifier = SVC(kernel='poly', degree=8)
-
-    # Gaussian Kernel
-    #svclassifier = SVC(kernel='rbf')
-
-    # Sigmoid Kernel
-    svclassifier = SVC(kernel='sigmoid')
-
-    #------------------------------------------
-
-    svclassifier.fit(X_train, y_train)
-
-    # Making Predictions
-    y_pred = svclassifier.predict(X_test)
-
-    # Evaluating the Algorithm
-    print(confusion_matrix(y_test, y_pred))
-    print(classification_report(y_test, y_pred))
+import re
+import subprocess
+import os
 
 def clase(data):
     return data[len(data)-1]
@@ -72,14 +17,8 @@ def leer_datos(nombre):
     #print([clase(x) for x in data])
     return data
 
-
-
-#leer_datos("bill_authentication.csv")
-
-
-
-def training_folds(clases,data,algorithm):
-    datos=leer_datos(data)
+def training_folds(clases,data_name,algorithm):
+    datos=leer_datos(data_name)
 
     #filterclass
     class_data=[]# lista de diccionarios donde:
@@ -106,7 +45,11 @@ def training_folds(clases,data,algorithm):
             #print("index= " + str(index))
             #print("n= "+str(n))
             validation_folder['data']+=class_data[i]['data'][index:index+n]
-            training_folder['data']+=class_data[i]['data'][:index] + class_data[i]['data'][index+n:]
+            validation_folder['class']+=[clases[i] for x in range(0,class_data[i]['n-folder'])]
+
+            temp_list=class_data[i]['data'][:index] + class_data[i]['data'][index+n:]
+            training_folder['data']+=temp_list
+            training_folder['class']+=[clases[i] for x in range(0,len(temp_list))]
             class_data[i]['index']+=n
             datos.append((training_folder,validation_folder))
     #-------------------------------------------------------------------------------------------
@@ -118,9 +61,11 @@ def training_folds(clases,data,algorithm):
         return svm_gaussian(datos)
     if algorithm=='trees':
         print("Ejecutando el algoritmo trees")
-
+        #crear_archivos(datos, "ejercicio_final", 0, clases)
+        trees(datos,data_name+"-tree",clases)
     if algorithm=='bayes':
         print("Ejecutando el algoritmo naieve bayes")
+        naieve_bayes(datos,data_name+"-naieve-bayes",clases)
 
 
 def svm_linear(datos):
@@ -150,17 +95,37 @@ def svm_linear(datos):
                 svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
 
                 # Making Predictions
-                prediccion = svclassifier.predict(validation_folder['data'])
+                validacion_prediccion = svclassifier.predict(validation_folder['data'])
 
                 # Evaluating the Algorithm
-                presicion=classification_report(validation_folder['class'], prediccion, output_dict=bool)
+                validation_results=classification_report(validation_folder['class'], validacion_prediccion, output_dict=bool)
 
-                print("presicion - macro avg:" + str(presicion['macro avg']))
+                #print(validation_results)
+                print("Validation acurracy:" + str(validation_results['macro avg']))
+
+
+
+
+                #-----------Training accurracy (se puede sacar)-------------------------
+                # Calculando error training
+                training_prediccion = svclassifier.predict(training_folder['data'])
+                # Evaluating the Algorithm
+                training_results=classification_report(training_folder['class'], training_prediccion, output_dict=bool)
+                #print(trainig_results)
+                
+                print("Training acurracy:" + str(training_results['macro avg']))
+                #-----------------------------------------------------------------------
+
+
+
+                
 
                 #---Optimizacion de los valores-----------
-                if mejor_ajuste['presicion']<(presicion['macro avg']['precision'] + presicion['macro avg']['recall'])/2:
-                    mejor_ajuste={'c':c,'presicion':(presicion['macro avg']['precision'] + presicion['macro avg']['recall'])/2}
+                if mejor_ajuste['presicion']<(validation_results['macro avg']['precision'] + validation_results['macro avg']['recall'])/2:
+                    mejor_ajuste={'c':c,'presicion':(validation_results['macro avg']['precision'] + validation_results['macro avg']['recall'])/2}
                 #------------------------------------------ 
+
+
 
             presicion_resultado.append(mejor_ajuste['presicion'])
         #------------------------------------------------------------------------------
@@ -185,7 +150,8 @@ def svm_linear(datos):
             if presicion_resultado[mejor_fold]<presicion_resultado[i]:
                 mejor_fold=i
         print("La mejor solucion surgio en la carpeta n" + str(mejor_fold) + " con un valor de c="+str(mejor_ajuste['c']) +"y una presicion de "+str(presicion_resultado[mejor_fold]))
-        return presicion_resultado[mejor_fold]
+        #return presicion_resultado[mejor_fold]
+        return presicion_resultado
 
 
 def svm_gaussiana(data):
@@ -212,16 +178,29 @@ def svm_gaussiana(data):
                     print("Resultados de la carpeta numero " + str(k) + " con c= " + str(c))
 
                     svclassifier = SVC(kernel='rbf',C=c, gamma=gamma)
+
                     # Training
                     svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
 
                     # Making Predictions
-                    prediccion = svclassifier.predict(validation_folder['data'])
+                    validacion_prediccion = svclassifier.predict(validation_folder['data'])
 
                     # Evaluating the Algorithm
-                    presicion=classification_report(validation_folder['class'], prediccion, output_dict=bool)
+                    validation_results=classification_report(validation_folder['class'], validacion_prediccion, output_dict=bool)
 
-                    print("presicion - macro avg:" + str(presicion['macro avg']))
+                    #print(validation_results)
+                    print("Validation acurracy:" + str(validation_results['macro avg']))
+
+
+                    #-----------Training accurracy (se puede sacar)-------------------------
+                    # Calculando error training
+                    training_prediccion = svclassifier.predict(training_folder['data'])
+                    # Evaluating the Algorithm
+                    training_results=classification_report(training_folder['class'], training_prediccion, output_dict=bool)
+                    #print(trainig_results)
+
+                    print("Training acurracy:" + str(training_results['macro avg']))
+                    #-----------------------------------------------------------------------
 
                     #---Optimizacion de los valores-----------
                     if mejor_ajuste['presicion']<(presicion['macro avg']['precision'] + presicion['macro avg']['recall'])/2:
@@ -251,12 +230,180 @@ def svm_gaussiana(data):
             if presicion_resultado[mejor_fold]<presicion_resultado[i]:
                 mejor_fold=i
         print("La mejor solucion surgio en la carpeta n" + str(mejor_fold) + " con un valor de c="+str(mejor_ajuste['c']) +"y una presicion de "+str(presicion_resultado[mejor_fold]))
-        return presicion_resultado[mejor_fold]
+        #return presicion_resultado[mejor_fold]
+        return presicion_resultado
 
+def crear_archivos(data, nombre, k, clases):
+    crear_archivo_data_tree(data,k,nombre)
+    crear_archivo_test_tree(data,k,nombre)
+    crear_archivo_names(data,nombre, clases)
+
+def crear_archivo_data_tree(data,k,nombre): #el k es el fold que estoy usando para los datos
+    f=open(nombre+".data", "w")
+    
+
+    training_data=data[k][0]['data']
+    training_class=data[k][0]['class']
+
+    """
+    validation_data=data[k][1]['data']
+    validation_class=data[k][1]['class']
+    for d in range(0,len(validation_data)):#itero sobre datos
+        write_value=''
+        for i in validation_data[d]:#itero sobre componente de cada dato
+            write_value+=str(i)+', '
+        f.write(write_value+str(validation_class[d])+'\n')
+    """
+
+    for d in range(0,len(training_data)):#itero sobre datos
+        write_value=''
+        for i in training_data[d]:#itero sobre componente de cada dato
+            write_value+=str(i)+', '
+        f.write(write_value+str(training_class[d])+'\n')
+    
+    f.close
+
+def crear_archivo_test_tree(data,k,nombre): 
+    f=open(nombre+".test", "w")
+
+    validation_data=data[k][1]['data']
+    validation_class=data[k][1]['class']
+    for d in range(0,len(validation_data)):#itero sobre datos
+        write_value=''
+        for i in validation_data[d]:#itero sobre componente de cada dato
+            write_value+=str(i)+', '
+        f.write(write_value+str(validation_class[d])+'\n')
+    f.close
+
+def crear_archivo_names(data,nombre, clases):
+    f=open(nombre+".names", "w")
+
+    for c in clases:
+        if c != clases[0]:
+            f.write(", ") #para no poner una coma adelante, lo tengo que hacer asi por que sino me queda 0, 1, .
+        f.write(str(c))
+    f.write(".\n\n")
+
+    #No puede trabajar con variables que no sean continuas, habria que editar esto de aca para que funcione
+    for i in range(0,len(data[0][1]['data'][0])):
+        f.write("d"+str(i)+": continuous.\n")
+
+    f.close
+
+    
+
+def get_tree_values(s):
+    """
+    Devuelve una tupla de lista de valores, donde la primera lista son los valores de training y la segunda
+    son los valores de testing. Ambos se guardan en la lista como:
+    [BeforePruningSize, BeforePruningErrors, BeforePruningErrors%, AfterPruningSize, AfterPruningErrors, AfterPruningErrors%, Estimate%]
+    """
+    trainingline_ = re.search('\n(.*)<<', s)
+    trainingline=trainingline_.group(1)
+    #print(trainingline)
+    testline_ = re.search('\n(.*)<<', s.split('<<', 1)[1])
+    testline=testline_.group(1)
+    #print(testline)
+
+    trainingv= re.findall(r"[+-]? *(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?", trainingline)
+    testingv= re.findall(r"[+-]? *(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?", testline)
+
+    return (map(lambda x:float(x),trainingv),map(lambda x:float(x),testingv))
+
+def trees(data,nombre,clases):
+    crear_archivo_names(data,nombre,clases)
+    
+    resultados_folds=[]
+    for k in range(0,10):
+        crear_archivo_data_tree(data,k,nombre)
+        crear_archivo_test_tree(data,k,nombre)
+
+        print("Entrenando arbol con fold n "+str(k))
+        output= subprocess.check_output("./c4.5 -f "+nombre+" -g -u", shell=True, universal_newlines=True)
+        #print(output)
+        result=get_tree_values(output)
+        TrainingAfterPruningError=result[0][5]
+        ValidationAfterPruningError=result[1][5]
+
+        print(result)
+
+        resultados_folds.append((TrainingAfterPruningError,ValidationAfterPruningError))
+        
+    
+    os.remove(nombre+".data")
+    os.remove(nombre+".test")
+    os.remove(nombre+".names")
+    return resultados_folds #(TrainigError,ValidationError)
+
+
+
+def crear_archivo_data_naieve_bayes(data,k,nombre): #el k es el fold que estoy usando para los datos
+    f=open(nombre+".data", "w")
+    
+    validation_data=data[k][1]['data']
+    validation_class=data[k][1]['class']
+    training_data=data[k][0]['data']
+    training_class=data[k][0]['class']
+
+    for d in range(0,len(training_data)):#itero sobre datos
+        write_value=''
+        for i in training_data[d]:#itero sobre componente de cada dato
+            write_value+=str(i)+', '
+        f.write(write_value+str(training_class[d])+'\n')
+
+    for d in range(0,len(validation_data)):#itero sobre datos
+        write_value=''
+        for i in validation_data[d]:#itero sobre componente de cada dato
+            write_value+=str(i)+', '
+        f.write(write_value+str(validation_class[d])+'\n')
+
+    f.close
+
+def crear_nb_naieve_bayes(data,nombre,clases):
+    f=open(nombre+".nb", "w")
+
+    validation_data=data[0][1]['data']
+    validation_class=data[0][1]['class']
+    training_data=data[0][0]['data']
+    training_class=data[0][0]['class']
+
+
+    dimension=len(validation_data[0])
+    cantidad_datos_entrenamiento=len(training_data)
+    cantidad_datos=len(validation_data)+cantidad_datos_entrenamiento
+    cantidad_datos_test=0
+    f.write(str(dimension)+'\n'+str(len(clases))+'\n'+str(cantidad_datos)+'\n'+str(cantidad_datos_entrenamiento)+'\n'+str(cantidad_datos_test)+'\n-1\n0') #
+
+    f.close
+
+def get_values_nb(s):
+    return map(lambda x: float(x),re.findall(r"[+-]? *(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?", s))
+
+def naieve_bayes(data,nombre,clases):
+    crear_archivo_names(data,nombre,clases)
+    crear_nb_naieve_bayes(data,nombre,clases)
+
+    resultados_folds=[]
+
+    for k in range(0,10):
+        crear_archivo_data_naieve_bayes(data,k,nombre)
+
+        print("Entrenando arbol con fold n "+str(k))
+        output= subprocess.check_output("./nb_n.out "+nombre, shell=True, universal_newlines=True)
+        #print(output)
+        s= output.split('Errores:', 1)[1]
+        valores=get_values_nb(s)
+
+        print("Errores: "+s)
+        print(valores)
+        resultados_folds.append((valores[0],valores[1]))
+
+    os.remove(nombre+".data")
+    os.remove(nombre+".nb")
+    os.remove(nombre+".names")
+    return resultados_folds #(TrainigError,ValidationError)
 
 training_folds([0,1],"BBBs.data","linear")
-
-
 
 
 
