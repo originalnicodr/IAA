@@ -16,6 +16,16 @@ def leer_datos(nombre):
     data=pd.read_csv(nombre,header=None).to_records(index=False)#.T.to_dict()
     #print([clase(x) for x in data])
     return data
+def svm_presicion(prediction_results):
+    #probablemente tenga que cambiarlo
+    return (prediction_results['macro avg']['precision'] + prediction_results['macro avg']['recall'])/2
+    """
+    The precision is the ratio tp / (tp + fp) where tp is the number of true positives and fp the number of false   positives. The precision is intuitively the ability of the classifier not to label as positive a sample that is   negative.
+    The recall is the ratio tp / (tp + fn) where tp is the number of true positives and fn the number of false negatives.   The recall is intuitively the ability of the classifier to find all the positive samples.
+    The F-beta score can be interpreted as a weighted harmonic mean of the precision and recall, where an F-beta score  reaches its best value at 1 and worst score at 0.
+    The F-beta score weights recall more than precision by a factor of beta. beta == 1.0 means recall and precision are     equally important.
+    The support is the number of occurrences of each class in y_true.
+    """
 
 def training_folds(clases,data_name,algorithm):
     datos=leer_datos(data_name)
@@ -44,10 +54,10 @@ def training_folds(clases,data_name,algorithm):
             n=class_data[i]['n-folder']
             #print("index= " + str(index))
             #print("n= "+str(n))
-            validation_folder['data']+=class_data[i]['data'][index:index+n]
+            validation_folder['data']+=[list(x)[:-1] for x in class_data[i]['data'][index:index+n]]#saco las clases de los datos
             validation_folder['class']+=[clases[i] for x in range(0,class_data[i]['n-folder'])]
 
-            temp_list=class_data[i]['data'][:index] + class_data[i]['data'][index+n:]
+            temp_list=[list(x)[:-1] for x in (class_data[i]['data'][:index] + class_data[i]['data'][index+n:])]
             training_folder['data']+=temp_list
             training_folder['class']+=[clases[i] for x in range(0,len(temp_list))]
             class_data[i]['index']+=n
@@ -62,14 +72,14 @@ def training_folds(clases,data_name,algorithm):
     if algorithm=='trees':
         print("Ejecutando el algoritmo trees")
         #crear_archivos(datos, "ejercicio_final", 0, clases)
-        trees(datos,data_name+"-tree",clases)
+        return trees(datos,data_name+"-tree",clases)
     if algorithm=='bayes':
         print("Ejecutando el algoritmo naieve bayes")
-        naieve_bayes(datos,data_name+"-naieve-bayes",clases)
+        return naieve_bayes(datos,data_name+"-naieve-bayes",clases)
 
 
 def svm_linear(datos):
-    mejor_ajuste={'c':1.0,'presicion':0}#para que tenga para comparar al principio
+    mejor_ajuste={'c':1.0,'presicion':(0,0)}#para que tenga para comparar al principio
     presicion_resultado=[]#donde se van a guardar los valores de presicion de cada fold
     mejor_fold=0 #
     for k in range(0,10):
@@ -77,20 +87,22 @@ def svm_linear(datos):
         validation_folder=datos[k][1]
 
         #-----------Formateo de datos para usarlos con la svm------------------------------
-        validation_folder['class']=pd.DataFrame([list(x)[len(validation_folder['data'][0])-1] for x in validation_folder['data']], columns =[len(validation_folder['data'][0])])
-        validation_folder['data']=pd.DataFrame([list(x)[:len(validation_folder['data'][0])-1] for x in validation_folder['data']], columns =range(0,len(validation_folder['data'][0])-1))
-        training_folder['class']=pd.DataFrame([list(x)[len(training_folder['data'][0])-1] for x in training_folder['data']], columns =[len(training_folder['data'][0])])
-        training_folder['data']=pd.DataFrame([list(x)[:len(training_folder['data'][0])-1] for x in training_folder['data']], columns =range(0,len(training_folder['data'][0])-1))
+        validation_folder['class']=pd.DataFrame(validation_folder['class'])
+        validation_folder['data']=pd.DataFrame(validation_folder['data'])
+        training_folder['class']=pd.DataFrame(training_folder['class'])
+        training_folder['data']=pd.DataFrame(training_folder['data'])
         #---------------------------------------------------------------------------------
         
         #--------Buscar los valores de config optimos en el primer fold--------------
         if k==0:
-            valores_posibles=[10**x for x in range(-5,6)]
+            valores_posibles=[10**x for x in range(-5,2)]#2 era 6
 
             for c in valores_posibles:
                 print("Resultados de la carpeta numero " + str(k) + " con c= " + str(c))
 
                 svclassifier = SVC(kernel='linear',C=c)
+
+
                 # Training
                 svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
 
@@ -103,9 +115,6 @@ def svm_linear(datos):
                 #print(validation_results)
                 print("Validation acurracy:" + str(validation_results['macro avg']))
 
-
-
-
                 #-----------Training accurracy (se puede sacar)-------------------------
                 # Calculando error training
                 training_prediccion = svclassifier.predict(training_folder['data'])
@@ -116,13 +125,9 @@ def svm_linear(datos):
                 print("Training acurracy:" + str(training_results['macro avg']))
                 #-----------------------------------------------------------------------
 
-
-
-                
-
                 #---Optimizacion de los valores-----------
-                if mejor_ajuste['presicion']<(validation_results['macro avg']['precision'] + validation_results['macro avg']['recall'])/2:
-                    mejor_ajuste={'c':c,'presicion':(validation_results['macro avg']['precision'] + validation_results['macro avg']['recall'])/2}
+                if mejor_ajuste['presicion'][1]<svm_presicion(validation_results):
+                    mejor_ajuste={'c':c,'presicion':(svm_presicion(training_results),svm_presicion(validation_results))}
                 #------------------------------------------ 
 
 
@@ -133,51 +138,61 @@ def svm_linear(datos):
         else:
             print("Resultados de la carpeta numero " + str(k))
             svclassifier = SVC(kernel='linear',C=mejor_ajuste['c'])
+            
             # Training
             svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
-
             # Making Predictions
-            prediccion = svclassifier.predict(validation_folder['data'])
-            
+            validacion_prediccion = svclassifier.predict(validation_folder['data'])
             # Evaluating the Algorithm
-            presicion=classification_report(validation_folder['class'], prediccion, output_dict=bool)
+            validation_results=classification_report(validation_folder['class'], validacion_prediccion,output_dict=bool)
+            #print(validation_results)
+            print("Validation acurracy:" + str(validation_results['macro avg']))
 
-            print("presicion - macro avg:" + str(presicion['macro avg']))
+            #-----------Training accurracy (se puede sacar)-------------------------
+            # Calculando error training
+            training_prediccion = svclassifier.predict(training_folder['data'])
+            # Evaluating the Algorithm
+            training_results=classification_report(training_folder['class'], training_prediccion, output_dict=bool)
+            #print(trainig_results)
+            
+            print("Training acurracy:" + str(training_results['macro avg']))
+            #-----------------------------------------------------------------------
 
-            presicion_resultado.append((presicion['macro avg']['precision'] + presicion['macro avg']['recall'])/2)
+            presicion_resultado.append((svm_presicion(training_results),svm_presicion(validation_results)))
 
-        for i in range(0,len(presicion_resultado)): #Lo hago asi por que quiero el valor de la carpeta
-            if presicion_resultado[mejor_fold]<presicion_resultado[i]:
-                mejor_fold=i
-        print("La mejor solucion surgio en la carpeta n" + str(mejor_fold) + " con un valor de c="+str(mejor_ajuste['c']) +"y una presicion de "+str(presicion_resultado[mejor_fold]))
-        #return presicion_resultado[mejor_fold]
-        return presicion_resultado
+    for i in range(0,len(presicion_resultado)): #Lo hago asi por que quiero el valor de la carpeta
+        if presicion_resultado[mejor_fold][1]<presicion_resultado[i][1]:
+            mejor_fold=i
+    print("La mejor solucion surgio en la carpeta n" + str(mejor_fold) + " con un valor de c="+str(mejor_ajuste['c']) +"y una presicion de validacion de "+str(presicion_resultado[mejor_fold][1]) +" y de entrenamiento de "+str(presicion_resultado[mejor_fold][0]))
+    #return presicion_resultado[mejor_fold]
+    return presicion_resultado
 
 
-def svm_gaussiana(data):
-    mejor_ajuste={'c':1.0,'gamma':0,'presicion':0}#para que tenga para comparar al principio
+def svm_gaussian(data):
+    mejor_ajuste={'c':1.0,'gamma':0,'presicion':(0,0)}#para que tenga para comparar al principio
     presicion_resultado=[]#donde se van a guardar los valores de presicion de cada fold
     mejor_fold=0 #
     for k in range(0,10):
-        training_folder=datos[k][0]
-        validation_folder=datos[k][1]
+        training_folder=data[k][0]
+        validation_folder=data[k][1]
 
         #-----------Formateo de datos para usarlos con la svm------------------------------
-        validation_folder['class']=pd.DataFrame([list(x)[len(validation_folder['data'][0])-1] for x in validation_folder['data']], columns =[len(validation_folder['data'][0])])
-        validation_folder['data']=pd.DataFrame([list(x)[:len(validation_folder['data'][0])-1] for x in validation_folder['data']], columns =range(0,len(validation_folder['data'][0])-1))
-        training_folder['class']=pd.DataFrame([list(x)[len(training_folder['data'][0])-1] for x in training_folder['data']], columns =[len(training_folder['data'][0])])
-        training_folder['data']=pd.DataFrame([list(x)[:len(training_folder['data'][0])-1] for x in training_folder['data']], columns =range(0,len(training_folder['data'][0])-1))
+        validation_folder['class']=pd.DataFrame(validation_folder['class'])
+        validation_folder['data']=pd.DataFrame(validation_folder['data'])
+        training_folder['class']=pd.DataFrame(training_folder['class'])
+        training_folder['data']=pd.DataFrame(training_folder['data'])
         #---------------------------------------------------------------------------------
         
         #--------Buscar los valores de config optimos en el primer fold--------------
         if k==0:
-            valores_posibles=[10**x for x in range(-5,6)]
+            valores_posibles=[10**x for x in range(-5,2)]#deberia ser 6 en lugar de 2
 
             for c in valores_posibles:
                 for gamma in ['scale','auto']+valores_posibles: #puede que usar todos esos valores posibles esten de mas, sino recortar (poner que gamma pruebe con valores negativos?)
-                    print("Resultados de la carpeta numero " + str(k) + " con c= " + str(c))
+                    print("Resultados de la carpeta numero " + str(k) + " con c= " + str(c) + " y gamma= "+str(gamma))
 
                     svclassifier = SVC(kernel='rbf',C=c, gamma=gamma)
+
 
                     # Training
                     svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
@@ -186,11 +201,10 @@ def svm_gaussiana(data):
                     validacion_prediccion = svclassifier.predict(validation_folder['data'])
 
                     # Evaluating the Algorithm
-                    validation_results=classification_report(validation_folder['class'], validacion_prediccion, output_dict=bool)
+                    validation_results=classification_report(validation_folder['class'], validacion_prediccion,     output_dict=bool)
 
                     #print(validation_results)
                     print("Validation acurracy:" + str(validation_results['macro avg']))
-
 
                     #-----------Training accurracy (se puede sacar)-------------------------
                     # Calculando error training
@@ -203,35 +217,46 @@ def svm_gaussiana(data):
                     #-----------------------------------------------------------------------
 
                     #---Optimizacion de los valores-----------
-                    if mejor_ajuste['presicion']<(presicion['macro avg']['precision'] + presicion['macro avg']['recall'])/2:
-                        mejor_ajuste={'c':c, 'gamma':gamma, 'presicion':(presicion['macro avg']['precision'] + presicion['macro avg']['recall'])/2}
+                    if mejor_ajuste['presicion'][1]<svm_presicion(validation_results):
+                        mejor_ajuste={'c':c,'presicion':(svm_presicion(training_results),svm_presicion(validation_results))}
                     #------------------------------------------ 
+
+
 
             presicion_resultado.append(mejor_ajuste['presicion'])
         #------------------------------------------------------------------------------
 
         else:
             print("Resultados de la carpeta numero " + str(k))
-            svclassifier = SVC(kernel='rbf',C=mejor_ajuste['c'], gamma=mejor_ajuste['gamma'])
+            svclassifier = SVC(kernel='linear',C=mejor_ajuste['c'])
+            
             # Training
             svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
-
             # Making Predictions
-            prediccion = svclassifier.predict(validation_folder['data'])
-            
+            validacion_prediccion = svclassifier.predict(validation_folder['data'])
             # Evaluating the Algorithm
-            presicion=classification_report(validation_folder['class'], prediccion, output_dict=bool)
+            validation_results=classification_report(validation_folder['class'], validacion_prediccion,output_dict=bool)
+            #print(validation_results)
+            print("Validation acurracy:" + str(validation_results['macro avg']))
 
-            print("presicion - macro avg:" + str(presicion['macro avg']))
+            #-----------Training accurracy (se puede sacar)-------------------------
+            # Calculando error training
+            training_prediccion = svclassifier.predict(training_folder['data'])
+            # Evaluating the Algorithm
+            training_results=classification_report(training_folder['class'], training_prediccion, output_dict=bool)
+            #print(trainig_results)
+            
+            print("Training acurracy:" + str(training_results['macro avg']))
+            #-----------------------------------------------------------------------
 
-            presicion_resultado.append((presicion['macro avg']['precision'] + presicion['macro avg']['recall'])/2)
+            presicion_resultado.append((svm_presicion(training_results),svm_presicion(validation_results)))
 
-        for i in range(0,len(presicion_resultado)): #Lo hago asi por que quiero el valor de la carpeta
-            if presicion_resultado[mejor_fold]<presicion_resultado[i]:
-                mejor_fold=i
-        print("La mejor solucion surgio en la carpeta n" + str(mejor_fold) + " con un valor de c="+str(mejor_ajuste['c']) +"y una presicion de "+str(presicion_resultado[mejor_fold]))
-        #return presicion_resultado[mejor_fold]
-        return presicion_resultado
+    for i in range(0,len(presicion_resultado)): #Lo hago asi por que quiero el valor de la carpeta
+        if presicion_resultado[mejor_fold][1]<presicion_resultado[i][1]:
+            mejor_fold=i
+    print("La mejor solucion surgio en la carpeta n" + str(mejor_fold) + " con un valor de c="+str(mejor_ajuste['c']) +"y una presicion de validacion de "+str(presicion_resultado[mejor_fold][1]) +" y de entrenamiento de "+str(presicion_resultado[mejor_fold][0]))
+    #return presicion_resultado[mejor_fold]
+    return presicion_resultado
 
 def crear_archivos(data, nombre, k, clases):
     crear_archivo_data_tree(data,k,nombre)
@@ -403,7 +428,57 @@ def naieve_bayes(data,nombre,clases):
     os.remove(nombre+".names")
     return resultados_folds #(TrainigError,ValidationError)
 
-training_folds([0,1],"BBBs.data","linear")
+def main():
+    """
+    #----------------Arboles------------------------
+    filetree=open("TreeErrores.txt", "w")
+    filetree.write("TrainingError ValidationError\n")
+    error_trees=training_folds([0,1],"BBBs.data","trees")
+    for (training,validation) in error_trees:
+        filetree.write(str(training) + "  " + str(validation) + "\n")
+    filetree.close
+    #-----------------------------------------------
+
+    #----------------Naieve-Bayes-------------------
+    filebayes=open("BayesErrores.txt", "w")
+    filebayes.write("TrainingError ValidationError\n")
+    error_bayes=training_folds([0,1],"BBBs.data","bayes")
+    for (training,validation) in error_bayes:
+        filebayes.write(str(training) + "  " + str(validation) + "\n")
+    filebayes.close
+    #-----------------------------------------------
+    """
+
+    """
+    #------------------SVM-Linear-------------------
+    error_svm_linear=training_folds([0,1],"BBBs.data","linear")
+    print(error_svm_linear)
+    error_svm_linear=[(1-x,1-y) for (x,y) in error_svm_linear]#cambio los valores para que sean errores
+
+    filesvmlinear=open("SVMLinearErrores.txt", "w")
+    filesvmlinear.write("TrainingError ValidationError\n")
+
+    for (training,validation) in error_svm_linear:
+        filesvmlinear.write(str(training) + "  " + str(validation) + "\n")
+    filesvmlinear.close
+    #-----------------------------------------------
+    """
+
+    #------------------SVM-Gaussian-------------------
+    error_svm_gauss=training_folds([0,1],"BBBs.data","gaussian")
+    print(error_svm_gauss)
+    error_svm_gauss=[(1-x,1-y) for (x,y) in error_svm_gauss]#cambio los valores para que sean errores
+
+    filesvmgauss=open("SVMGaussianErrores.txt", "w")
+    filesvmgauss.write("TrainingError ValidationError\n")
+
+    for (training,validation) in error_svm_gauss:
+        filesvmgauss.write(str(training) + "  " + str(validation) + "\n")
+    filesvmgauss.close
+    #-----------------------------------------------
+    
+
+main()
 
 
 
@@ -415,47 +490,28 @@ training_folds([0,1],"BBBs.data","linear")
 
 
 
-a={u'1': {'recall': 0.8148148148148148,
-        'f1-score': 0.7719298245614035,
-        'support': 27,
-        'precision': 0.7333333333333333},
-u'0': {'recall': 0.38461538461538464, 'f1-score': 0.4347826086956522, 'support': 13, 'precision': 0.5},
-'weighted avg': {'recall': 0.675, 'f1-score': 0.6623569794050344, 'support': 40, 'precision': 0.6575},
-'micro avg': {'recall': 0.675, 'f1-score': 0.675, 'support': 40, 'precision': 0.675},
-'macro avg': {'recall': 0.5997150997150997, 'f1-score': 0.6033562166285278, 'support': 40, 'precision': 0.6166666666666667}}
+"""
+Resultados de la carpeta numero 0 con c= 1e-05
+Validation acurracy:{'recall': 0.48148148148148145, 'f1-score': 0.3939393939393939, 'support': 40, 'precision': 0.3333333333333333}
+Training acurracy:{'recall': 0.6189041881812967, 'f1-score': 0.6153846153846154, 'support': 375, 'precision': 0.7846840659340659}
+Resultados de la carpeta numero 0 con c= 0.0001
+Validation acurracy:{'recall': 0.5997150997150997, 'f1-score': 0.6033562166285278, 'support': 40, 'precision': 0.6166666666666667}
+Training acurracy:{'recall': 0.7275769745649263, 'f1-score': 0.7401825351341642, 'support': 375, 'precision': 0.7684210526315789}
+Resultados de la carpeta numero 0 con c= 0.001
+Validation acurracy:{'recall': 0.6182336182336182, 'f1-score': 0.6238244514106583, 'support': 40, 'precision': 0.6487455197132617}
+Training acurracy:{'recall': 0.7434021801491681, 'f1-score': 0.7542347247428918, 'support': 375, 'precision': 0.774240465416936}
+Resultados de la carpeta numero 0 con c= 0.01
+Validation acurracy:{'recall': 0.5997150997150997, 'f1-score': 0.6033562166285278, 'support': 40, 'precision': 0.6166666666666667}
+Training acurracy:{'recall': 0.7493784662459362, 'f1-score': 0.7605363984674329, 'support': 375, 'precision': 0.7809739280327516}
+Resultados de la carpeta numero 0 con c= 0.1
+Validation acurracy:{'recall': 0.5997150997150997, 'f1-score': 0.6033562166285278, 'support': 40, 'precision': 0.6166666666666667}
+Training acurracy:{'recall': 0.7513864983744502, 'f1-score': 0.7631000412732374, 'support': 375, 'precision': 0.7849967478499675}
+Resultados de la carpeta numero 0 con c= 1
+Validation acurracy:{'recall': 0.5427350427350428, 'f1-score': 0.5423340961098397, 'support': 40, 'precision': 0.55}
+Training acurracy:{'recall': 0.8111493593421304, 'f1-score': 0.826273363600374, 'support': 375, 'precision': 0.8527498735274988}
+Resultados de la carpeta numero 0 con c= 10
+Validation acurracy:{'recall': 0.6196581196581197, 'f1-score': 0.6218181818181819, 'support': 40, 'precision': 0.625}
+Training acurracy:{'recall': 0.8647446930579461, 'f1-score': 0.8741085245928486, 'support': 375, 'precision': 0.8865263797878808}
+Resultados de la carpeta numero 0 con c= 100
+"""
 
-
-#The precision is the ratio tp / (tp + fp) where tp is the number of true positives and fp the number of false positives. The precision is intuitively the ability of the classifier not to label as positive a sample that is negative.
-#The recall is the ratio tp / (tp + fn) where tp is the number of true positives and fn the number of false negatives. The recall is intuitively the ability of the classifier to find all the positive samples.
-#The F-beta score can be interpreted as a weighted harmonic mean of the precision and recall, where an F-beta score reaches its best value at 1 and worst score at 0.
-#The F-beta score weights recall more than precision by a factor of beta. beta == 1.0 means recall and precision are equally important.
-#The support is the number of occurrences of each class in y_true.
-
-
-#Resultados de la carpeta numero 0 con c= 1e-05
-#presicion - macro avg:{'recall': 0.48148148148148145, 'f1-score': 0.3939393939393939, 'support': 40, 'precision': 0.3333333333333333}
-#Resultados de la carpeta numero 0 con c= 0.0001
-#Resultados de la carpeta numero 0 con c= 0.0001
-#presicion - macro avg:{'recall': 0.5997150997150997, 'f1-score': 0.6033562166285278, 'support': 40, 'precision': 0.6166666666666667}
-#Resultados de la carpeta numero 0 con c= 0.001
-#Resultados de la carpeta numero 0 con c= 0.001
-#presicion - macro avg:{'recall': 0.6182336182336182, 'f1-score': 0.6238244514106583, 'support': 40, 'precision': 0.6487455197132617}
-#Resultados de la carpeta numero 0 con c= 0.01
-#Resultados de la carpeta numero 0 con c= 0.01
-#presicion - macro avg:{'recall': 0.5997150997150997, 'f1-score': 0.6033562166285278, 'support': 40, 'precision': 0.6166666666666667}
-#Resultados de la carpeta numero 0 con c= 0.1
-#Resultados de la carpeta numero 0 con c= 0.1
-#presicion - macro avg:{'recall': 0.5997150997150997, 'f1-score': 0.6033562166285278, 'support': 40, 'precision': 0.6166666666666667}
-#Resultados de la carpeta numero 0 con c= 1
-#Resultados de la carpeta numero 0 con c= 1
-#presicion - macro avg:{'recall': 0.5427350427350428, 'f1-score': 0.5423340961098397, 'support': 40, 'precision': 0.55}
-#Resultados de la carpeta numero 0 con c= 10
-#Resultados de la carpeta numero 0 con c= 10
-#presicion - macro avg:{'recall': 0.6196581196581197, 'f1-score': 0.6218181818181819, 'support': 40, 'precision': 0.625}
-#Resultados de la carpeta numero 0 con c= 100
-#Resultados de la carpeta numero 0 con c= 100
-#presicion - macro avg:{'recall': 0.5242165242165242, 'f1-score': 0.5238095238095238, 'support': 40, 'precision': 0.5266457680250785}
-#Resultados de la carpeta numero 0 con c= 1000
-#Resultados de la carpeta numero 0 con c= 1000
-#presicion - macro avg:{'recall': 0.5256410256410257, 'f1-score': 0.5248078266946191, 'support': 40, 'precision': 0.5247252747252747}
-#Resultados de la carpeta numero 0 con c= 10000
