@@ -477,6 +477,41 @@ def naieve_bayes(data,nombre,clases):
     os.remove(nombre+".names")
     return resultados_folds #(TrainigError,ValidationError)
 
+def desviacion_estandar(lst):
+    d=average(lst)
+
+    sd=0.0
+    for x in lst:
+        sd+=(x-d)**2
+    sd=(float(sd)/(len(lst)-1))**(1.0/2)
+    return sd
+
+def average(lst):
+    return float(sum(lst)) / len(lst)
+
+
+def t_test(errores1,errores2):
+    validation_error1=[x[1] for x in errores1]
+    validation_error2=[x[1] for x in errores2]
+
+    d=average(validation_error1)-average(validation_error2)
+    #d=average(validation_error1+validation_error2)
+
+    #Fijarse si en el calculo de la desviacion estandar para sd tengo que usar el d que calcule arriba o solamente el promedio de los errores
+    sd=desviacion_estandar(validation_error1+validation_error2)
+
+    """
+    sd=0.0
+    for x in validation_error1+validation_error2:
+        sd+=(x-d)**2
+    sd=(float(sd)/(len(validation_error1+validation_error2)-1))**(1.0/2)
+    """
+    
+
+    t=float((d-0))/(float(sd)/(len(errores1+errores2)**(1/2)))
+
+    return t
+
 def main():
     
     #----------------Arboles------------------------
@@ -531,53 +566,52 @@ def main():
     filesvmgauss.close
     #-----------------------------------------------
 
-    print("Promedio error bayes: "+str(sum([x[1] for x in error_bayes])/len(error_bayes)))
-    print("Promedio error trees: "+str(sum([x[1] for x in error_trees])/len(error_trees)))
-    print("Promedio error svm linear: "+str(sum([x[1] for x in error_svm_linear])/len(error_svm_linear)))
-    print("Promedio error svm gauss: "+str(sum([x[1] for x in error_svm_gauss])/len(error_svm_gauss)))
+    print("Promedio error validacion bayes: "+str(average([x[1] for x in error_bayes])))
+    print("Promedio error training bayes: "+str(average([x[0] for x in error_bayes])))
+    print("Desviacion estandar bayes: "+str(desviacion_estandar([x[1] for x in error_bayes])))
+    print("Promedio error validacion trees: "+str(average([x[1] for x in error_trees])))
+    print("Promedio error training trees: "+str(average([x[0] for x in error_trees])))
+    print("Desviacion estandar trees: "+str(desviacion_estandar([x[1] for x in error_trees])))
+    print("Promedio error validacion svm linear: "+str(average([x[1] for x in error_svm_linear])))
+    print("Promedio error training svm linear: "+str(average([x[0] for x in error_svm_linear])))
+    print("Desviacion estandar svm linear: "+str(desviacion_estandar([x[1] for x in error_svm_linear])))
+    print("Promedio error validacion svm gauss: "+str(average([x[1] for x in error_svm_gauss])))
+    print("Promedio error training svm gauss: "+str(average([x[0] for x in error_svm_gauss])))
+    print("Desviacion estandar svm gauss: "+str(desviacion_estandar([x[1] for x in error_svm_gauss])))
 
-def t_test(errores1,errores2):
-    d=sum([x[1] for x in errores1])/len(errores1)-sum([x[1] for x in errores2])/len(errores2)
+    """
+    Promedio error validacion bayes: 0.607499999
+    Promedio error training bayes: 0.561866668
+    Desviacion estandar bayes: 0.0425734706778
+    Promedio error validacion trees: 0.21
+    Promedio error training trees: 0.0223
+    Desviacion estandar trees: 0.0529674952736
+    Promedio error validacion svm linear: 0.32
+    Promedio error training svm linear: 0.2056
+    Desviacion estandar svm linear: 0.0586893895389
+    Promedio error validacion svm gauss: 0.285
+    Promedio error training svm gauss: 0.0456
+    Desviacion estandar svm gauss: 0.05027701043
 
-    sd=0
-    for x in errores1+errores2:
-        sd=(x-d)**2
-    sd=(sd/(len(errores1+errores2)-1))**(1/2)
-
-    t=(d-0)/(sd/(len(errores1+errores2)**(1/2)))
-
-#main()
+    t-test mejor y peor: 1.95379483587
+    t-test mejor y segundo mejor: 3.91010437919
+    """
 
 
-
+    #print(t_test(error_trees,error_bayes))#mejor y peor
+    #print(t_test(error_trees,error_svm_gauss))#mejor y segundo mejor
+    print(t_test(error_bayes,error_trees))#mejor y peor
+    print(t_test(error_svm_gauss,error_trees))#mejor y segundo mejor
 
 
 
 
 
+main()
+#print(desviacion_estandar([0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]))
 
-"""
-Resultados de la carpeta numero 0 con c= 1e-05
-Validation acurracy:{'recall': 0.48148148148148145, 'f1-score': 0.3939393939393939, 'support': 40, 'precision': 0.3333333333333333}
-Training acurracy:{'recall': 0.6189041881812967, 'f1-score': 0.6153846153846154, 'support': 375, 'precision': 0.7846840659340659}
-Resultados de la carpeta numero 0 con c= 0.0001
-Validation acurracy:{'recall': 0.5997150997150997, 'f1-score': 0.6033562166285278, 'support': 40, 'precision': 0.6166666666666667}
-Training acurracy:{'recall': 0.7275769745649263, 'f1-score': 0.7401825351341642, 'support': 375, 'precision': 0.7684210526315789}
-Resultados de la carpeta numero 0 con c= 0.001
-Validation acurracy:{'recall': 0.6182336182336182, 'f1-score': 0.6238244514106583, 'support': 40, 'precision': 0.6487455197132617}
-Training acurracy:{'recall': 0.7434021801491681, 'f1-score': 0.7542347247428918, 'support': 375, 'precision': 0.774240465416936}
-Resultados de la carpeta numero 0 con c= 0.01
-Validation acurracy:{'recall': 0.5997150997150997, 'f1-score': 0.6033562166285278, 'support': 40, 'precision': 0.6166666666666667}
-Training acurracy:{'recall': 0.7493784662459362, 'f1-score': 0.7605363984674329, 'support': 375, 'precision': 0.7809739280327516}
-Resultados de la carpeta numero 0 con c= 0.1
-Validation acurracy:{'recall': 0.5997150997150997, 'f1-score': 0.6033562166285278, 'support': 40, 'precision': 0.6166666666666667}
-Training acurracy:{'recall': 0.7513864983744502, 'f1-score': 0.7631000412732374, 'support': 375, 'precision': 0.7849967478499675}
-Resultados de la carpeta numero 0 con c= 1
-Validation acurracy:{'recall': 0.5427350427350428, 'f1-score': 0.5423340961098397, 'support': 40, 'precision': 0.55}
-Training acurracy:{'recall': 0.8111493593421304, 'f1-score': 0.826273363600374, 'support': 375, 'precision': 0.8527498735274988}
-Resultados de la carpeta numero 0 con c= 10
-Validation acurracy:{'recall': 0.6196581196581197, 'f1-score': 0.6218181818181819, 'support': 40, 'precision': 0.625}
-Training acurracy:{'recall': 0.8647446930579461, 'f1-score': 0.8741085245928486, 'support': 375, 'precision': 0.8865263797878808}
-Resultados de la carpeta numero 0 con c= 100
-"""
+
+
+
+
 
