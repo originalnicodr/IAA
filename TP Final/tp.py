@@ -115,9 +115,65 @@ def training_folds(clases,data_name,algorithm):
 
 
 def svm_linear(datos):
-    mejor_ajuste={'c':1.0,'presicion':(0,0)}#para que tenga para comparar al principio
+    mejor_ajuste={'c':40.0,'presicion':(0,0)}#para que tenga para comparar al principio
     presicion_resultado=[]#donde se van a guardar los valores de presicion de cada fold
     mejor_fold=0 #
+
+
+    #--------------Optimizo c-------------------------------
+    """
+
+    valores_posibles=[10**x for x in range(-5,3)] #c=0.001 el mejor
+    #valores_posibles=[0.0001,0.0004,0.0007,0.001,0.004,0.007,0.01]
+    valores_posibles=[10,40,70,100,400,700,1000]
+
+    for c in valores_posibles:
+        print("Optimizando valor de c, actualmente con c= " + str(c))
+
+        optimization_folder=datos[1][1]#agarro la segunda carpeta de te
+        training_folder={'data':[],'class':[]}#va a tener 8 folders para entrenar
+        for k in range(2,10):
+            training_folder['data']+=datos[k][1]['data']
+            training_folder['class']+=datos[k][1]['class']
+        
+        #-----------Formateo de datos para usarlos con la svm------------------------------
+        optimization_folder['class']=pd.DataFrame(optimization_folder['class'])
+        optimization_folder['data']=pd.DataFrame(optimization_folder['data'])
+        training_folder['class']=pd.DataFrame(training_folder['class'])
+        training_folder['data']=pd.DataFrame(training_folder['data'])
+        #---------------------------------------------------------------------------------
+
+
+        svclassifier = SVC(kernel='linear',C=c)
+        # Training
+        svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
+        # Making Predictions
+        validacion_prediccion = svclassifier.predict(optimization_folder['data'])
+        # Evaluating the Algorithm
+        validation_results=classification_report(optimization_folder['class'], validacion_prediccion, output_dict=bool)
+       
+        validation_confusion_matrix=confusion_matrix(optimization_folder['class'], validacion_prediccion)
+        #print(validation_results)
+        print("Validation acurracy:" + str(svm_accuracy(validation_confusion_matrix)))
+        #-----------Training accurracy (se puede sacar)-------------------------
+        # Calculando error training
+        training_prediccion = svclassifier.predict(training_folder['data'])
+        # Evaluating the Algorithm
+        training_results=classification_report(training_folder['class'], training_prediccion, output_dict=bool)
+        training_confusion_matrix=confusion_matrix(training_folder['class'], training_prediccion)
+        #print(trainig_results)
+        
+        print("Training acurracy:" + str(svm_accuracy(training_confusion_matrix)))
+        #-----------------------------------------------------------------------
+        #---Optimizacion de los valores-----------
+        if mejor_ajuste['presicion'][1]<svm_accuracy(validation_confusion_matrix):
+            mejor_ajuste={'c':c,'presicion':(svm_accuracy(training_confusion_matrix),svm_accuracy(validation_confusion_matrix))}
+        #------------------------------------------ 
+    #------------------------------------------------------------------------------
+    """
+    print(mejor_ajuste)
+
+    
     for k in range(0,10):
         training_folder=datos[k][0]
         validation_folder=datos[k][1]
@@ -130,79 +186,32 @@ def svm_linear(datos):
         #---------------------------------------------------------------------------------
         
         #--------Buscar los valores de config optimos en el primer fold--------------
-        if k==0:
-            #valores_posibles=[10**x for x in range(-5,2)] #c=0.001 el mejor
-            valores_posibles=[0.0001,0.0004,0.0007,0.001,0.004,0.007,0.01]
-
-            for c in valores_posibles:
-                print("Resultados de la carpeta numero " + str(k) + " con c= " + str(c))
-
-                svclassifier = SVC(kernel='linear',C=c)
-
-                # Training
-                svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
-
-                # Making Predictions
-                validacion_prediccion = svclassifier.predict(validation_folder['data'])
-
-                # Evaluating the Algorithm
-                validation_results=classification_report(validation_folder['class'], validacion_prediccion, output_dict=bool)
-               
-                validation_confusion_matrix=confusion_matrix(validation_folder['class'], validacion_prediccion)
-                #print(validation_results)
-                print("Validation acurracy:" + str(svm_accuracy(validation_confusion_matrix)))
-
-                #-----------Training accurracy (se puede sacar)-------------------------
-                # Calculando error training
-                training_prediccion = svclassifier.predict(training_folder['data'])
-                # Evaluating the Algorithm
-                training_results=classification_report(training_folder['class'], training_prediccion, output_dict=bool)
-
-                training_confusion_matrix=confusion_matrix(training_folder['class'], training_prediccion)
-                #print(trainig_results)
-                
-                print("Training acurracy:" + str(svm_accuracy(training_confusion_matrix)))
-                #-----------------------------------------------------------------------
-
-                #---Optimizacion de los valores-----------
-                if mejor_ajuste['presicion'][1]<svm_accuracy(validation_confusion_matrix):
-                    mejor_ajuste={'c':c,'presicion':(svm_accuracy(training_confusion_matrix),svm_accuracy(validation_confusion_matrix))}
-                #------------------------------------------ 
-
-
-
-            presicion_resultado.append(mejor_ajuste['presicion'])
-        #------------------------------------------------------------------------------
-
-        else:
-            print("Resultados de la carpeta numero " + str(k))
-            svclassifier = SVC(kernel='linear',C=mejor_ajuste['c'])
-            
-            # Training
-            svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
-            # Making Predictions
-            validacion_prediccion = svclassifier.predict(validation_folder['data'])
-            # Evaluating the Algorithm
-            validation_results=classification_report(validation_folder['class'], validacion_prediccion, output_dict=bool)
-            
-            validation_confusion_matrix=confusion_matrix(validation_folder['class'], validacion_prediccion)
-
-            #print(validation_results)
-            print("Validation acurracy:" + str(svm_accuracy(validation_confusion_matrix)))
-
-            #-----------Training accurracy (se puede sacar)-------------------------
-            # Calculando error training
-            training_prediccion = svclassifier.predict(training_folder['data'])
-            # Evaluating the Algorithm
-            training_results=classification_report(training_folder['class'], training_prediccion, output_dict=bool)
-            
-            training_confusion_matrix=confusion_matrix(training_folder['class'], training_prediccion)
-            #print(trainig_results)
-            
-            print("Training acurracy:" + str(svm_accuracy(training_confusion_matrix)))
-            #-----------------------------------------------------------------------
-
-            presicion_resultado.append((svm_accuracy(training_confusion_matrix),svm_accuracy(validation_confusion_matrix)))
+        
+        print("Resultados de la carpeta numero " + str(k))
+        svclassifier = SVC(kernel='linear',C=mejor_ajuste['c'])
+        
+        # Training
+        svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
+        # Making Predictions
+        validacion_prediccion = svclassifier.predict(validation_folder['data'])
+        # Evaluating the Algorithm
+        validation_results=classification_report(validation_folder['class'], validacion_prediccion, output_dict=bool)
+        
+        validation_confusion_matrix=confusion_matrix(validation_folder['class'], validacion_prediccion)
+        #print(validation_results)
+        print("Validation acurracy:" + str(svm_accuracy(validation_confusion_matrix)))
+        #-----------Training accurracy (se puede sacar)-------------------------
+        # Calculando error training
+        training_prediccion = svclassifier.predict(training_folder['data'])
+        # Evaluating the Algorithm
+        training_results=classification_report(training_folder['class'], training_prediccion, output_dict=bool)
+        
+        training_confusion_matrix=confusion_matrix(training_folder['class'], training_prediccion)
+        #print(trainig_results)
+        
+        print("Training acurracy:" + str(svm_accuracy(training_confusion_matrix)))
+        #-----------------------------------------------------------------------
+        presicion_resultado.append((svm_accuracy(training_confusion_matrix),svm_accuracy(validation_confusion_matrix)))
 
     for i in range(0,len(presicion_resultado)): #Lo hago asi por que quiero el valor de la carpeta
         if presicion_resultado[mejor_fold][1]<presicion_resultado[i][1]:
@@ -210,12 +219,63 @@ def svm_linear(datos):
     print("La mejor solucion surgio en la carpeta n" + str(mejor_fold) + " con un valor de c="+str(mejor_ajuste['c']) +"y una presicion de validacion de "+str(presicion_resultado[mejor_fold][1]) +" y de entrenamiento de "+str(presicion_resultado[mejor_fold][0]))
     #return presicion_resultado[mejor_fold]
     return presicion_resultado
+    
 
 
 def svm_gaussian(data):
     mejor_ajuste={'c':1.0,'gamma':0,'presicion':(0,0)}#para que tenga para comparar al principio
     presicion_resultado=[]#donde se van a guardar los valores de presicion de cada fold
-    mejor_fold=0 #
+    mejor_fold=0
+
+
+    #valores_posibles_c=[10**x for x in range(-5,5)] #c=1 el mejor
+    #valores_posibles_c=[0.1,0.4,0.7,1,4,7,10]
+    valores_posibles_c=[40]#[25,50,75,100,250,500,750]
+    for c in valores_posibles_c:
+        for gamma in ['scale','auto']+[float(x)/10 for x in range(0,100) if x!=0]: #puede que usar todos esos valores posibles esten de mas, sino recortar (poner que gamma pruebe con valores negativos?)
+            
+            print("Optimizando valor de c y gamma, actualmente con c= " + str(c) + " y gamma= " +str(gamma))
+
+            optimization_folder=data[1][1]#agarro la segunda carpeta de te
+            training_folder={'data':[],'class':[]}#va a tener 8 folders para entrenar
+            for k in range(2,10):
+                training_folder['data']+=data[k][1]['data']
+                training_folder['class']+=data[k][1]['class']
+
+            #-----------Formateo de datos para usarlos con la svm------------------------------
+            optimization_folder['class']=pd.DataFrame(optimization_folder['class'])
+            optimization_folder['data']=pd.DataFrame(optimization_folder['data'])
+            training_folder['class']=pd.DataFrame(training_folder['class'])
+            training_folder['data']=pd.DataFrame(training_folder['data'])
+            #---------------------------------------------------------------------------------
+
+            print("Resultados de la carpeta numero " + str(k) + " con c= " + str(c) + " y gamma= "+str(gamma))
+            svclassifier = SVC(kernel='rbf',C=c, gamma=gamma)
+            # Training
+            svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
+            # Making Predictions
+            validacion_prediccion = svclassifier.predict(optimization_folder['data'])
+            # Evaluating the Algorithm
+            validation_results=classification_report(optimization_folder['class'], validacion_prediccion, output_dict=bool)
+            validation_confusion_matrix=confusion_matrix(optimization_folder['class'], validacion_prediccion)
+            #print(validation_results)
+            print("Validation acurracy:" + str(svm_accuracy(validation_confusion_matrix)))
+            #-----------Training accurracy (se puede sacar)-------------------------
+            # Calculando error training
+            training_prediccion = svclassifier.predict(training_folder['data'])
+            # Evaluating the Algorithm
+            training_results=classification_report(training_folder['class'], training_prediccion, output_dict=bool)
+            training_confusion_matrix=confusion_matrix(training_folder['class'], training_prediccion)
+            #print(trainig_results)
+            print("Training acurracy:" + str(svm_accuracy(training_confusion_matrix)))
+            #-----------------------------------------------------------------------
+            #---Optimizacion de los valores-----------
+            if mejor_ajuste['presicion'][1]<svm_accuracy(validation_confusion_matrix):
+                mejor_ajuste={'c':c,'gamma':gamma,'presicion':(svm_accuracy(training_confusion_matrix),svm_accuracy(validation_confusion_matrix))}
+            #------------------------------------------ 
+    #------------------------------------------------------------------------------
+
+
     for k in range(0,10):
         training_folder=data[k][0]
         validation_folder=data[k][1]
@@ -228,77 +288,33 @@ def svm_gaussian(data):
         #---------------------------------------------------------------------------------
         
         #--------Buscar los valores de config optimos en el primer fold--------------
-        if k==0:
-            valores_posibles_c=[10**x for x in range(-5,6)]#deberia ser 6 en lugar de 2
-            for c in valores_posibles_c:
-                for gamma in ['scale','auto']+[float(x)/100 for x in range(1,100)]: #puede que usar todos esos valores posibles esten de mas, sino recortar (poner que gamma pruebe con valores negativos?)
-                    print("Resultados de la carpeta numero " + str(k) + " con c= " + str(c) + " y gamma= "+str(gamma))
-
-                    svclassifier = SVC(kernel='rbf',C=c, gamma=gamma)
-
-                    # Training
-                    svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
-
-                    # Making Predictions
-                    validacion_prediccion = svclassifier.predict(validation_folder['data'])
-
-                    # Evaluating the Algorithm
-                    validation_results=classification_report(validation_folder['class'], validacion_prediccion, output_dict=bool)
-
-                    validation_confusion_matrix=confusion_matrix(validation_folder['class'], validacion_prediccion)
-                    #print(validation_results)
-                    print("Validation acurracy:" + str(svm_accuracy(validation_confusion_matrix)))
-
-                    #-----------Training accurracy (se puede sacar)-------------------------
-                    # Calculando error training
-                    training_prediccion = svclassifier.predict(training_folder['data'])
-                    # Evaluating the Algorithm
-                    training_results=classification_report(training_folder['class'], training_prediccion, output_dict=bool)
-
-                    training_confusion_matrix=confusion_matrix(training_folder['class'], training_prediccion)
-                    #print(trainig_results)
-
-                    print("Training acurracy:" + str(svm_accuracy(training_confusion_matrix)))
-                    #-----------------------------------------------------------------------
-
-                    #---Optimizacion de los valores-----------
-                    if mejor_ajuste['presicion'][1]<svm_accuracy(validation_confusion_matrix):
-                        mejor_ajuste={'c':c,'gamma':gamma,'presicion':(svm_accuracy(training_confusion_matrix),svm_accuracy(validation_confusion_matrix))}
-                    #------------------------------------------ 
+        
 
 
-            presicion_resultado.append(mejor_ajuste['presicion'])
-        #------------------------------------------------------------------------------
-
-        else:
-            print("Resultados de la carpeta numero " + str(k))
-            svclassifier = SVC(kernel='rbf',C=mejor_ajuste['c'], gamma=mejor_ajuste['gamma'])
-
-            # Training
-            svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
-            # Making Predictions
-            validacion_prediccion = svclassifier.predict(validation_folder['data'])
-            # Evaluating the Algorithm
-            validation_results=classification_report(validation_folder['class'], validacion_prediccion, output_dict=bool)
-            
-            validation_confusion_matrix=confusion_matrix(validation_folder['class'], validacion_prediccion)
-
-            #print(validation_results)
-            print("Validation acurracy:" + str(svm_accuracy(validation_confusion_matrix)))
-
-            #-----------Training accurracy (se puede sacar)-------------------------
-            # Calculando error training
-            training_prediccion = svclassifier.predict(training_folder['data'])
-            # Evaluating the Algorithm
-            training_results=classification_report(training_folder['class'], training_prediccion, output_dict=bool)
-            
-            training_confusion_matrix=confusion_matrix(training_folder['class'], training_prediccion)
-            #print(trainig_results)
-            
-            print("Training acurracy:" + str(svm_accuracy(training_confusion_matrix)))
-            #-----------------------------------------------------------------------
-
-            presicion_resultado.append((svm_accuracy(training_confusion_matrix),svm_accuracy(validation_confusion_matrix)))
+        print("Resultados de la carpeta numero " + str(k))
+        svclassifier = SVC(kernel='rbf',C=mejor_ajuste['c'], gamma=mejor_ajuste['gamma'])
+        # Training
+        svclassifier.fit(training_folder['data'], training_folder['class'].values.ravel())
+        # Making Predictions
+        validacion_prediccion = svclassifier.predict(validation_folder['data'])
+        # Evaluating the Algorithm
+        validation_results=classification_report(validation_folder['class'], validacion_prediccion, output_dict=bool)
+        
+        validation_confusion_matrix=confusion_matrix(validation_folder['class'], validacion_prediccion)
+        #print(validation_results)
+        print("Validation acurracy:" + str(svm_accuracy(validation_confusion_matrix)))
+        #-----------Training accurracy (se puede sacar)-------------------------
+        # Calculando error training
+        training_prediccion = svclassifier.predict(training_folder['data'])
+        # Evaluating the Algorithm
+        training_results=classification_report(training_folder['class'], training_prediccion, output_dict=bool)
+        
+        training_confusion_matrix=confusion_matrix(training_folder['class'], training_prediccion)
+        #print(trainig_results)
+        
+        print("Training acurracy:" + str(svm_accuracy(training_confusion_matrix)))
+        #-----------------------------------------------------------------------
+        presicion_resultado.append((svm_accuracy(training_confusion_matrix),svm_accuracy(validation_confusion_matrix)))
 
     for i in range(0,len(presicion_resultado)): #Lo hago asi por que quiero el valor de la carpeta
         if presicion_resultado[mejor_fold][1]<presicion_resultado[i][1]:
@@ -319,15 +335,15 @@ def crear_archivo_data_tree(data,k,nombre): #el k es el fold que estoy usando pa
     training_data=data[k][0]['data']
     training_class=data[k][0]['class']
 
-    """
-    validation_data=data[k][1]['data']
-    validation_class=data[k][1]['class']
-    for d in range(0,len(validation_data)):#itero sobre datos
-        write_value=''
-        for i in validation_data[d]:#itero sobre componente de cada dato
-            write_value+=str(i)+', '
-        f.write(write_value+str(validation_class[d])+'\n')
-    """
+
+    #validation_data=data[k][1]['data']
+    #validation_class=data[k][1]['class']
+    #for d in range(0,len(validation_data)):#itero sobre datos
+    #    write_value=''
+    #    for i in validation_data[d]:#itero sobre componente de cada dato
+    #        write_value+=str(i)+', '
+    #    f.write(write_value+str(validation_class[d])+'\n')
+
 
     for d in range(0,len(training_data)):#itero sobre datos
         write_value=''
@@ -393,8 +409,8 @@ def trees(data,nombre,clases):
         crear_archivo_test_tree(data,k,nombre)
 
         print("Entrenando arbol con fold n "+str(k))
-        output= subprocess.check_output("./c4.5 -f "+nombre+" -g -u", shell=True, universal_newlines=True)
-        #print(output)
+        output= subprocess.check_output("./c4.5 -f "+nombre+" -g -u -v 2", shell=True, universal_newlines=True)
+        print(output)
         result=get_tree_values(output)
         TrainingAfterPruningError=result[0][5]
         ValidationAfterPruningError=result[1][5]
@@ -498,17 +514,13 @@ def t_test(errores1,errores2):
     #d=average(validation_error1+validation_error2)
 
     #Fijarse si en el calculo de la desviacion estandar para sd tengo que usar el d que calcule arriba o solamente el promedio de los errores
-    sd=desviacion_estandar(validation_error1+validation_error2)
+    diferencia_errores=[validation_error1[i]-validation_error2[i] for i in range(0,len(validation_error1))]
+    sd=desviacion_estandar(diferencia_errores)
 
-    """
-    sd=0.0
-    for x in validation_error1+validation_error2:
-        sd+=(x-d)**2
-    sd=(float(sd)/(len(validation_error1+validation_error2)-1))**(1.0/2)
-    """
+    #print(sd)
     
-
-    t=float((d-0))/(float(sd)/(len(errores1+errores2)**(1/2)))
+    #t=float((d-0))/(float(sd)/(len(errores1+errores2)**(1/2)))
+    t=float((d-0))/(float(sd)/(len(diferencia_errores)**(1/2)))
 
     return t
 
@@ -524,7 +536,7 @@ def main():
     filetree.close
     #-----------------------------------------------
 
-    
+    """
     #----------------Naieve-Bayes-------------------
     filebayes=open("BayesErrores.txt", "w")
     filebayes.write("TrainingError ValidationError\n")
@@ -534,9 +546,8 @@ def main():
         filebayes.write(str(training) + "  " + str(validation) + "\n")
     filebayes.close
     #-----------------------------------------------
-    
-
-    
+    """
+    """
     #------------------SVM-Linear-------------------
     error_svm_linear=training_folds([0,1],"BBBs.data","linear")
     print(error_svm_linear)
@@ -549,10 +560,10 @@ def main():
         filesvmlinear.write(str(training) + "  " + str(validation) + "\n")
     filesvmlinear.close
     #-----------------------------------------------
+    """
     
     
-    
-    
+    """
     #------------------SVM-Gaussian-------------------
     error_svm_gauss=training_folds([0,1],"BBBs.data","gaussian")
     print(error_svm_gauss)
@@ -565,7 +576,8 @@ def main():
         filesvmgauss.write(str(training) + "  " + str(validation) + "\n")
     filesvmgauss.close
     #-----------------------------------------------
-
+    """
+    
     print("Promedio error validacion bayes: "+str(average([x[1] for x in error_bayes])))
     print("Promedio error training bayes: "+str(average([x[0] for x in error_bayes])))
     print("Desviacion estandar bayes: "+str(desviacion_estandar([x[1] for x in error_bayes])))
@@ -579,6 +591,12 @@ def main():
     print("Promedio error training svm gauss: "+str(average([x[0] for x in error_svm_gauss])))
     print("Desviacion estandar svm gauss: "+str(desviacion_estandar([x[1] for x in error_svm_gauss])))
 
+    print("t-test para mejor (trees) y peor (bayes) metodo: "+str(t_test(error_bayes,error_trees)))
+    print("t-test para mejor (trees) y segundo mejor (svm gauss) metodo: "+str(t_test(error_svm_gauss,error_trees)))
+
+    #print("t-test para mejor (trees) y peor (bayes) metodo: "+str(t_test(error_trees,error_bayes)))
+    #print("t-test para mejor (trees) y segundo mejor (svm gauss) metodo: "+str(t_test(error_trees,error_svm_gauss)))
+
     """
     Promedio error validacion bayes: 0.607499999
     Promedio error training bayes: 0.561866668
@@ -586,22 +604,33 @@ def main():
     Promedio error validacion trees: 0.21
     Promedio error training trees: 0.0223
     Desviacion estandar trees: 0.0529674952736
-    Promedio error validacion svm linear: 0.32
-    Promedio error training svm linear: 0.2056
-    Desviacion estandar svm linear: 0.0586893895389
-    Promedio error validacion svm gauss: 0.285
-    Promedio error training svm gauss: 0.0456
-    Desviacion estandar svm gauss: 0.05027701043
+    Promedio error validacion svm linear: 0.305
+    Promedio error training svm linear: 0.101333333333
+    Desviacion estandar svm linear: 0.0524404424085
+    Promedio error validacion svm gauss: 0.265
+    Promedio error training svm gauss: 0.00906666666667
+    Desviacion estandar svm gauss: 0.0459468291736
+    t-test para mejor (trees) y peor (bayes) metodo: 4.61348902045
+    t-test para mejor (trees) y segundo mejor (svm gauss) metodo: 0.654782526859
 
-    t-test mejor y peor: 1.95379483587
-    t-test mejor y segundo mejor: 3.91010437919
+
+    svm lineal c=40
+
+    svm gauss c=40, un valor de gamma=0.2
+
+
+
+
+    ['scale','auto']
+    gaussiana mejores valores c=10 y un valor de gamma=0.07
+    una presicion de validacion de 0.825 y de entrenamiento de 0.952
     """
 
 
     #print(t_test(error_trees,error_bayes))#mejor y peor
     #print(t_test(error_trees,error_svm_gauss))#mejor y segundo mejor
-    print(t_test(error_bayes,error_trees))#mejor y peor
-    print(t_test(error_svm_gauss,error_trees))#mejor y segundo mejor
+    #print(t_test(error_bayes,error_trees))#mejor y peor
+    #print(t_test(error_svm_gauss,error_trees))#mejor y segundo mejor
 
 
 
@@ -609,9 +638,5 @@ def main():
 
 main()
 #print(desviacion_estandar([0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]))
-
-
-
-
 
 
